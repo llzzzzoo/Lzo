@@ -1166,7 +1166,7 @@ class Customer{
 
 ##### （1）IO流概述
 
-参照内存来的嗷，从内存出来叫做写，输出，输出流
+站在内存嗷，从内存出来叫做写，输出，输出流
 进入内存叫做读，输入，输入流
 
 ![image-20220321223322534](C:\Users\Lzo\AppData\Roaming\Typora\typora-user-images\image-20220321223322534.png)
@@ -1179,13 +1179,15 @@ class Customer{
 
 ![image-20220321224832709](C:\Users\Lzo\AppData\Roaming\Typora\typora-user-images\image-20220321224832709.png)
 
+
+
 ##### （4）java.io包下的16个流
 
 ![image-20220321225055945](C:\Users\Lzo\AppData\Roaming\Typora\typora-user-images\image-20220321225055945.png)
 
 ##### （5）IDEA默认的文件
 
-默认的相对路径起点是那个你的单个的project里面的模块，看下面，一个文件在跟模块在同一目录的可以之间访问
+默认的相对路径起点是那个你的单个的project里面的模块，看下面，在同一模块下的文件可以利用相对路径相互访问
 
 **重点，你的输入的文件一定要跟文件那边的名字一模一样，.txt啥的后缀这些自己注意就好**
 
@@ -1219,7 +1221,7 @@ public class FileTest {
         //如果D:\file不存在，则以文件的形式创建出来
         if(!f1.exists()){
             //以文件形式创建
-            f1.createNewFile();
+            f1.createNewFile(	);
         }
 
         //如果D:\file不存在，则以目录的形式创建出来
@@ -1235,6 +1237,11 @@ public class FileTest {
             //以多重目录的形式新建
             f3.mkdirs();
         }
+        /**
+        * mkdir和mkdirs的区别
+        * 如果你指定的路径只有一层目录不存在，那么mkdir就能创建那一层(文件夹)
+        * 如果有两层目录不存在，mkdir就无法使用，只能使用mkdirs来创建两层目录，即文件夹套文件夹
+        */
 
         //获取文件的父路径
         File f4 = new File("E:/z95/FileTest.txt");
@@ -1243,7 +1250,7 @@ public class FileTest {
         //上面那种方式返回的是一个String字符串
         //下面这个方式返回的是一个File
         //这个File再调用其中的方法就可以输出路径了
-        File parentFile = f4.getParentFile();
+        File parentFile = f4.getParentFile();//得到父文件了都
         System.out.println("获取到父路径的绝对路径：" + parentFile.getAbsolutePath());
 
         //获取绝对路径
@@ -1263,9 +1270,9 @@ public class FileTest {
         //获取一个文件最后的修改时间
         long haoMiao = f6.lastModified();//这个毫秒是1970年到现在的毫秒数
         //将总毫秒数转换为日期
-        Date time = new Date(haoMiao);
-        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss SSS");
-        String strTime = sdf.format(time);
+        Date time = new Date(haoMiao);//获取资源
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss SSS");//固定格式
+        String strTime = sdf.format(time);//将资源以格式打印
         System.out.println("最后的修改时间是在" + strTime);
 
         //获取文件大小
@@ -1313,7 +1320,7 @@ public class aaa {
         //调用Properties对象的load方法将文件的数据加载到Map集合当中
         pro.load(fileReader);//文件顺着管道加载到Map集合中，其中等号左边等于key，右边等于value
 
-        String username = pro.getProperty("username");
+        String username = pro.getProperty("username");//getproperties的参数应该是key吧，返回值是value
         System.out.println("用户名：" + username);
 
         String password = pro.getProperty("password");

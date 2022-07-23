@@ -52,10 +52,10 @@ final修饰的变量只能赋一次值，而且必须定义的时候就赋值，
 
 抽象类不能实例化，即创建对象
 final和abstract也是不能联合使用的，因为你写了final，就表明你不希望这玩意被继承被覆盖修改，但是你写abstract，摆明了是要让这个抽象类称为父类，所以逻辑上是自相矛盾的，联合使用会报错
-抽象类里面也是用构造方法的，符合**子在必有父**的逻辑
+抽象类里面也是用构造方法的，符合**子在必有父**的逻辑，你构造子类的时候，肯定先构造父类啊，才符合逻辑
 抽象类不一定有抽象方法，但有抽象方法一定是抽象类
 子类继承抽象类后，如果有抽象方法，必须覆盖，就是把abstract删了，然后填个方法体
-面对抽象编程，其实就是引用类型是抽象类的（说白了就是类名可以当引用数据类型名嘛）
+面对抽象编程，其实就是引用类型是抽象类的（说白了就是类名可以当引用数据类型名嘛）  
 
 ![image-20220312034858044](C:\Users\Lzo\AppData\Roaming\Typora\typora-user-images\image-20220312034858044.png)
 
@@ -75,6 +75,8 @@ final和abstract也是不能联合使用的，因为你写了final，就表明�
 
 #### （4）小陷阱：并不是没有方法体的方法都是抽象方法
 
+cool啊，直接调用JVM的本地程序
+
 ![image-20220312121838332](C:\Users\Lzo\AppData\Roaming\Typora\typora-user-images\image-20220312121838332.png)
 
 ### 4、接口
@@ -82,11 +84,11 @@ final和abstract也是不能联合使用的，因为你写了final，就表明�
 #### （1）基础语法
 
 ①接口是抽象的，所以里面可以有抽象方法，并且抽象方法可以省略public abstract，但是注意不要让抽象方法带{}，因为你带了这个就表明方法体实现了，不是抽象方法了
-②接口可以**实现多继承**
-③接口中写的常量是public static final int PI = 3;也可以直接缩写成int PI = 3;（可以这么说，接口中随便写一个变量就是常量，接口中是不能放变量的），接口中所有元素方法属性都是公开的，都要用public修饰
+②接口可以**实现多继承**，一个接口继承多个接口
+③接口中写的常量public static final int PI = 3;也可以直接缩写成int PI = 3;（可以这么说，接口中随便写一个变量就是常量，接口中是不能放变量的），接口中所有元素方法属性都是公开的，都要用public修饰
 ④接口(interface)中只能出现**抽象方法（没有方法体），和常量**
 ⑤接口也是一种引用数据类型
-⑥接口是完全抽象的，抽象方法和常量
+⑥接口是完全抽象的，抽象方法和常量，半抽象估计是抽象类有构造方法的原因吧(虽然不能直接new就是了)
 
 ![image-20220313215006600](C:\Users\Lzo\AppData\Roaming\Typora\typora-user-images\image-20220313215006600.png)
 
@@ -98,7 +100,7 @@ final和abstract也是不能联合使用的，因为你写了final，就表明�
 
 回来了，匿名内部类实现接口就是这样的，new接口的时候后面的{...}相当于实现了接口
 
-其实本质上应该是 new (匿名) implements 接口{...}，怎么样get到了吗
+其实本质上应该是 *new (匿名) implements 接口{...}*，怎么样get到了吗
 
 ![image-20220313223816141](C:\Users\Lzo\AppData\Roaming\Typora\typora-user-images\image-20220313223816141.png)
 
@@ -118,13 +120,13 @@ final和abstract也是不能联合使用的，因为你写了final，就表明�
 
 #### （5）接口的转型
 
-第一，一个类实现了多个接口，那么这几个接口可以相互转型的，属于接口转型
+第一，一个类实现了多个接口，那么这几个接口可以相互转型的，属于**接口转型**
 第二，一个类实现了一个接口M，很奇葩的就是我可以把一个指向M的引用，强制转化为一个K（注意子类可没有实现K，K和M和子类都没啥关系的），即 
 
 ```java
 K k = (K)m;
 //上面的代码编译时候是不会报错的，尽管两者根本没有继承关系
-//但是运行阶段还是说ClassCastException错误
+//但是如果没有继承关系运行阶段还是ClassCastException错误
 //所以以后不管何时进行强制转型操作的时候最好都用一下instanceof
 if(m instanceof K){//这一行的意思是如果m指向的堆内存的数据类型是K的话就可以强制转型，不可以的话就返回false
     K k = (K)m;
@@ -153,7 +155,9 @@ if(m instanceof K){//这一行的意思是如果m指向的堆内存的数据类�
 
 
 
-这里讲下我对接口的崇拜，我写一个A类，接口B，C类，我作为A类，我是调用者，我想提出一些需求，那么就需要实现者C类出现，此时我的A类只跟接口B交互，我把一切需求教给B，然后C类implement了接口B，那么它也只跟接口B交互，，它通过B知道了我的A类的需求，然后实现它，很神奇啊，明明是A让C干活，但是我们却不用直接接触，降低耦合度。而且这个也炒鸡灵活，我想调用D类，我直接把C类换走，不需要更改A的代码，因为A只跟B对话，而变成D类以后，经过一些调整，D也可以去实现B了，这也就是说，我要完成一个贼牛逼的项目，那么我作为架构师，或者说软件工程师，我就需要把项目分成几部分，然后分给不同的人去做，而我最重要的任务就是搞定一个接口，让大家做不同部分最终能链接起来！！！
+感觉现实工程就是一条长河，上游，下游，下游的通过接口接受上游的需求和信息，以此达到流通
+
+这里讲下我对接口的崇拜，我写一个A类，C类，接口B，我作为A类，我是调用者，我想提出一些需求(假设需要获取一些数据)，那么就需要实现者C类出现，此时我的A类只跟接口B交互，我把一切需求教给B(获取数据的方法)，然后C类implement了接口B，那么它也只跟接口B交互，，它通过B知道了我的A类的需求，然后实现它，很神奇啊，明明是A让C干活，但是我们却不用直接接触，降低耦合度。而且这个也炒鸡灵活，我想调用D类，我直接把C类换走，不需要更改A的代码，因为A只跟B对话，而变成D类以后，经过一些调整，D也可以去实现B了，这也就是说，我要完成一个贼牛逼的项目，那么我作为架构师，或者说软件工程师，我就需要把项目分成几部分，然后分给不同的人去做，而我最重要的任务就是搞定一个接口，让大家做不同部分最终能链接起来！！！
 **还有不懂的建议结合下面的视频理解**
 
 https://www.bilibili.com/video/BV1Rx411876f?p=514&t=103.4
@@ -163,6 +167,8 @@ https://www.bilibili.com/video/BV1Rx411876f?p=514&t=103.4
 ### 5、类和类的关系
 
 A like B的关系感觉就像A 实现 B
+
+attribute/property
 
 ![image-20220314003411994](C:\Users\Lzo\AppData\Roaming\Typora\typora-user-images\image-20220314003411994.png)
 
@@ -178,7 +184,7 @@ A like B的关系感觉就像A 实现 B
 
 注意包只能出现在第一行，那个啥注释后面也算第一行
 
- 	 ![image-20220314202220793](C:\Users\Lzo\AppData\Roaming\Typora\typora-user-images\image-20220314202220793.png)
+![image-20220314202220793](C:\Users\Lzo\AppData\Roaming\Typora\typora-user-images\image-20220314202220793.png)
 
 不使用IDEA的创建包
 
@@ -336,7 +342,7 @@ System.gc();//建议，不一定GC就会启动
 
 ![image-20220315100433993](C:\Users\Lzo\AppData\Roaming\Typora\typora-user-images\image-20220315100433993.png)
 
-匿名内部类
+**匿名内部类**
 
 说白了就是没有名字，所以很奇葩，只能用一次，不能反复使用
 
@@ -344,7 +350,56 @@ System.gc();//建议，不一定GC就会启动
 
 其实本质上应该是 new (匿名) implements 接口{...}，怎么样get到了吗
 
+[(10条消息) 关于匿名内部类的一些理解_一纸春秋的博客-CSDN博客_匿名内部类](https://blog.csdn.net/qq_44823756/article/details/120402324)
+
 ![image-20220315135124511](C:\Users\Lzo\AppData\Roaming\Typora\typora-user-images\image-20220315135124511.png)
+
+```java
+package test.AnonymousDemo2;
+
+/**
+* 接口
+*/
+public interface Run {
+    public void run();
+    public int getSpeed();
+}
+
+public class Anonymous2 {
+    /**
+    * 该方法调用了接口中的方法
+    */
+    public void personRun(Run r){
+        r.run();
+        System.out.println("the man's running speed is "+r.getSpeed());
+    }
+
+    public static void main(String[] args) {
+        Anonymous2 a = new Anonymous2();
+    
+        /**
+        * 在该地方直接实现了接口中的抽象方法，而上面调用接口的方法，直接使用这里的匿名内部类给出的实现
+        * 粗略理解为匿名内部类可以用在，以接口为参数，调用了接口的方法，我直接实现了	的操作
+        */
+        a.personRun(new Run() {
+            @Override
+            public void run() {
+                System.out.println("can run");
+            }
+    
+            @Override
+            public int getSpeed() {
+                return 3;
+            }
+        });
+    }
+
+}
+```
+
+
+
+
 
 ### 11、数组
 
@@ -1060,6 +1115,18 @@ public static void m3() throws FileNotFoundException, FileAlreadyExistsException
 
 所以你打开文件一定要关闭文件，那么就记得finally嗷铁子
 
+强大如我finally
+
+```java
+try {
+   	return;//哪怕在try语句块中放这个return，最终也会执行finally语句块的
+    System.exit(0);//但是如果是这个语句话，直接退出JVM了，直接给你结束了，finally都不执行了
+    //-------------综上，执行了try的全部语句，哪怕是return i;都会先返回一个i，最后再执行finally里面的i++;----------x`
+}finally {
+    system.out.println("执行到finally里面了");
+}
+```
+
 ```java
 public static void main(String[] args) {
     FileInputStream fis = null;
@@ -1154,7 +1221,7 @@ public class test01 {
         MyException userNameException = new MyException("用户名输入有误！");//创建了异常对象
 
         userNameException.printStackTrace();//打印异常栈追踪信息
-
+        
         System.out.println(userNameException.getMessage());//重写toString方法，打印错误提示
         
     }
@@ -1237,3 +1304,8 @@ class MyException extends Exception{//这里两个方法，一个无惨构造，
     }
 }
 ```
+
+
+
+
+

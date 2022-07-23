@@ -1109,10 +1109,8 @@ class Test{
 ### 16、模拟栈结构的弹栈压栈
 
 ```java
-import java.lang.reflect.Array;
-import java.util.Arrays;
 
-public class GaoShuSOS {
+class GaoShuSOS {
     private int index = -1;//栈帧，永远指向栈的顶部元素，此处初始化-1表示了没有指向任何一个元素
     private Object[] stacks;
 
@@ -1142,63 +1140,282 @@ public class GaoShuSOS {
      * 压栈的方法
      * @param obj 被压入的元素
      */
-    public void push(Object obj){
+    public void push(Object obj) throws MyStackOperationException {
         if(this.index < this.stacks.length - 1) {
             index++;
             this.stacks[index] = obj;
             System.out.println("push了一个" + this.stacks[index]  +"，栈帧指向" + index);
         }else{
-            System.out.println("stack满了");
+            MyStackOperationException msoe = new MyStackOperationException("栈已经满了");
+            throw msoe;//出现异常上抛
         }
     }
 
     /**
      * 弹栈的方法
      */
-    public void pop(){
+    public void pop() throws MyStackOperationException {
         if(this.index >= 0){
             System.out.println("pop了一个"+ this.stacks[index] + "，栈帧指向了" + index);
             this.stacks[index] = null;
             this.index--;
         }else{
-            System.out.println("stack空了");
+            MyStackOperationException msoe = new MyStackOperationException("栈已经空了");
+            throw msoe;//出现异常上抛
         }
     }
 
 }
 
+class MyStackOperationException extends Exception{
+    public MyStackOperationException(){
+
+    }
+
+    public MyStackOperationException(String str){
+        super(str);
+    }
+
+}
+
+
 class Stack{
     public static void main(String[] args) {
         GaoShuSOS gaoShuSOS = new GaoShuSOS();
-        gaoShuSOS.push(new Object());
-        gaoShuSOS.push(new Object());
-        gaoShuSOS.push(new Object());
-        gaoShuSOS.push(new Object());
-        gaoShuSOS.push(new Object());
-        gaoShuSOS.push(new Object());
-        gaoShuSOS.push(new Object());
-        gaoShuSOS.push(new Object());
-        gaoShuSOS.push(new Object());
-        gaoShuSOS.push(new Object());
-        gaoShuSOS.push(new Object());
-        gaoShuSOS.push(new Object());
+        try {
+            gaoShuSOS.push(new Object());
+            gaoShuSOS.push(new Object());
+            gaoShuSOS.push(new Object());
+            gaoShuSOS.push(new Object());
+            gaoShuSOS.push(new Object());
+            gaoShuSOS.push(new Object());
+            gaoShuSOS.push(new Object());
+            gaoShuSOS.push(new Object());
+            gaoShuSOS.push(new Object());
+            gaoShuSOS.push(new Object());
+            gaoShuSOS.push(new Object());   
+            gaoShuSOS.push(new Object());
 
-        gaoShuSOS.pop();
-        gaoShuSOS.pop();
-        gaoShuSOS.pop();
-        gaoShuSOS.pop();
-        gaoShuSOS.pop();
-        gaoShuSOS.pop();
-        gaoShuSOS.pop();
-        gaoShuSOS.pop();
-        gaoShuSOS.pop();
-        gaoShuSOS.pop();
-        gaoShuSOS.pop();
-        gaoShuSOS.pop();
+            gaoShuSOS.pop();
+            gaoShuSOS.pop();
+            gaoShuSOS.pop();
+            gaoShuSOS.pop();
+            gaoShuSOS.pop();
+            gaoShuSOS.pop();
+            gaoShuSOS.pop();
+            gaoShuSOS.pop();
+            gaoShuSOS.pop();
+            gaoShuSOS.pop();
+            gaoShuSOS.pop();
+            gaoShuSOS.pop();
+        } catch (MyStackOperationException e) {
+            //其实这个try-catch的意义就是我中途那个环节出问题了，直接就跳到catch了，不会往下执行了
+            //对比于我出问题就报错，例如上面那么多方法，假设那一个出问题我就new异常然后e.printStackTrace，如果全出异常，难道全都printStackTrace吗，那多麻烦，而且理论上应该是中途环节出问题代码就停止执行了才对，所以我的new异常后上抛，统一处理才是最好的行为，节省了资源和时间
+            e.printStackTrace();
+        }
+    }
+
+}	
+```
+
+
+
+### 17、武器数组
+
+主要体现了接口的厉害之处
+
+实现了建立武器数组，添加武器，让全部可移动的武器移动，可攻击的武器攻击
+
+```java
+class Army{
+    /**
+     * 武器数组
+     */
+    private Weapon[] weapons;
+    private int index = -1;//武器数组中的的“栈帧“
+
+    public Army() {
+    }
+
+    //根据传过来的参数设置数组的长度
+    public Army(int count) {
+        weapons = new Weapon[count];
+    }
+
+    /**
+     * 将武器加入数组
+     * @param weapon 武器
+     */
+    public void addWeapon(Weapon weapon) {
+        this.index++;
+        if (this.index < weapons.length) {
+            weapons[index] = weapon;//加入武器
+        }else{
+            System.out.println("武器库里面已经塞得满满的了哦~");
+        }
+    }
+
+    /**
+     * 让所有可移动的武器移动
+     */
+    public void moveAll(){
+        for (int i = 0; i < this.weapons.length; i++) {
+            if(weapons[i] instanceof Move){
+                ((Move) weapons[i]).move();
+            }
+        }
+    }
+
+    /**
+     * 让所有可攻击的武器攻击
+     */
+    public void attackAll(){
+        for (int i = 0; i < this.weapons.length; i++) {
+            if(weapons[i] instanceof Attack){
+                ((Attack) weapons[i]).attack();
+            }
+        }
+    }
+
+    public Weapon[] getWeapons() {
+        return weapons;
+    }
+
+    public void setWeapons(Weapon[] weapons) {
+        this.weapons = weapons;
+    }
+}
+
+/**
+ * 所有武器的父类
+ */
+class Weapon{
+
+}
+
+//武器：阿帕奇
+class Helicopter extends Weapon implements Move, Attack{
+
+    @Override
+    public void move() {
+        System.out.println("团长！有种你飞来沈阳！");
+    }
+
+    @Override
+    public void attack() {
+        System.out.println("biu~biu~biu~哒哒哒哒");
+    }
+}
+//武器：坦克
+class Tank extends Weapon implements Move, Attack{
+
+    @Override
+    public void move() {
+        System.out.println("报告，我们发现了敌方的九五式坦克！");
+    }
+
+    @Override
+    public void attack() {
+        System.out.println("开炮！！！");
+    }
+}
+//武器：枪
+class Gun extends Weapon implements Attack{
+
+    @Override
+    public void attack() {
+        System.out.println("我赌你的枪里没有子弹！");
+    }
+}
+//武器：刀
+class Knife extends Weapon implements Attack{
+
+    @Override
+    public void attack() {
+        System.out.println("见过这个纹身没有啊！斧头帮的大哥啊！");
+    }
+}
+//武器：嘴巴(莫名其妙的武器，但有时会有出其不意的效果哦)
+class Mouth extends Weapon implements Attack{
+
+    @Override
+    public void attack() {
+        System.out.println("你这种家伙根本就不懂得同伴的力量！");
+        System.out.println("我们谈谈吧！");
+    }
+}
+
+
+/**
+ * 一个移动的接口，可以给武器插上翅膀
+ */
+interface Move {
+    /**
+     * 可移动的方法
+     */
+    void move();
+}
+
+/**
+ * 一个攻击的接口，可以给武器附魔
+ */
+interface Attack {
+    /**
+     * 可攻击的方法
+     */
+    void attack();
+}
+
+
+class Test{
+    public static void main(String[] args) {
+        Army army = new Army(5);//武器库容量为5
+        army.addWeapon(new Helicopter());
+        army.addWeapon(new Tank());
+        army.addWeapon(new Gun());
+        army.addWeapon(new Knife());
+        army.addWeapon(new Mouth());
+        System.out.println("----------");
+        army.addWeapon(new Mouth());
+        System.out.println("fight---------");
+        army.attackAll();
+        System.out.println("move----------");
+        army.moveAll();
+
     }
 
 }
 ```
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
