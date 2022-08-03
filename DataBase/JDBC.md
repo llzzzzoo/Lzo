@@ -54,6 +54,22 @@
 
 ## 4、查询结果集
 
+这个是以获取的那一行数据库数据行的第几列获取的
+
+![image-20220801204250730](JDBC.assets/image-20220801204250730.png)
+
+
+
+这个是以数据库数据行的每列的名词获取的
+
+
+
+*注意*：你给每个类名重命名后就需要使用重命名的名字
+举个例子：sql = "select abc as a";
+那么就需要rs.getString("a");
+
+
+
 ![image-20220403084246022](C:\Users\Lzo\AppData\Roaming\Typora\typora-user-images\image-20220403084246022.png)![image-20220403084421854](C:\Users\Lzo\AppData\Roaming\Typora\typora-user-images\image-20220403084421854.png)
 
 ## 5、用户登录
@@ -126,7 +142,7 @@ public class JdbcTest {
         System.out.println("请输入用户名：");
         String loginUsername = s.nextLine();
 
-        System.out.println("请输入密码：");
+        System.out.println("请输入密码：");‘
         String loginPassword = s.nextLine();
 
         //把数据存储到Map集合中

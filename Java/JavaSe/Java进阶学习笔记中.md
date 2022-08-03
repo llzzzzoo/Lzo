@@ -1356,10 +1356,11 @@ public class FileTet {
             fis = new FileInputStream("E:\\z95\\FileTest.txt");
 
             //开始读
-            int readData = fis.read();//方法的返回值是：读取到的“字节”本身
+            //每读一位，fis指针都下一个位	移动一位字节
+            int readData = fis.read();//方法的返回值是：读取到的“字节”本身的ASCII码
             System.out.println(readData);
 
-            readData = fis.read();//方法的返回值是：读取到的“字节”本身
+            readData = fis.read();//方法的返回值是：读取到的“字节”本身的ASCII码
             System.out.println(readData);
 
             readData = fis.read();//方法的返回值是：读取到的“字节”本身
@@ -1482,6 +1483,7 @@ public class FileTet {
                 }
                 //下面的这个就是把一个byte数组转化为String字符串然后打印出来
                 //憋问为什么，记住就好，offset是起始位置，后面的是length
+                //我觉着下面的这个new String就是把ASCII转换为普通字符，而且这种格式刚好能把文件的内容一模一样打印出来
                 System.out.println(new String(bytes, 0, readCount));
             }
         } catch (FileNotFoundException e) {
@@ -1504,7 +1506,7 @@ public class FileTet {
 }
 ```
 
-###### ④求没有读取到的字节数量和跳过字节
+###### ④skip求没有读取到的字节数量和跳过字节
 
 这玩意可以实现不需要while一波读取全部字节，但是不太适合太大的容量（上百万长度那种吧），毕竟开辟不了那么大的连续内存空间
 
@@ -1621,7 +1623,9 @@ public class copyThat {
             e.printStackTrace();
         } finally {
             //分开try，不要一起try
+            //因为万一哪个家伙有问题，另一个就关不了了
             //好像听说先打开的要后关，不知道为啥
+            //好像为了防止IOException，规范嘛，就这么写也挺好
             if(fos != null){
                 try {
                     fos.close();
@@ -1648,7 +1652,7 @@ public class copyThat {
 但是，这个玩意只能操作普通文本文件，也就是说搞不了word，搞不了图片视频音频文件
 
 **这里科普一下什么是普通文件**
-能用记事本打开 并且正常编辑的都普通文本文件，.java .temp这些都是普通文本文件
+能用**记事本打开 并且正常编辑**的都普通文本文件，.java .temp这些都是普通文本文件
 
 ##### (1)FileReader（文件字符输入流）
 
@@ -1748,7 +1752,7 @@ BufferedReader br = new BufferedReader(new InputStreamReader(new FileInputStream
 
 ![image-20220323162255217](C:\Users\Lzo\AppData\Roaming\Typora\typora-user-images\image-20220323162255217.png)
 
-### ====标注流====
+### ====标准流====
 
 ##### （1）PrintStream（标准字节输出流）
 
@@ -1759,7 +1763,7 @@ BufferedReader br = new BufferedReader(new InputStreamReader(new FileInputStream
 这里我解释一下
 
 ```java
-System.our.println();
+System.out.println();
 /*这行代码本质如下
 首先System是一个类
 这个类里面有个属性，叫做out
@@ -1801,6 +1805,7 @@ class Logger{
     public static void log(String msg) {
         //指向一个日志文件
         try {
+            //默认第二个参数是false，表示不追加，每次new对象都会清空之前的内容创建新的内容，ture表示在之前的基础上追加内容
             PrintStream out = new PrintStream(new FileOutputStream("myblog.txt", true));
             //改变输出方向
             System.setOut(out);
@@ -1823,7 +1828,7 @@ class Logger{
 
 感觉就像c语言的链表读到文件，再以链表的形式读取出来
 序列化：把对象拆分，然后放到硬盘文件里面去
-返序列法：把对象组装，然后从文件中读取出来
+反序列法：把对象组装，然后从硬盘文件中读取出来
 反序列就是你去读那个你存放序列了看起来乱码的文件 但是能读出对象来
 
 ![image-20220323190130936](C:\Users\Lzo\AppData\Roaming\Typora\typora-user-images\image-20220323190130936.png)
@@ -2038,7 +2043,7 @@ public class fanxuliehua {
 
 首先，实现了那个Serializable接口的，你不给它个版本号，编译器会给你自动搞一个，那么当你序列化后，再反序列化的时候，编译器会把这个版本号记住，放到本地，也就是说，反序列化的时候，看到这个版本号，对头了，那么我就给你反序列
 
-而你给这个类增删的时候，你在直接run反序列，就大问题了，因为这个类生成了一个新的序列号，你反序列的时候跟本地的不同，于是就报错（注意此时不能run序列化的，因为你一run，这个新的序列号就会替代旧的了，那么反序列化的也会抛弃旧的）
+而你给这个类增删的时候(并且编译)，你在直接run反序列，就大问题了，因为这个类生成了一个新的序列号，你反序列的时候跟本地的不同，于是就报错（注意此时不能run序列化的，因为你一run，这个新的序列号就会替代旧的了，那么反序列化的也会抛弃旧的）
 
 如果你自己手动写了一个版本号，那么这个版本号就跟这个类绑死了，也就是你不管怎么搞，云端的版本号总是这个，本地的版本号也是这个，你直接run反序列也不会有事
 

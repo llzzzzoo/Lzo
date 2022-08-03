@@ -1391,9 +1391,138 @@ class Test{
 
 
 
+### 18、目录的拷贝
+
+```java
+import java.io.*;
+
+class copyFiles{
+    public static void main(String[] args) {
+        System.out.println("拷贝开始");
+        //copyFilesTest();
+        //先判断是否为一个文件或者目录，搞一个方法
+        //文件的话，就调用文件的操作
+        //目录的话就调用目录的操作
+
+        //是这样的吧，我先从第一层遍历一遍当前目录的子文件，如果是文件的话就不用进入下一层，直接进行复制
+        //如果是目录的话，就进入下一层，再进行如上操作，直到最后只剩下文件，而没有目录
+        //如果是文件的话就获取绝对路径进行复制，文件夹的话没想好
+        //if(wenjian) 复制; if(目录) 继续遍历;
+       java.util.Scanner s = new java.util.Scanner(System.in);
+        System.out.println("请输入文件或文件夹的起始路径");
+        System.out.println("示例：C:/User/Administrator;C:/User/1.jpg");
+        System.out.print(":");
+        String fileBeginPath = s.nextLine();
+        System.out.println("请输入文件或文件夹的指定复制路径");
+        System.out.print(":");
+        String fileEndPath = s.nextLine();
+
+        //进入复制，先进行第一轮的分流
+        judgeFileOrDirectory(fileBeginPath, fileEndPath);
+        System.out.println("拷贝结束");
+    }
+
+    /**
+     * 复制文件用的方法
+     * @param fileBeginPath 文件的起始路径
+     * @param fileEndPath 文件的指定复制路径
+     */
+    public static void copyFiles(String fileBeginPath, String fileEndPath){
+        FileInputStream fis = null;
+        FileOutputStream fos = null;
+
+        try {
+            fis = new FileInputStream(fileBeginPath);
+            fos = new FileOutputStream(fileEndPath);
+
+            //设置为1MB
+            byte[] bytes = new byte[1024 * 1024];
+            int readCount = 0;
+
+            //边读边写
+            while((readCount = fis.read(bytes)) != -1){
+                //这个length放的是readCount，而不是bytes.length感觉就很nice
+                //因为readCount的值是read字节的返回值，到最后可能bytes数组不到全部长度
+                //但是readCount就很好地避免了读入数组中空的数据
+                fos.write(bytes, 0, readCount);
+            }
+
+            fos.flush();
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        } finally {
+            try {
+                fos.close();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+            try {
+                fis.close();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+
+    }
+
+    /**
+     * 用来判断是否文件还是目录
+     * @param fileEndPath 文件或文件夹的的最初目录
+     * @param fileEndPath 文件或者文件夹的指定目录
+     */
+    public static void judgeFileOrDirectory(String fileBeginPath, String fileEndPath){
+        File file = new File(fileBeginPath);
+
+        //应该分割开，对普通文件单独的操作，对目录又是一个操作，我要做的就是把文件从一层一层目录揪出来，从里到外进行复制
+        if(file.isFile()){
+            //由于此处只是第一次判断（文件和目录的第一次分流），路径错误报错就行，我不会创建目录
+            copyFiles(fileBeginPath, fileEndPath + "/" + file.getName());
+        }else{
+            //进入递归
+            copyDirectory(fileBeginPath, fileEndPath);
+        }
+
+    }
 
 
+    /**
+     * 专门递归操作文件夹的
+     * @param fileBeginPath 文件夹起始路径
+     * @param fileEndPath 文件夹指定路径
+     */
+    public static void copyDirectory(String fileBeginPath, String fileEndPath){
+        File file = new File(fileBeginPath);//文件夹中的文件
+        File directory = new File(fileEndPath);//文件夹中的文件夹
+        //很重要的一步，为了处理复制目录（路径）的必须操作
+        //因为复制一个文件夹其实就是创建一个相同的文件夹
+        //假设文件夹为空嘛，你要把一个黄油油的文件夹copy的话其实是行不通的，因为FileOutputStream字符输出流是不允许输出目录的
+        //那我们怎么办呢？直接照着已存在的复制个名字创建一个新的不就很哇塞了吗
+        if(!directory.exists()){
+            directory.mkdir();
+        }
 
+        File[] files = file.listFiles();//获取子文件或者目录
+        //遍历子文件或者目录，对齐进行再判断
+         for (File innerFile:
+                files) {
+             //下面是当你遍历文件夹的时候，遇到了文件，直接复制
+             //遇到了文件夹，继续递归
+                if(innerFile.isDirectory()){
+                    //需要注意的是前面的起始路径应该是当前文件夹的绝对路径
+                    //后面的指定路径，因为是在文件夹下的文件夹，所以fileEndPath是指当前的文件夹路径
+                    //然后再加上/子文件夹名称，这样就构成了子文件夹的路径，因为递归回去的话若是路径下的目录不存在，我就会创建，所以不用担心
+                    copyDirectory(innerFile.getAbsolutePath(), fileEndPath + "/" + innerFile.getName());
+                }else{
+                    //前面的路径需要是当前被复制文件的绝对路径作为起始路径
+                    //复制的话记得FileOutputStream是必须指定输出的文件的名称的，所以后面我加了一个复制的当前文件的名称
+                    copyFiles(innerFile.getAbsolutePath(), directory.getAbsolutePath() + "/" + innerFile.getName());
+                }
+         }
+    }
+}
+```
 
 
 

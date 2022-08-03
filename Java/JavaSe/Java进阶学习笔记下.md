@@ -30,13 +30,13 @@ package com.lzo.test;
 public class xiancheng {
     public static void main(String[] args) {
         //此处是main方法，这里的代码属于主线程，在主栈中运行
-        //新建一个分支线程对象
+        //第一，新建一个分支线程对象
         MyThread myThread = new MyThread();
         //启动线程
         myThread.run();//不会启动线程，不会分配新的分支栈。（这种方法就是单线程）
         //start()方法的作用是：启动一个分支线程，在JVM开辟一个新的栈空间，这段代码任务完成之后，瞬间就结束了
         //这行代码的任务只是为了开辟一个新的栈空间，只要新的栈空间开辟出来，start()方法就结束了。线程就启动成功了
-        //启动成功的线程会自动调用run方法，并且run方法在分支栈的栈底部（压栈）
+        //启动成功的线程会自动调用run方法，并且run方法在分支栈的栈底部（压栈），自动调用run方法
         //run方法在分支栈的栈底部，main方法在主栈的栈底部，run和main是平级的
         myThread.start();
         //下面的代码还是运行在主线程之中
@@ -60,18 +60,20 @@ class MyThread extends Thread{
 
 ##### ②编写一个类实现java.lang.Runnable接口
 
+实现抽象方法run方法
+
 ```java
 package com.lzo.test;
 
 public class xiancheng {
     public static void main(String[] args) {
-        //创建一个可运行的对象
+        //第一，创建一个可运行的对象
         MyThread myThread = new MyThread();
-        //将可运行的对象封装成一个线程对象
+        //第二，将可运行的对象封装成一个线程对象
         Thread t = new Thread(myThread);
         //也可以像下面这样写
         //Thread t = new Thread(new MyThread());
-        //启动线程
+        //启动线程，同时创建新的栈，开启新线程
         t.start();
 
         for (int i = 0; i < 100; i++) {
@@ -102,7 +104,7 @@ public class xiancheng {
         //采用匿名内部类的方式
         //这个地方比较奇葩，接口是不能实例化，就是new
         //但是匿名内部类的语法是你 new 接口(){...}
-        //允许你这样写 new接口，然后在后面的大括号写方法实现这个接口
+        //允许你这样写 new接口(){...}，然后在后面的大括号写方法实现这个接口
         //装逼式写法，其实不是很建议
         Thread t = new Thread(new Runnable(){
             @Override
@@ -138,7 +140,7 @@ import java.util.concurrent.FutureTask;
 public class protectedThread {
     public static void main(String[] args) throws Exception {
 
-        //第一步，创建一个 “未来任务类”对象
+        //第一步，创建一个 “未来任务类”对象，jar包的
         //参数非常重要，需要给一个Callable接口实现类对象
         FutureTask task = new FutureTask(new Callable() {
             public Object call() throws Exception{
@@ -160,7 +162,8 @@ public class protectedThread {
         t.start();
 
         //此处是main方法，执行的是主线程
-        //在主线程中，怎么获取其他线程的运行的返回结果呢
+        //在主线程中，怎么获取其他线程的运行的返回结果呢？
+        //调用FutureTask类的get方法得到其callable接口的抽象方法call()
         Object obj = task.get();
 
         //main方法在这里的程序要想执行必须等待get()方法的结束
@@ -172,6 +175,8 @@ public class protectedThread {
 ```
 
 #### （3）线程的生命周期
+
+关于运行状态到run结束那里，举个例子，我的run方法有100行sout，抢到的CPU时间片只够执行50行，那么用完之后，还剩50行没有执行，回到就绪状态，假设又抢到了，那么就会接着执行剩下的代码（五十行sout），直到run结束，进入死亡状态
 
 ![image-20220324225419526](C:\Users\Lzo\AppData\Roaming\Typora\typora-user-images\image-20220324225419526.png)
 
@@ -191,6 +196,8 @@ public class protectedThread {
 
 下面的题告诉我们，这个是个静态方法，尽管你new对象，然后拿引用去调用，不吊你的，sleep在哪里，那个线程睡觉完事了铁汁
 
+确实感觉怪怪的，一个引用类型居然还可以调用类的静态方法
+
 ![image-20220325160331613](C:\Users\Lzo\AppData\Roaming\Typora\typora-user-images\image-20220325160331613.png)
 
 #### （7）干扰线程的睡眠
@@ -204,9 +211,9 @@ package com.lzo.test;
 
 public class xiancheng {
     public static void main(String[] args) {
-        //创建一个可运行的对象
+        //第一，创建一个可运行的对象
         MyThread myThread = new MyThread();
-        //将可运行的对象封装成一个线程对象
+        //第二，将可运行的对象封装成一个线程对象
         Thread t = new Thread(myThread);
         //设置线程的名字
         t.setName("主栈");
@@ -324,6 +331,8 @@ class MyThread implements Runnable{
 
 ##### ①基本概述
 
+抢占式调度模型、均分式调度模型
+
 ![image-20220325170338236](C:\Users\Lzo\AppData\Roaming\Typora\typora-user-images\image-20220325170338236.png)
 
 ##### ②相关方法
@@ -341,6 +350,14 @@ class MyThread implements Runnable{
 异步就是并发，同步就是排队
 
 ![image-20220325173150847](C:\Users\Lzo\AppData\Roaming\Typora\typora-user-images\image-20220325173150847.png)
+
+锁池(lockpool)：并非一种状态
+
+我觉得共享对象的对象锁是这样理解的：
+synchronized(一个对象xx){...}<-------参数只能是对象
+当代码执行到此处后，某个线程就去找这个xx，然后就去看这个对象有没有被上锁（即有没有线程已经找到了这个共享对象的对象锁），如果没有上锁的话，就占用，上了锁的话，就进入等待。
+
+延伸开来，你这一个共享对象Account里面写一个属性Object obj，其实这个obj也是共享的，也可以用synchronized进行上锁
 
 ![image-20220325214850995](C:\Users\Lzo\AppData\Roaming\Typora\typora-user-images\image-20220325214850995.png)
 
@@ -472,15 +489,56 @@ class Account{
 
 ![image-20220325223255100](C:\Users\Lzo\AppData\Roaming\Typora\typora-user-images\image-20220325223255100.png)
 
-##### ③变量和线程安全的关系
+![image-20220727195939636](Java进阶学习笔记下.assets/image-20220727195939636.png)
 
-常量不可变，所以不用担心线程安全，但是它的确是只有一个对象
+##### ③synchronized放不同参数的操作
+
+看看下面一种情况，你觉得可以这么写吗
+
+![image-20220727200714166](Java进阶学习笔记下.assets/image-20220727200714166.png)
+
+synchronized(obj)其实没有关系的，因为Account对象是共享的（实际上只有一个），其中的属性也应该是共享的（堆内存中有且仅有一个）
+
+![image-20220727200742691](Java进阶学习笔记下.assets/image-20220727200742691.png)
+
+**还有第二种特殊情况**
+
+这种写法完全就是错误的，因为这个obj2是一个withdraw方法的局部变量，你是两个线程都调用了这个withdraw方法，那么两个方法就在不同的栈中，而且他们在堆内存new的obj2对象是两个不同的对象，所以synchronized(obj2)并没有使这个对象同步
+
+![image-20220727202252385](Java进阶学习笔记下.assets/image-20220727202252385.png)
+
+再讲解下synchronized放其他参数的操作
+
+![image-20220727203333935](Java进阶学习笔记下.assets/image-20220727203333935.png)
+
+**第一个放字符串：**
+
+会把字符串常量池的字符串synchronized，也就是每个线程遇到了这个synchronized都会去找字符串的对象锁
+
+**第二个放null：**
+
+什么鬼操作？
+
+
+
+##### ④变量和线程安全的关系
+
+常量不可变，线程无法对齐修改值的大小，所以不用担心线程安全，但是它的确是只有一个对象
+
+
 
 ![image-20220325224200190](C:\Users\Lzo\AppData\Roaming\Typora\typora-user-images\image-20220325224200190.png)
 
 ![image-20220325224803944](C:\Users\Lzo\AppData\Roaming\Typora\typora-user-images\image-20220325224803944.png)
 
-##### ④synchronized使用在实例方法上
+##### ⑤synchronized使用在实例/静态方法上
+
+**synchronized放在实例方法**的时候相当于this，即锁住了这个对象，但凡对这个实例对象的①实例方法操作，并且这个实例方法②带有让其进入lockpool的synchronized限制时，就必须考虑同步机制了
+
+**synchronized放在静态方法上**(public synchronized static void doSome())时相当于锁住了这个类，你new了二个这个类的实例对象，第一个对象调用了这个类的静态方法doSome，第二个对象调用了这个类的静态方法doOther
+分析：第一个对象调用了静态方法doSome，使得类被锁上了，第二个对象调用另一个静态方法doOther，此时遇到了①synchronized，进入了lockpool，发现②此类已经被锁住了，因此就会等待第一个对象的doSome方法结束，再执行第二个doOther
+
+
 
 其实我这里补充一个对象，就是锁锁住Integer型变量的操作，这玩意比较诡异，怎么说呢，如果你是在整数型常量池之外的话，那么你对该变量自增运算，synchronized(i){i++;} 其实每次自加都是一个新的对象，所以每次会并发，而不会同步（排队）
 
@@ -490,7 +548,25 @@ class Account{
 
 ![image-20220325224746791](C:\Users\Lzo\AppData\Roaming\Typora\typora-user-images\image-20220325224746791.png)
 
-##### ⑤死锁
+
+
+##### ⑥synchronized的面试题
+
+*doOther方法执行的时候需要等待doSome方法的结束吗？*
+
+答：不需要，为什么呢？倒不如说为什么你觉得会等待呢。因为你知道synchronized锁实例方法的时候实际上锁的是，this对象，那么你觉得这个示例对象被锁住了，它的全部方法也需要同步执行
+但是你忘了一点，doOther方法是没有synchronized的，所以它不需要进入lockpool去找寻所谓的共享对象的对象锁，所以是连前提都无法成立的，当然不需要等待啦
+所以，与此同时，如果doOther方法加了synchronized的话就需要等待了，毕竟它要去lockpool找类的对象锁了
+
+![image-20220728194923008](Java进阶学习笔记下.assets/image-20220728194923008.png)
+
+![image-20220728194753891](Java进阶学习笔记下.assets/image-20220728194753891.png)
+
+![image-20220728194821571](Java进阶学习笔记下.assets/image-20220728194821571.png)
+
+
+
+##### ⑦死锁
 
 ```java
 package com.lzo.test.hello;
@@ -503,6 +579,7 @@ public class TestThread {
         Object o1 = new Object();
         Object o2 = new Object();
         //下面一个向上转型给我干懵了，看了半天才get到
+        //之前不都是这么写的吗，太不仔细了吧你
         Thread t1 = new Thread1(o1, o2);
         Thread t2 = new Thread2(o1, o2);
 
@@ -557,9 +634,13 @@ class Thread2 extends Thread{
         }
     }
 }
+//之所以还出现死锁的原因很简单
+//线程thread1如果碰到了synchronized，就放弃CPU时间片，然后去lockpool找共享对象锁，在它寻找o1的时候，thread2抢夺到CPU时间片
+//往下走结果也遇到synchronized，然后放弃执行权，去锁池找到o2的对象锁，此时thread1拿到执行权，往下走，遇到了同步代码块，想去放弃执行权，去锁池找o2的对象锁，但是o2已经被thread2拿到了，而thread2拿到执行权往下走，遇到了同步代码块，去锁池拿o1的锁，可
+//是锁在thread1身上，于是两者都僵持不下了，形成死锁局面。
 ```
 
-##### ⑥如何解决线程安全的问题
+##### ⑧如何解决线程安全的问题
 
 ![image-20220326121116741](C:\Users\Lzo\AppData\Roaming\Typora\typora-user-images\image-20220326121116741.png)
 
@@ -600,6 +681,7 @@ class BackDataThread extends Thread{
     public void run() {
         int i = 0;
         while(true){
+            //可以在这个死循环里面写一个隔好多秒备份当前资料的操作
             System.out.println(Thread.currentThread().getName() + "--->" + (++i));//获取当前的线程的对象
             try {
                 Thread.sleep(1000);
@@ -632,9 +714,9 @@ public class protectedThread {
         //Timer timer = new Timer(true);//守护线程的方式
 
         //指定定时任务
-        //timer.schedule(定时任务，第一次执行时间，间隔多少次执行)
+        //timer.schedule(定时任务，第一次执行时间，间隔多少毫秒执行)
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-        Date firstTime = sdf.parse("2022-03-26 15:08:30");
+        Date firstTime = sdf.parse("2022-03-26 15:08:30");//这个转换爱了啊
         timer.schedule(new LogTimerTask(), firstTime, 1000);
 
     }
@@ -646,16 +728,18 @@ class LogTimerTask extends TimerTask {
     @Override
     public void run() {
         //编写需要执行的任务
+        //好比我备份了一次，还可以记录备份的时间
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
         String strTime = sdf.format(new Date());
         System.out.println(strTime + "：完成了一次备份");
-
 
     }
 }
 ```
 
 匿名内部类装逼写法
+
+很怪的写法，别这样写吧
 
 ```java
 package com.lzo.test;
@@ -678,6 +762,10 @@ public class protectedThread {
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
         Date firstTime = sdf.parse("2022-03-26 15:06:50");
         timer.schedule(new TimerTask(){
+            //其实这个写法很厉害啊，匿名内部类的写法，可以用在抽象类上，但是你必须实现其中的抽象方法
+            //原理在这里：匿名内部类是不是类嘛你说，它其实是一个存在的类，而这个类没有构造方法，但是我们默认它继承了
+            //抽象类TimerTask，由于没有办法使用构造方法，只能“显式调用”父类(抽象类)的构造方法，并且重写其中的抽象方法
+            //于是便有了这种写法，接口还不是这样的，抽象类、接口都不能new啊，但是我们可以使用匿名内部类来new他们
             public void run() {
             //编写需要执行的任务
             SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
@@ -695,7 +783,7 @@ public class protectedThread {
 
 ![image-20220326175617647](C:\Users\Lzo\AppData\Roaming\Typora\typora-user-images\image-20220326175617647.png)
 
-我这里将哈妙处
+我这里讲哈妙处
 
 第一个就是假设先看你的生产线程嘛，假设你现在仓库屁都没有，并且先锁柱了生产线
 
@@ -890,6 +978,10 @@ public class ReflectTest {
 
 ##### ①优势
 
+我的理解就是对于框架，我们是不用改代码的，只需要改配置文件，这就说明了框架的牛逼
+
+正如上面的一样，只改不动产文件，代码原封不动，实现生成了不同类的操作
+
 ![image-20220326205706376](C:\Users\Lzo\AppData\Roaming\Typora\typora-user-images\image-20220326205706376.png)
 
 ```java
@@ -910,7 +1002,7 @@ public class ReflectTest {
         //以下代码是灵活的，代码不需要改动，可以修改配置文件，配置文件修改后，可以创建出不同的实例对象
         //通过IO流读取User.properties文件
         
-        //下面是老写法，建议换成下下的新写法，因为绝对路径嘛，好像在Linux也可以找到我这个文件
+        //下面是老写法，建议换成下下的新写法，因为绝对路径嘛，好像可以保证在Linux也可以找到我这个文件
         // FileReader reader = new FileReader("qwer\\src\\com\\lzo\\ClassName.properties");
         String path = Thread.currentThread().getContextClassLoader()
                 .getResource("com/lzo/ClassName.properties").getPath();
@@ -937,6 +1029,8 @@ public class ReflectTest {
 
 #### （4）只让一个类静态代码块执行的时候请用forName
 
+确实好啊，Class.forName("");只是使得类加载到类加载器，而且只让类的静态代码块执行
+
 ![image-20220326212245115](C:\Users\Lzo\AppData\Roaming\Typora\typora-user-images\image-20220326212245115.png)
 
 ```java
@@ -955,7 +1049,7 @@ public class ReflectTest {
 }
 
 class MyClass{
-    //静态代码块在内加载时执行，并且只执行一次
+    //静态代码块在类加载时执行，并且只执行一次
     static{
         System.out.println("Myclass类的静态代码块执行");
     }
@@ -964,6 +1058,8 @@ class MyClass{
 ```
 
 #### （5）获取类路径下文件的绝对路径
+
+类路径：在src下的都是类路径下的（src是类的根路径）
 
 ![image-20220326214048214](C:\Users\Lzo\AppData\Roaming\Typora\typora-user-images\image-20220326214048214.png)
 
@@ -1008,7 +1104,7 @@ public class ReflectTest {
         //只能绑定properties，并且也是必须在类路径下
         ResourceBundle bundle = ResourceBundle.getBundle("com/lzo/ClassName");
 
-        String className = bundle.getString("className");
+        String className = bundle.getString("className");//这是键值对的key
         System.out.println("类名是" + className);
     }
 }
@@ -1080,6 +1176,7 @@ public class ReflectTest {
 
         System.out.println("============");
         //获取类的所有field
+        //类只能是public的
         Field[] fields = userClass.getFields();
         System.out.println("有" + fields.length + "个public公开的属性");
 
@@ -1130,9 +1227,9 @@ public class ReflectTest {
         Class userClass = Class.forName("com.lzo.User");
         Object obj = userClass.newInstance();//obj就是User对象（底层会调用无参构造方法）
 
-        //获取no属性，通过属性名来获取field
+        //获取属性名为no的属性，通过属性名来获取field
         Field noField = userClass.getDeclaredField("no");//获取指定名字的属性，这里获取field你要带有一个整体感，就是相当于获取了那一坨，
-        // 然后你可以选择访问修饰符啊 类型啊 名字啊啥的
+        // 然后你可以选择访问修饰符啊 类型啊 名字啊啥的？？？你都知道名字你访问个啥啊你 果咩纳塞是我冒饭了
 
         //给obj对象的no赋值
         //三要素
@@ -1140,7 +1237,7 @@ public class ReflectTest {
         //要素2：no属性
         //要素3：赋的值
         //虽然看起来一个new个对象，然后=赋值就完事了的东西，却花了这么一大段代码
-        //其实是让代码变得耦合度更低了，更灵活了，怎么说呢，我上面可以选择访问什么类，创建什么对象，修改什么属性，而你原来new那一段代码只能针对User对象
+        //其实是让代码变得耦合度更低了，更灵活了，怎么说呢，我上面可以通过修改片段，选择访问什么类，创建什么对象，修改什么属性，而你原来new那一段代码只能针对User对象
 
         //访问对象属性
         //这里的noField变量其实就是指的no属性，所以你下面的get和set操作其实都是在对no属性操作
@@ -1150,6 +1247,8 @@ public class ReflectTest {
         System.out.print("\n");
 
         //虽然私有变量只能在本类中访问，但我们可以打破封装_(:з」∠)_
+        //首先需要使用下面的Declared获取到不是public的属性
+        //再到下下面打破搞一个true才能对其赋值，打破封装
         Field nameField = userClass.getDeclaredField("name");
 
         //下面的代码就是打破封装，所以其实吧，反射也是有缺点的啦
@@ -1193,9 +1292,11 @@ public class ReflectTest {
             System.out.println("返回值类型是：" + method.getReturnType());
 
             //获取参数列表（一个方法可能有多个参数，for遍历出来）
-            Class[] parameterTypes = method.getParameterTypes();//这玩意好像是随机选一个参数，而不是从左往右哎
+            Class[] parameterTypes = method.getParameterTypes();//这玩意好像是随机选一个参数，而不是从左往右哎，虽然可能会有override但是不影响吧
+            //foreach，第一个parameter为集合的元素，第二个为集合本身
             for (Class parameterType: parameterTypes){
-                System.out.println("方法的修饰符列表是：" + parameterType.getSimpleName());
+                //输出的是参数的类型，类似于String int之类的
+                System.out.println("方法参数的数据类型是：" + parameterType.getSimpleName());
             }
             if(parameterTypes.length == 0){
                 System.out.println("无参");
@@ -1254,14 +1355,16 @@ public class ReflectTest {
         //左边是方法名，右边是参数名
         //专门为了跟方法重载overload对着干的
         //Method loginMethod = userServiceClass.getDeclaredMethod("login", int.class);
+        
         //四个要素
         //方法名
         //对象
         //传过去的实参
-        //返回值
+        //返回值（在下面，通过输入参数得到返回值）
         //这个invoke的意思应该是对着指定的方法，指定的对象，输入实参
+        //注意这个invoke（援用）的返回值是Object，不知道它是怎么操作的
         Object retValue = loginMethod.invoke(obj, "admin", "123");
-        //这里转型居然成功了，学到了
+        //应该是包装类型Boolean(大写B)
         System.out.println((Boolean) retValue? "登陆成功": "登录失败");
     }
 }
@@ -1384,6 +1487,12 @@ class Vip {
 
 #### （3）元注解
 
+（1）.SOURCE:在源文件中有效（即源文件保留）编译成class文件将舍弃该注解。
+
+（2）.CLASS:在class文件中有效（即class保留） 编译成dex文件将舍弃该注解。
+
+（3）.RUNTIME:在运行时有效（即运行时保留） 运行时可见。
+
 ![image-20220327204055874](C:\Users\Lzo\AppData\Roaming\Typora\typora-user-images\image-20220327204055874.png)
 
 ![image-20220327203950398](C:\Users\Lzo\AppData\Roaming\Typora\typora-user-images\image-20220327203950398.png)
@@ -1396,6 +1505,8 @@ class Vip {
 
 暂时不知道有什么用，这个自定义
 
+java当中@Deprecated能够用来注解类、接口、成员方法和成员变量等,用于表示某个元素(类、方法等)已过时,在其他程序使用已过时的元素时,编译器将会给出警告。
+
 ```java
 package com.lzo.test;
 
@@ -1403,7 +1514,7 @@ package com.lzo.test;
 class MyAnnotationTest{
 
     //报错的原因：如果一个注解当中有属性，那么必须给属性赋值
-    @MyAnnotation(value = "value我啊可是不用属性名的，但是只有一个属性且叫叫value的时候才行",
+    @MyAnnotation(value = "value我啊可是不用属性名的，但是只有一个属性且叫value的时候才行",
             name = "xiaolin", color = "blue",//普通类型
             value1 = {1, 2}, value2 = "只写一个元素不用大括号",//整形数组和字符数组的操作
             value3 = Season.AUTUMN, value4 = {Season.AUTUMN, Season.SPRING},//这个是枚举类型的操作
@@ -1423,7 +1534,7 @@ class MyAnnotationTest{
      */
     /*注解中属性的类型可以是
         byte, short, int, long, float, double, boolean, char, String, Class, 枚举类型
-        以及以上所有的数组形式
+        以及以上所有的数组集合形式
         不能是Integer和Object
         */
     String value();//神奇的来了，没有报错，因为一个属性的属性名是value的时候，你可以直接赋值
@@ -1496,9 +1607,9 @@ public class ReflectionAnnotationTest {
 }
 ```
 
-#### （6）注解在开发中的作用
+#### （6）注解在开发中的作用	
 
-我的理解就是你可以自定义一个注解，然后这个注解的要求又你直接来定义，类似于我想一旦有这个@Id注解标记的类，那么这个类里面必须出现一个int类型的id属性，如果没有就报错
+我的理解就是你可以自定义一个注解，然后这个注解的要求由你直接来定义，类似于我想一旦有这个@Id注解标记的类，那么这个类里面必须出现一个int类型的id属性，如果没有就报错
 
 然后报错你得自己抛个异常啊，然后我又得自己自定义个异常
 
@@ -1509,6 +1620,10 @@ public class ReflectionAnnotationTest {
 总结，注解就是一个限制，你可以通过它限制这个类里面出现什么方法，但是你得自己检查这个类里面真的出现没有，没出现就报错，出现了就没事，以此来达到注解的限制作用
 
 ![image-20220328203119581](C:\Users\Lzo\AppData\Roaming\Typora\typora-user-images\image-20220328203119581.png)
+
+注意@Id改成了MustHasIdPropertyAnnotation放在了User类上
+
+你可能疑惑为什么不是像IDEA一样写个注解，就自动检验，而不是我上面还要run一下，这个应该后面会学吧
 
 ![image-20220328203358248](C:\Users\Lzo\AppData\Roaming\Typora\typora-user-images\image-20220328203358248.png)
 

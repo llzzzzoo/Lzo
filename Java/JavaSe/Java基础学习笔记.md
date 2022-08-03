@@ -649,7 +649,9 @@ return flag? 1: 0;//三目运算符可以让代码变得很简练
 上面叫方法不同
 第一，方法参数个数不同
 第二，方法类型不同
-第三，方法顺序不同（这玩意给我整不会了，sum(int x, int y)和sum(int y, int x)其实是不同的。。）
+第三，方法顺序不同（这玩意给我整不会了，sum(int x, Long y)和sum(Long y, int x)其实是不同的。。但是sum(int x, int y)和sum(int y, int x)是相同的哦）
+
+我这里好像get到了一个比较是否overload的tip，你把两个方法像两张纸似的重叠，若除了参数的名称有所不同，那就是方法重载、方法重写
 
 ![image-20220301210431363](C:\Users\Lzo\AppData\Roaming\Typora\typora-user-images\image-20220301210431363.png)
 
