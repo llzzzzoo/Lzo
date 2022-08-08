@@ -175,7 +175,15 @@ public class JdbcTest {
 
 如何解决呢？
 
+预先对SQL语句的框架进行编译的再传值，可以想象成一个函数传值吧
+
 ![image-20220403191247565](C:\Users\Lzo\AppData\Roaming\Typora\typora-user-images\image-20220403191247565.png)
+
+![image-20220403195357694](C:\Users\Lzo\AppData\Roaming\Typora\typora-user-images\image-20220403195357694.png)
+
+
+
+**操作示例：**
 
 ```java
 package com.JDBC.test;
@@ -197,7 +205,7 @@ public class JdbcTest {
 
 
     }
-
+    
     private static boolean loginVerify(Map<String, String> userLoginInfo) {
         //JDBC相关的代码
         boolean loginResult = false;//做一个mark
@@ -206,36 +214,36 @@ public class JdbcTest {
         Connection conn = null;
         PreparedStatement ps = null;//搞一个预编译的数据库操作对象
         ResultSet rs = null;
-
+    
         try {
             //1、2步靠工具类完成了
             conn = DBUtil.getConnection();
-
+    
             //3、获取预编译的数据库操作对象
             //sql语句的框框，其中的?，表示一个占位符，一个坑用来接收一个“值”，注意，?不能使用''括起来
             String sql = "select * from t_user where loginUsername = ? and loginPassword = ?";//编写sql语句
            
-            //程序执行到此处，会发送sql语句框架给DBMS，然后DBMS进行sql语句的编译
+            //程序执行到此处，会发送sql语句框架给DBMS(Database Management System)，然后DBMS进行sql语句的编译
             ps = conn.prepareStatement(sql);
-
+    
             //给占位符?传值，第一个?的下标是1，第二个?的下标是2，JDBC中所有下标从1开始
             ps.setString(1, loginUsername);//不用担心你的输入会影响最终sql语句的编译，因为上面的sql语句已经编译了
             ps.setString(2, loginPassword);
-
+    
             //4、执行sql语句
             rs = ps.executeQuery();//类似于迭代器的玩意，这里不能写sql了，因为上面已经传过去了
-
+    
             //5、有DQL语句处理结果集
             if(rs.next()){//只需要一个if就行了，因为上面的sql执行出来最多一个记录，迭代器走一步发现什么都没有为false，发现有数据必然有这个账号
                 loginResult = true;
             }
-
+    
         } catch (Exception e) {
             e.printStackTrace();
         }finally{
             DBUtil.close(conn, ps, rs);//工具类
         }
-
+    
         return loginResult;//返回结果
     }
 
@@ -246,26 +254,24 @@ public class JdbcTest {
      */
     private static Map<String, String> initUI() {
         Scanner s = new Scanner(System.in);
-
+    
         System.out.println("请输入用户名：");
         String loginUsername = s.nextLine();
-
+    
         System.out.println("请输入密码：");
         String loginPassword = s.nextLine();
-
+    
         //把数据存储到Map集合中
         Map<String, String> userLoginInfo = new HashMap<String, String>();
         userLoginInfo.put("loginUsername", loginUsername);
         userLoginInfo.put("loginPassword", loginPassword);
-
+    
         return userLoginInfo;//返回一个集合用以对数据库的进行比较
     }
 
 
 }
 ```
-
-![image-20220403195357694](C:\Users\Lzo\AppData\Roaming\Typora\typora-user-images\image-20220403195357694.png)
 
 
 
@@ -345,7 +351,17 @@ public class JdbcTest {
 }
 ```
 
-## 8、防止了注入现象的增删改	
+## 8、防止了注入现象的增删改
+
+## 9、手动提交事务
+
+自动提交机制的弊端：当你多个DML语句联合才能完成的一个操作，你提交了一句DML，但是突然出了问题，后面的DML没有提交，那么当你修复好bug之后数据已经被影响变动了，出了无法修改的错误
+
+*“事物:是用户定义的一个操作序列。这些操作要么全部执行,要么全部不执行,是一个不可切分的工作单元。”*
+
+![image-20220403214600116](JDBC.assets/image-20220403214600116.png)
+
+![image-20220403214633517](C:\Users\Lzo\AppData\Roaming\Typora\typora-user-images\image-20220403214633517.png)
 
 ```java
 package com.JDBC.test;
@@ -370,13 +386,13 @@ public class JdbcTest {
 
         try {
             //1、注册驱动
-            Class.forName("com.mysql.jdbc.Driver");//连接jar包
+            Class.forName("com.mysql.jdbc.Driver");//连接驱动包jar包的一种）
 
             // 2、获取连接
             conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/userinfo", "root", "123456");
 
             //将自动提交机制改为手动提交
-            conn.setAutoCommit(false);//开启事物
+            conn.setAutoCommit(false);//开启事务
 
             //3、获取数据库操作对象
 
@@ -450,14 +466,6 @@ public class JdbcTest {
 
 
 
-## 9、手动提交事务
-
-![image-20220403214600116](C:\Users\Lzo\AppData\Roaming\Typora\typora-user-images\image-20220403214600116.png)
-
-![image-20220403214633517](C:\Users\Lzo\AppData\Roaming\Typora\typora-user-images\image-20220403214633517.png)
-
-
-
 ## 10、模糊查询
 
 ```java
@@ -506,7 +514,7 @@ import java.sql.*;
 public class DBUtil {
 
     /**
-     * 工具类的方法都是私有的
+     * 工具类的构造方法都是私有的，不让new嘛
      * 因为工具类当中的方法都是静态的，不需要new对象，直接采用类名即可调用
      *
      */
@@ -562,9 +570,9 @@ public class DBUtil {
 }
 ```
 
-## 12、悲观锁乐观锁
+## 12、悲观锁/乐观锁
 
-这个就是把一个数据锁住了，知道它执行完毕，才到下一个数据执行
+这个就是把一个数据锁住了，直到它执行完毕，才到下一个数据执行
 
 ![image-20220403220936084](C:\Users\Lzo\AppData\Roaming\Typora\typora-user-images\image-20220403220936084.png)
 

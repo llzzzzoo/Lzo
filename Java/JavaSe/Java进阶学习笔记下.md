@@ -789,13 +789,15 @@ public class protectedThread {
 
 好，那么我先看一眼，屁都没有是吧，那么我给你new一个，好很精神，然后我唤醒，唤个屁，都没人睡呢
 
-然后我离开同步代码块，好，解锁，开始抢锁
+然后我离开同步代码块（锁同时放开），好，解锁，开始抢锁
 
 假设又自己抢到，好，让我康康，有了是吧，进入if，开启wait状态，好，消费线开抢，轻松抢到，开锁，发现有了是吧，那我直接恰了，然后又唤醒生产线程，开抢
 假设又被自己抢到，那么进入if，好家伙，屁都没有，给爷wait去，然后此时另外的生产线程就会抢到，然后开启生产，然后又唤醒消费线程
 假设又被自己抢到，好家伙，都有了，给爷wait去，开锁，然后，消费线程就会绑锁，开搞
 
 上面都是假设唤醒了，或者离开同步代码块的时候，自己又绑锁了情况，因为有if所以完全不用担心，后面我补下流程图吧
+
+![image-20220803202432727](Java进阶学习笔记下.assets/image-20220803202432727.png)
 
 ```java
 package com.lzo.test;
@@ -828,6 +830,7 @@ class Producer implements Runnable{
     //不断生产
     @Override
     public void run() {
+        //保持这个生产的预备状态
         while(true){
 
             //放个睡眠看的清楚一点
@@ -841,7 +844,7 @@ class Producer implements Runnable{
                 if (list.size() > 0) {
                     //当前线程等于等待状态
                     try {
-                        list.wait();
+                        list.wait();//进入线程的等待池
                     } catch (InterruptedException e) {
                         e.printStackTrace();
                     }
@@ -850,7 +853,10 @@ class Producer implements Runnable{
                 Object obj = new Object();
                 list.add(obj);
                 System.out.println(Thread.currentThread().getName() + "--->" + obj);
-                //唤醒消费者进行消费
+                
+                //下面这一步就是让两条线都进入预备抢锁操作
+                //假设被生产线抢到了，那么就会发现已经有了，进入wait，把锁给消费线，然后就进行消费操作
+                //假设被消费线抢到了，那么就会进入消费操作
                 list.notifyAll();
             }
         }
@@ -872,6 +878,7 @@ class Consumer implements Runnable{
     //不断消费
     @Override
     public void run() {
+        //保持消费的预备状态
         while(true){
 
             //放个睡眠看的清楚一点
@@ -884,7 +891,7 @@ class Consumer implements Runnable{
                 if (list.size() == 0) {
                     //当前线程等于等待状态
                     try {
-                        list.wait();
+                        list.wait();//进入线程的等待池	
                     } catch (InterruptedException e) {
                         e.printStackTrace();
                     }
@@ -892,7 +899,10 @@ class Consumer implements Runnable{
                 //程序能进行到此处说明仓库有数据，进行消费
                 Object obj = list.remove(0);
                 System.out.println(Thread.currentThread().getName() + "--->" + obj);
-                //唤醒生产者生产
+                
+                //下面就是让两条线都进入预备抢锁状态
+                //假设被消费线抢到了，就会发现已经空了，进入了wait，把锁给生产线，生产线就会进行生产
+                //假设被生产线抢到了，就会进行生产
                 list.notifyAll();
             }
         }

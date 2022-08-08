@@ -1401,7 +1401,7 @@ Web Video Text Tracks Format(互联网视频文本轨道格式)
 用于创建另一个网页的内联框架，就是在一个网页里面嵌套另一个网页
 
 <p>http://www.pornhub.com</p>
-<iframe src="https://www.bilibili.com/video/BV1Eb411u7Fw?p=125" width="1024px" height="800px">你干嘛~</iframe>
+<iframe src="https://www.bilibili.com" width="1024px" height="800px">你干嘛~</iframe>
 
 ![image-20220424003052911](C:\Users\Lzo\AppData\Roaming\Typora\typora-user-images\image-20220424003052911.png)
 
