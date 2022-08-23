@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>焦点图/轮播图</title>
+    <style>
+        * {
+            padding: 0;
+            margin: 0;
+        }
+
+        li {
+            list-style: none;
+        }
+
+        .promo {
+            /* 子绝父相 */
+            position: relative;
+            width: 976px;
+            height: 550px;
+            margin: 70px auto;
+            background-color: #f3f5f7;
+        }
+
+        .promo img {
+            border-radius: 10px;
+        }
+
+        /* 并集选择器可以集体声明相同的样式 */
+        .prev,
+        .next {
+            position: absolute;
+            /* 绝对定位的盒子垂直居中 */
+            top: 50%;
+            margin-top: -25px;
+            /* 加了绝对定位的盒子可以直接设置高度和宽度 */
+            width: 35px;
+            height: 50px;
+            background: rgba(37, 36, 37, .2);
+            text-align: center;
+            line-height: 50px;
+            font-size: 23px;
+            text-decoration: none;
+            color: #ffffff;
+        }
+
+        .prev {
+            left: 0;
+            border-top-right-radius: 18px;
+            border-bottom-right-radius: 18px;
+        }
+
+        .next {
+            /* 如果一个盒子left和right属性都有，则会执行left属性 同理，top/bottom则是top*/
+            right: 0;
+            border-top-left-radius: 18px;
+            border-bottom-left-radius: 18px;
+        }
+
+        .promo .btn:hover {
+            background: rgba(61, 60, 61, .3);
+        }
+
+        .promo-nav {
+            position: absolute;
+            bottom: 15px;
+            left: 50%;
+            margin-left: -90px;
+            width: 180px;
+            height: 20px;
+            background: rgba(255, 255, 255, .3);
+            border-radius: 15px;
+        }
+
+        .promo-nav li {
+            float: left;
+            width: 8px;
+            height: 8px;
+            background-color: #ffffff;
+            border-radius: 50%;
+            margin: 6px;
+        }
+
+        .promo-nav .selected {
+
+            background-color: skyblue;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="promo">
+        <img src="img/summer.png" alt="阿伟你又在看二刺猿了嚯">
+        <!-- 左侧按钮 -->
+        <a href="#" class="prev btn"> &lt; </a>
+        <!-- 右侧按钮 -->
+        <a href="#" class="next btn"> &gt; </a>
+        <!-- 小圆点 -->
+        <ul class="promo-nav">
+            <li class="selected" style="margin-left: 16px;"></li>
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+        </ul>
+    </div>
+
+</body>
+
+</html>

@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>3D硬币翻转</title>
+    <style>
+        body {
+            perspective: 400px;
+            background-color: #848f9a;
+        }
+
+        .box {
+            position: relative;
+            width: 300px;
+            height: 300px;
+            margin: 100px auto;
+            transition: all .6s;
+            transform-style: preserve-3d;
+        }
+
+        .box:hover {
+            transform: rotateY(-180deg);
+        }
+
+        .front,
+        .back {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            border-radius: 50%;
+            text-align: center;
+            line-height: 300px;
+            font-size: 20px;
+        }
+
+        .front {
+            background-color: darkcyan;
+            /* 把front提到上面来，毕竟两者重叠了 */
+            /* z-index: 1; */
+            /* 但是现在有更好的选择，在父元素开启立体空间的时候，相当于进入3Dspace */
+            /* 此时虽然front被压住，但是你可以设置它的z轴高度，让它升起来不被压住 */
+            transform: translateZ(1px);
+        }
+
+        .back {
+            background-color: darkslategray;
+            /* 这个很重要，背面本来是被叠在了下面，正面朝上的，你一翻转box，不就看到的是back的背面了吗，字都镜像翻转了看个鬼啊 */
+            /* 此时你让它旋转180度，刚好像贴纸贴在了硬币的背面，翻转过来看到的也是back的正面 */
+            transform: rotateY(180deg);
+        }
+    </style>
+</head>
+
+<body>
+    <!-- 必须有一个box包起来，因为旋转的是box -->
+    <!-- 逻辑就是box是一个硬币，两个div贴纸一个贴着前面，一个贴着后面 -->
+    <div class="box">
+        <div class="front">
+            God is omnipotent.
+        </div>
+        <div class="back">
+            God is inomnipotent.
+        </div>
+    </div>
+</body>
+
+</html>
