@@ -4,6 +4,29 @@
 
 
 
+bootstrap的码
+
+```html
+ <meta charset="UTF-8">
+ <!-- 要求当前网页使用IE浏览器最高版本的内核来渲染 -->
+ <meta http-equiv="X-UA-Compatible" content="IE=egde">
+ <!-- 视口的设置:视口的宽度和设备一致，默认的缩放比例和PC端一致，用户不能自行缩放 -->
+ <!-- [if lt IE 9] -->
+     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=0">
+     <!-- 解决了IE9以下浏览器对HTML5新增标签不识别，并导致CSS不起作用的问题 -->
+     <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
+     <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+ <!-- [endif] -->
+```
+
+初始化的码
+
+```css
+html,body,ul,li,ol,dl,dd,dt,p,h1,h2,h3,h4,h5,h6,form,fieldset,legend,img{margin:0;padding:0;}
+```
+
+
+
 以下若有内部样式表的CSS代码，建议新建CSS文件，使用外部样式表
 
 ## 1、注册界面

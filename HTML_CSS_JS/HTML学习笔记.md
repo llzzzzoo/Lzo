@@ -643,17 +643,25 @@ cols和rows随意，真的调整文本框的时候是用CSS来搞的
 
 
 
+# 四、Web服务器
+
+![image-20220828234404968](HTML学习笔记.assets/image-20220828234404968.png)
+
+![image-20220828234635875](HTML学习笔记.assets/image-20220828234635875.png)
+
+![image-20220828234644429](HTML学习笔记.assets/image-20220828234644429.png)
+
+![image-20220828234739070](HTML学习笔记.assets/image-20220828234739070.png)
 
 
 
+**申请免费空间**
 
+https://www.bilibili.com/video/BV14J4114768?p=354&spm_id_from=pageDriver&vd_source=fa6237a8a5bce00232e38ebaf2cd8745&t=352.0
 
+具体看视频
 
-
-
-
-
-
+![image-20220828234924060](HTML学习笔记.assets/image-20220828234924060.png)
 
 
 
