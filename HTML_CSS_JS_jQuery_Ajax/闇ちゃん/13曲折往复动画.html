@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>曲折往复动画</title>
+    <style>
+        /* 实现效果，页面一打开，一个盒子就从左边走到右边 */
+        /* 1.定义动画 */
+        /* 1、可以做多个状态的变化，keyframe 关键帧 */
+        /* 2、里面的百分要是整数比 */
+        /* 3、里面的百分比就是 总的持续时间(2s)的划分 */
+        @keyframes move {
+
+            /* 开始状态 */
+            0% {
+                transform: translate(0, 0);
+            }
+
+            /* 走了25%状态 */
+            25% {
+                transform: translate(500px, 0);
+            }
+
+            /* 走了50%的状态 */
+            50% {
+                transform: translate(500px, 500px);
+            }
+
+            /* 走了75%的状态 */
+            75% {
+                transform: translate(0, 500px);
+            }
+
+            /* 走了100%的状态 */
+            100% {
+                transform: translate(0, 0);
+            }
+        }
+
+
+        div {
+            width: 200px;
+            height: 200px;
+            background-color: aquamarine;
+            /* 2.调用动画 */
+            animation-name: move;
+            /* 持续时间 */
+            animation-duration: 2s;
+            /* 何时开始，默认为0 */
+            animation-delay: .5s;
+            /* 规定动画播放的次数，默认为1，还有infinite */
+            animation-iteration-count: infinite;
+            /* 规定动画是否在下一周期逆向播放，默认normal，alternate逆播放 */
+            animation-direction: alternate;
+            /* 规定动画结束后，是否回到其实状态，回到起始backwards，保持forwards */
+            /* 但由于会跟逆向，播放次数矛盾，所以得想注释了 */
+            animation-fill-mode: forwards;
+        }
+
+        div:hover {
+            /* 鼠标经过盒子，盒子的动画效果就会暂停 */
+            animation-play-state: paused;
+        }
+    </style>
+</head>
+
+<body>
+    <div></div>
+</body>
+
+</html>
