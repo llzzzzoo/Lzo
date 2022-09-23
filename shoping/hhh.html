@@ -1,0 +1,317 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script>
+        /*
+        函数使用分为两步，声明函数 和 调用函数
+        1.声明函数
+        function 函数名() {
+            函数体
+        }
+        function haha(){
+            console.log(111);
+        }
+        (1) function 声明函数的关键字，开头小写，驼峰命名法
+        2.调用函数
+        haha();//千万记得加小括号啊集美
+
+        */
+
+        /*         2.函数表达式(匿名函数)
+                var 变量名 = function () { 函数体 };
+                var fun = function () {
+                    console.log(111);
+                }
+                fun();//调用方法
+                但是有两点需要注意
+                1. fun是变量名，不是函数名，函数是匿名的
+                2. 函数表达式声明方式跟声明变量差不多，只不过声明变量里面存的是 值， 但是函数表达式声明，里面存的是 函数 */
+
+        /*         1.利用字面量创建对象 { }
+                var obj = {};// 创建了一个空的对象
+                var objj = {
+                    name: '小瘪三',
+                    age: 11,
+                    sex: '男',
+                    sayHi: function () {
+                        console.log(haihaihia);
+                    }
+                }
+                    (1)里面的属性或者方法我们采用键值对的方式   键 属性名: 值 属性值
+                (2)多个属性或者方法用逗号隔开
+                    (3)方法冒号后面跟的是一个匿名函数
+                2.使用对象
+                    (1)调用对象的属性 我们采取 对象名.属性名 理解为的
+                console.log(objj.name);
+                (2)调用属性还有一种方法，对象名['属性名']
+                console.log(objj[name]);
+                (3)调用对象的方法 对象名.方法名
+                objj.sayHi();
+        
+                var obj = new Object();
+                obj.name = '小瘪三';
+                obj.age = 18;
+                obj.sayHi = function () {
+                    console.log(hhh);
+                }
+                    (1)利用 = 赋值的方法，添加对象的属性和方法
+                        (2)每个属性直接用分号结束
+                obj.name;
+                obj.sayHi();
+        
+                //new 构造对象名()
+                //跟java那个类似，实现了创建多个属性名和方法名一样的，值不同的对象
+                //一个模板，类似于身份证，但是每个人身份证又具体有所不同
+                function Star(name, age, sex) {
+                    this.name = name;
+                    this.age = age;
+                    this.sex = sex;
+                }
+                var obj1 = new Star('小瘪三', 11, 'man');
+                var obj2 = new Star('大瘪四', 10, 'man'); */
+        /*         function Star(name, age, sex) {
+                    this.name = name;
+                    this.age = age;
+                    this.sex = sex;
+                    this.sing = function (singer, song) {
+                        console.log(singer + '的' + song + '好好汀');
+                    }
+                    this.sayHi = function () {
+                        console.log(111);
+                    }
+                }
+                var obj1 = new Star('小瘪三', 11, 'man');
+                var obj2 = new Star('大瘪四', 10, 'man');
+                obj1.sayHi();
+        
+        
+                var obj = {
+                    name: '111',
+                    age: 11,
+                    sex: 'man'
+                }
+        
+                for (var k in obj) {
+                    console.log(k);//遍历k得到的是属性的名字
+                    console.log(obj[k]);//得到的是属性的值
+                } */
+
+        /*
+            随机数写法，输入上下限，闭区间
+        */
+        // function getRandom(max, min) {
+        //     return Math.floor(Math.random() * (max - min + 1)) + min;
+        // }
+        // console.log(getRandom(10, 20));
+        // console.log(Math.random());
+
+        // /*         1.如果没有参数，那么就会打印当前时间
+        //         var date = new Date();
+        //         console.log(date);
+        //         2.参数常用的写法，数字型 2003, 10, 01 或者是 字符串型 '2003-10-1 1:1:1' */
+        // console.log(new Date(2003, 10, 01));
+        // console.log(new Date('2003-10-01 1:1:1'));
+
+        // //格式化日期 年月日
+        // var date = new Date();
+        // var year = date.getFullYear();
+        // var month = date.getMonth() + 1;//加1，是因为返回的月份比实际小1
+        // var dates = date.getDate();//返回的是号数
+        // var arr = ['星期天', '星期一', '星期二', '星期三', '星期四', '星期五', '星期六'];
+        // var day = date.getDay();
+        // console.log('今天是：' + year + '年' + month + '月' + dates + '日 ' + arr[day]);
+
+        // //封装一个函数，返回当前的时分秒，格式 01:01:01
+        // function getTime() {
+        //     var time = new Date();
+        //     var h = time.getHours();
+        //     var m = time.getMinutes();
+        //     var s = time.getSeconds();
+        //     //下面的操作就是避免出现 1:2:3 这种情况，也就是为了好看点，前面补个0
+        //     h = h < 10 ? '0' + h : h;
+        //     m = m < 10 ? '0' + m : m;
+        //     s = s < 10 ? '0' + s : s;
+
+        //     return h + ':' + m + ':' + s;
+        // }
+        // console.log(getTime());
+        // console.log('今天是：' + year + '年' + month + '月' + dates + '日 ' + arr[day] + ' ' + getTime());
+
+        // //  获取Date总的毫秒数 不是当前的毫秒数，是距离1970年1月1日的毫秒数
+        // //1.通过valueOf() getTime()
+        // var date = new Date();
+        // //两者都是返回毫秒数
+        // console.log(date.valueOf());
+        // console.log(date.getTime());
+
+        // //2.简单的写法 经常用的写法
+        // var date_easy = +new Date();//隐式转换，相当于new Date() + 0,最后得到的也是当前的毫秒数
+        // console.log(date_easy);
+
+        // //3.H5 新增的 获得总的毫秒数 适用范围可能有限制
+        // console.log(Date.now());
+
+        // // 倒计时函数
+        // // 参数为允许输入的时间(规定的时间)
+        // function countDown(time) {
+        //     var nowTime = +new Date(); // 返回当前时间毫秒数
+        //     var inputTime = +new Date(time); // 返回的是允许用户输入的总的毫秒数
+        //     var times = (inputTime - nowTime) / 1000; // 得到当前时间的秒数
+        //     var d = parseInt(times / 60 / 60 / 24); // 天
+        //     d = d < 10 ? '0' + d : d;
+        //     // 算法强啊，先除以3600得到应该差多少个小时，然后余24，满了24的就算到一天里面去，不满的就是差的小时，补上了一天，不到一天的那几个小时
+        //     var h = parseInt(times / 60 / 60 % 24); // 时
+        //     h = h < 10 ? '0' + h : h;
+        //     // 跟算小时差不多，求出差多少个分钟，满了60分钟的算到小时去，分钟只计算不满一个小时的那几个分钟
+        //     var m = parseInt(times / 60 % 60); // 分
+        //     m = m < 10 ? '0' + m : m;
+        //     // 爱了，直接计算不满一分钟的秒数
+        //     var s = parseInt(times % 60); // 当前秒数
+        //     s = s < 10 ? '0' + s : s;
+        //     return d + '天' + h + '时' + m + '分' + s + '秒';
+        // }
+        // // 特别注意下面这个写法，参数写字符串，只要按照这个格式，它就会依次读取你的年月日，时分秒
+        // console.log(countDown('2022-9-5 16:16:49'));
+
+        // // 创建数组的两组方式
+        // //  1. 利用字面量创建
+        // var a = [1, 2, 3];
+        // console.log(a[0]);
+
+        // //  2.利用new Array()
+        // var arr1 = new Array(); // 创建一个空的数组
+        // var arr2 = new Array(2); //这个2 表示 数组的长度为2 里面有连个空的元素
+        // var arr3 = new Array(2, 3); // 等价于创建了两个长度的数组，元素为[2, 3]
+
+
+        // // 数组去重
+        // function unique(arr) {
+        //     var newArr = [];
+        //     for (var i = 0; i < arr.length; i++) {
+        //         // 遍历原数组，如果遍历的元素在newArr了就不放进去，如果不存在就push进去，保证相同的元素只能push一个
+        //         if (newArr.indexOf(arr[i]) === -1) {
+        //             newArr.push(arr[i]);
+        //         }
+        //     }
+        //     return newArr;
+        // }
+
+
+        // // 查找某个字符出现的次数和位置
+        // //str 目标字符串，c 查找的字符
+        // function query(str, c) {
+        //     var index = str.indexOf(c);
+        //     var number = 0;
+        //     while (-1 !== index) {
+        //         number++;
+        //         console.log('index:' + index);
+        //         index = str.indexOf(c, index + 1);
+        //     }
+        //     console.log('number是' + number);
+        // }
+        // query('absdabdsfsa', 'a');
+
+
+        // // 判断字符串 'aassccaa' 中出现最多的字符，并统计其个数
+        // //o.a = 4;
+        // //o.s = 2;
+        // //o.c = 2;
+        // // 核心算法：利用charAt() 遍历这个数组
+        // // 把每个字符都存储给对象，如果对象没有该属性，则为 1，如果有了则 加1
+        // //遍历对象，得到最大值和字符
+        // //@param str 遍历的字符串
+        // function findMost(str) {
+        //     //1.统计次数
+        //     var obj = {};
+        //     for (var i = 0; i < str.length; i++) {
+        //         var chars = str.charAt(i); // chars 是字符串的每一个字符
+        //         //判断对象obj是否有chars属性
+        //         if (obj[chars]) { // 这里是判断是否存在属性chars
+        //             obj[chars]++; // 这里则是给chars属性值++
+        //         } else {
+        //             obj[chars] = 1; // 这里是创建这个属性，属性名 chars 值 1
+        //         }
+        //     }
+        //     console.log('统计结果如下');
+        //     console.log(obj);
+
+        //     //2.遍历对象
+        //     var max = 0;
+        //     var ch = ''
+        //     for (var k in obj) {
+        //         //k 得到的是属性名
+        //         //o[k] 就是属性值
+        //         if (obj[k] > max) {
+        //             max = obj[k];
+        //             ch = k;
+        //         }
+        //     }
+        //     console.log('最多的字符：' + ch + '' + ' 次数为' + max);
+        // }
+        // findMost('dadwfafwafgafcaefxfrfwca');
+
+        // var a = null;
+        // console.log(typeof a);
+        
+
+
+
+
+
+
+
+    </script>
+    <style>
+        th,
+        td {
+            padding: 0 20px;
+        }
+        
+    </style>
+</head>
+
+<body>
+    <div class="search" style="position:relative;margin-top: 100px;margin-left: 600px">
+        <div class="con" style="position:absolute;bottom:28px;border: 1px solid #626365;width: 165px;font-size: 18px;display: none;"></div>
+        <input type="text" placeholder="请输入您的号码" class="num">
+    </div>
+
+    <script>
+        // 快递单号输入内容时，给其添加键盘响应事件
+        // 同时把input里面的value获取过来赋值给 上面的盒子作为内容
+        // 如果快递号为空，就把上面的盒子隐藏起来
+        var con = document.querySelector('.con');
+        var num_input = document.querySelector('.num');
+
+        // 此处不要使用keydown，因为keydown事件响应的时候是你按下一个键的时候
+        // 按下键(keydown)->键盘内容输入到表格->键弹起(keyup)
+        // keydown 响应了，但是内容还没输入进去呢，它读个屁
+        num_input.addEventListener('keyup', function(){
+            // 有内容显示，没内容none掉
+            if('' == this.value){
+                con.style.display = 'none';
+            }else{
+                con.style.display = 'block';
+                con.innerHTML = this.value;
+            }
+        });
+
+        // 失去焦点，隐藏盒子
+        // 获得焦点，再显示
+        num_input.addEventListener('blur', function(e){
+            con.style.display = 'none';
+        });
+        num_input.addEventListener('focus', function(e){
+            if('' !== this.value){
+                con.style.display = 'block';
+            }
+        });
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,23 @@
+{
+  "id": "3614596",
+  "name": "项目1",
+  "font_family": "iconfont",
+  "css_prefix_text": "icon-",
+  "description": "",
+  "glyphs": [
+    {
+      "icon_id": "462188",
+      "name": "今日推荐",
+      "font_class": "jinrituijian",
+      "unicode": "e65b",
+      "unicode_decimal": 58971
+    },
+    {
+      "icon_id": "22720005",
+      "name": "新品推荐",
+      "font_class": "xinpintuijian",
+      "unicode": "e6ab",
+      "unicode_decimal": 59051
+    }
+  ]
+}

@@ -1,0 +1,438 @@
+@font-face {
+    font-family: 'iconfont';
+    src: url('iconfont.woff2?t=1661656481694') format('woff2'),
+        url('iconfont.woff?t=1661656481694') format('woff'),
+        url('iconfont.ttf?t=1661656481694') format('truetype');
+}
+
+.iconfont {
+    font-family: "iconfont" !important;
+    font-size: 16px;
+    font-style: normal;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+
+.main {
+    width: 980px;
+    height: 453px;
+    margin-left: 240px;
+    margin-top: 10px;
+}
+
+.newsflash {
+    float: right;
+    width: 250px;
+    height: 453px;
+}
+
+
+.focus {
+    float: left;
+    /* 子绝父相 */
+    position: relative;
+    width: 721px;
+    height: 453px;
+    margin: 0 auto;
+}
+
+.focus a img {
+    border-radius: 5px;
+    width: 100%;
+    height: 100%;
+}
+
+.focus a img:hover {
+    filter: opacity(92%);
+}
+
+/* 并集选择器可以集体声明相同的样式 */
+.prev,
+.next {
+    position: absolute;
+    /* 绝对定位的盒子垂直居中 */
+    top: 50%;
+    margin-top: -25px;
+    /* 加了绝对定位的盒子可以直接设置高度和宽度 */
+    width: 35px;
+    height: 50px;
+    background: rgba(37, 36, 37, .2);
+    text-align: center;
+    line-height: 50px;
+    font-size: 23px;
+    text-decoration: none;
+    color: #ffffff;
+}
+
+.prev {
+    left: 0;
+    border-top-right-radius: 18px;
+    border-bottom-right-radius: 18px;
+}
+
+.next {
+    /* 如果一个盒子left和right属性都有，则会执行left属性 同理，top/bottom则是top*/
+    right: 0;
+    border-top-left-radius: 18px;
+    border-bottom-left-radius: 18px;
+}
+
+.focus .btn:hover {
+    background: rgba(61, 60, 61, .3);
+}
+
+.focus-nav {
+    position: absolute;
+    bottom: 15px;
+    left: 50%;
+    margin-left: -90px;
+    width: 180px;
+    height: 20px;
+    background: rgba(255, 255, 255, .3);
+    border-radius: 15px;
+}
+
+.focus-nav li {
+    float: left;
+    width: 8px;
+    height: 8px;
+    background-color: #ffffff;
+    border-radius: 50%;
+    margin: 6px;
+}
+
+.focus-nav .selected {
+    background-color: skyblue;
+}
+
+.news {
+    height: 165px;
+    border: 1px solid #e4e4e4;
+}
+
+
+.new_head {
+    height: 33px;
+    border-bottom: 1px dotted #e4e4e4;
+    line-height: 33px;
+    padding: 0 15px;
+    font-size: 15px;
+}
+
+.new_head h5 {
+    float: left;
+    font-family: "icomoon";
+}
+
+.new_head .more {
+    float: right;
+    font-size: 13px;
+    margin-right: 10px;
+}
+
+.new_head .more:hover {
+    color: #00aee9;
+}
+
+.new_head .more::after {
+    content: '\ea50';
+    font-family: "icomoon";
+}
+
+.new_body {
+    padding: 5px 15px 0;
+    font-size: 13px;
+}
+
+.new_body ul li {
+    height: 24px;
+    line-height: 24px;
+    /* 下面三步溢出显示为省略号 */
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+}
+
+.new_body ul li a {
+    color: #666666;
+}
+
+.new_body ul li a:hover {
+    color: #15a1d2;
+}
+
+.lifeservice {
+    height: 209px;
+    border: 1px solid #e4e4e4;
+    border-top: 0;
+    overflow: hidden;
+}
+
+.lifeservice ul {
+    width: 252px;
+}
+
+.lifeservice ul li {
+    float: left;
+    width: 63px;
+    height: 71px;
+    border-right: 1px solid #e4e4e4;
+    border-bottom: 1px solid #e4e4e4;
+    text-align: center;
+    font-size: 12px;
+    color: #7f848a;
+}
+
+.lifeservice ul li i {
+    display: inline-block;
+    width: 24px;
+    height: 28px;
+    margin-top: 12px;
+    background-color: #00aee9;
+}
+
+.lifeservice ul li:hover {
+    background-color: #f0f0f0;
+    animation-name: move;
+    animation-duration: .3s;
+    filter: opacity(80%);
+}
+
+@keyframes move {
+    0% {
+        transform: translateY(0);
+    }
+
+    100% {
+        transform: translateY(-1px);
+    }
+}
+
+.bargain {
+    margin-top: 5px;
+}
+
+.bargain a img:hover {
+    filter: opacity(90%);
+}
+
+/* 热门板块开始 */
+.hot {
+    margin-top: 30px;
+    margin-bottom: 30px;
+    height: 506px;
+    background-color: #ffffff;
+}
+
+.hot .box {
+    float: left;
+    width: 270px;
+    height: 475px;
+    background-color: #fff;
+    margin: 0 15px;
+    margin-top: 12px;
+    border: 1px solid #ccc;
+}
+
+.hot .box img {
+    height: 300px;
+    /* 宽度和父亲一样宽，就不会出现遗漏了 */
+    width: 270px;
+    margin-left: -1px;
+}
+
+.hot .review {
+    font-size: 20px;
+    height: 60px;
+    /* 由于p没有width属性，所以不会撑开盒子，不需要修改盒子的宽度 */
+    padding: 0 18px;
+    /* 由于已经设置了高度，再用内边距设置高度，可能会撑开设置，所以这里使用了外边距 */
+    margin-top: 20px;
+}
+
+.hot .praise {
+    font-size: 14px;
+    color: #b0b0b0;
+    padding: 5px 10px 0 150px;
+}
+
+.hot .info {
+    font-size: 13.5px;
+    font-family: "Microsoft Yahei";
+    margin-top: 20px;
+    padding: 0 20px;
+}
+
+.info a {
+    text-decoration: none;
+    color: #333;
+}
+
+.info span {
+    color: #0c84f5;
+}
+
+.info em {
+    font-style: normal;
+    color: #ebe4e0;
+    margin: 0 4px 0 18px;
+}
+
+.info a:hover {
+    color: #00aee8;
+}
+
+/* 推荐模块开始 */
+.recom {
+    height: 163px;
+    background-color: #ffffff;
+    margin-top: 12px;
+}
+
+.recom_hd {
+    position: relative;
+    float: left;
+    height: 163px;
+    width: 206px;
+    background-color: rgba(136, 223, 248, .8);
+    text-align: center;
+}
+
+.recom_hd span:nth-child(1) {
+    display: block;
+    font-size: 85px;
+    margin-top: 20px;
+}
+
+.recom_hd span:nth-child(2) {
+    position: absolute;
+    bottom: 35px;
+    left: 73px;
+    line-height: 20px;
+    font-size: 15px;
+}
+
+.recom_bd {
+    float: left;
+}
+
+.recom_bd ul a li {
+    position: relative;
+    float: left;
+    width: 248px;
+    height: 163px;
+    background-color: #00aee9;
+    /* filter: opacity(10%); */
+    background: url(../upload/jingxiang.png) no-repeat transparent;
+}
+
+.recom_bd ul a:nth-child(-n+3) li::after {
+    content: '';
+    position: absolute;
+    right: 0;
+    top: 10px;
+    width: 1px;
+    height: 145px;
+    background-color: #ddd;
+}
+
+.recom_bd ul a li:hover {
+    filter: opacity(90%);
+}
+
+/* 必须这样限制图片大小，不然盒子掉下来 */
+.recom_bd ul li img {
+    width: 248px;
+    height: 163px;
+}
+
+
+/* 冒险模块 */
+.box_hd {
+    height: 50px;
+    padding: 0 20px;
+    line-height: 50px;
+}
+
+.box_hd h3 {
+    float: left;
+    font-size: 22px;
+    font-weight: 400;
+    line-height: 50px;
+}
+
+.tab_list {
+    float: right;
+    line-height: 50px;
+}
+
+.tab_list ul li {
+    float: left;
+}
+
+.tab_list ul li a {
+    margin: 0 15px;
+}
+
+.floor .w {
+    margin-top: 30px;
+    margin-bottom: 20px;
+    background-color: #ffffff;
+}
+
+.box_bd {
+    height: 361px;
+    padding: 0 20px 20px 20px;
+}
+
+.tab_list_item>div {
+    float: left;
+    height: 341px;
+}
+
+.col_210 {
+    width: 210px;
+    background-color: #f9f9f9;
+    text-align: center;
+    padding-left: 12px;
+}
+
+.col_210 ul li {
+    float: left;
+    width: 85px;
+    height: 34px;
+    border-bottom: 1px solid #ccc;
+    text-align: center;
+    line-height: 34px;
+    font-size: 13px;
+    color: #999999;
+    margin-right: 10px;
+}
+
+.col_210 ul li a {
+    color: #999999;
+}
+
+.col_210 ul li a:hover {
+    color: #00aeec;
+}
+
+.col_310 {
+    width: 310px;
+}
+
+.col_221 {
+    width: 221px;
+    border-right: 1px solid #ccc;
+}
+
+.col_198 {
+    width: 198px;
+}
+
+
+.bod-bot {
+    /* 一般情况下，a如果包含有宽度的盒子，a需要转换为块级元素 */
+    display: block;
+    border-bottom: 1px solid #ccc;
+}

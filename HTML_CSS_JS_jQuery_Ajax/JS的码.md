@@ -73,7 +73,9 @@ console.log('今天是：' + year + '年' + month + '月' + dates + '日 ' + arr
 
 
 
-## 3、倒计时
+## 3、动态倒计时
+
+> 这是个计算倒计时的封装函数，下面是动态的应用
 
 ```javascript
 // 倒计时函数
@@ -99,6 +101,63 @@ function countDown(time) {
 console.log(countDown('2022-9-5 16:16:49'));
 
 ```
+
+
+
+示例：
+
+![1]((JS的码).assets/1-1663856146212-3.gif) 这玩意有时候对不上，多刷新几次吧
+
+
+
+源码：
+
+```html
+<body>
+    <div class="timeClock" style="margin-top: 100px;padding-left: 600px;">
+    时:<div class="hour" style="border: 1px solid #ccc;width:20px;"></div>
+    分:<div class="minute" style="border: 1px solid #ccc;width:20px;">2</div>
+    秒:<div class="second" style="border: 1px solid #ccc;width:20px;">3</div>
+    </div>
+    <script>
+        // 1.获取元素
+        var hour = document.querySelector('.hour'); // 小时
+        var minute = document.querySelector('.minute'); // 分钟
+        var second = document.querySelector('.second'); // 秒数
+        var inputTime = +new Date('2022-9-22 23:17:00'); // 返回的是允许用户输入的总的毫秒数
+        countDown(); // 先调用一次，防止有空白，因为下面的定时器要等一秒才执行
+
+        // 2.开启定时器，每隔一秒钟调用一次，刚好好像在倒计时一样
+        setInterval(countDown, 1000)
+
+        // 倒计时函数
+        // 参数为允许输入的时间(规定的时间)
+        function countDown() {
+            var nowTime = +new Date(); // 返回当前时间毫秒数
+            var times = (inputTime - nowTime) / 1000; // 得到当前时间的秒数
+            var d = parseInt(times / 60 / 60 / 24); // 天
+            d = d < 10 ? '0' + d : d;
+            // 算法强啊，先除以3600得到应该差多少个小时，然后余24，满了24的就算到一天里面去，不满的就是差的小时，补上了一天，不到一天的那几个小时
+            var h = parseInt(times / 60 / 60 % 24); // 时
+            h = h < 10 ? '0' + h : h;
+            // 跟算小时差不多，求出差多少个分钟，满了60分钟的算到小时去，分钟只计算不满一个小时的那几个分钟
+            var m = parseInt(times / 60 % 60); // 分
+            m = m < 10 ? '0' + m : m;
+            // 爱了，直接计算不满一分钟的秒数
+            var s = parseInt(times % 60); // 当前秒数
+            s+=1; // 为了处理那一秒的误差 但是由于一定因素，偶尔还是会有误差，这玩意甚至跑的比现实时间快一秒
+            if(60 == s)s=0;
+            s = s < 10 ? '0' + s : s;
+
+            hour.innerHTML = h;
+            minute.innerHTML = m;
+            second.innerHTML = s;
+        }
+    </script>
+</body>
+```
+
+
 
 
 
@@ -931,6 +990,178 @@ document.addEventListener('keyup', function (e) {
     }
 });
 ```
+
+
+
+
+
+
+
+
+
+## 19、京东快递单号查询
+
+样例：
+
+> 两个细节，输入框失去焦点时候，上面的也消失了，回来的时候，上面的内容还在
+
+![1](JS的码.assets/1-1663831128012-1.gif) 
+
+
+
+
+
+源码：
+
+```html
+    <div class="search" style="position:relative;margin-top: 100px;margin-left: 600px">
+        <div class="con" style="position:absolute;bottom:28px;border: 1px solid #626365;width: 165px;font-size: 18px;display: none;"></div>
+        <input type="text" placeholder="请输入您的号码" class="num">
+    </div>
+
+    <script>
+        // 快递单号输入内容时，给其添加键盘响应事件
+        // 同时把input里面的value获取过来赋值给 上面的盒子作为内容
+        // 如果快递号为空，就把上面的盒子隐藏起来
+        var con = document.querySelector('.con');
+        var num_input = document.querySelector('.num');
+
+        // 此处不要使用keydown，因为keydown事件响应的时候是你按下一个键的时候
+        // 按下键(keydown)->键盘内容输入到表格->键弹起(keyup)
+        // keydown 响应了，但是内容还没输入进去呢，它读个屁
+        num_input.addEventListener('keyup', function(){
+            // 有内容显示，没内容none掉
+            if('' == this.value){
+                con.style.display = 'none';
+            }else{
+                con.style.display = 'block';
+                con.innerHTML = this.value;
+            }
+        });
+
+        // 失去焦点，隐藏盒子
+        // 获得焦点，再显示
+        num_input.addEventListener('blur', function(e){
+            con.style.display = 'none';
+        });
+        num_input.addEventListener('focus', function(e){
+            if('' !== this.value){
+                con.style.display = 'block';
+            }
+        });
+    </script>
+</body>
+```
+
+
+
+
+
+
+
+## 20、发送短信
+
+样例：
+
+![1](JS的码.assets/1-1663863580082-5.gif) 
+
+
+
+源码：
+
+```html
+<body>
+    手机号：<input type="number"> <button>点击发送</button>
+    <script>
+        // 按钮点击以后，就会把disabled 改为true
+        // 同时按钮里面的内容会变化， 利用innerHTML修改
+        // 里面秒数会变化，利用倒计时
+        // 定义一个变量在定时器里面不断递减
+        // 当递减到了0，停止计时器，恢复定时器的状态
+        var btn = document.querySelector('button');
+        var time = 60;
+        btn.addEventListener('click', function(){
+            btn.disabled = true;
+            var timer = setInterval(function(){
+                if(0 == time){
+                    // 去除定时器
+                    clearInterval(timer);
+                    //复原按钮
+                    btn.disabled = false;
+                    btn.innerHTML = '点击发送';
+                    time = 60; // 重新为60
+                }else{
+                    btn.innerHTML = '还剩'+ time +'秒';
+                    time--;
+                }
+            }, 1000);
+        });
+    </script>
+</body>
+```
+
+
+
+
+
+
+
+
+
+
+
+## 21、自动跳转界面
+
+样例：
+
+![1](JS的码.assets/1-1663918551324-1.gif) 
+
+
+
+源码：
+
+```html
+<body>
+    <button>点击跳转</button>
+    <div></div>
+    <script>
+        var btn = document.querySelector('button');
+        var div = document.querySelector('div');
+        var time = 5;
+        move(); // 先调用一次，免得出现空档期
+
+        btn.addEventListener('click', function(){
+            location.href = 'https://www.baidu.com/?tn=02003390_75_hao_pg';
+        })
+
+        function move(){
+            if(0 == time){
+                location.href = 'https://www.baidu.com/?tn=02003390_75_hao_pg';
+            }
+            div.innerHTML = '您将在'+ time +'秒后跳转到首页';
+            time--;
+        }
+        setInterval(move, 1000);
+
+    </script>
+</body>
+```
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
