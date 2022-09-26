@@ -1155,6 +1155,442 @@ document.addEventListener('keyup', function (e) {
 
 
 
+## 22、拖动的模糊动态框
+
+> 我觉着这个可以在登录界面用一下，以及在那个发弹幕和评论没登录的时候 duang出来
+>
+
+样例：
+
+![1](JS的码.assets/1-1664011908141-1.gif) 
+
+源码：
+
+```html
+<body>
+    <div class="box" style="position:absolute;top: 100px;left: 100px;background-color: aquamarine;width:100px;height: 100px;"></div>
+
+    <script>
+        // 第一，获取鼠标在页面中的坐标pageX/pageY
+        // 第二，获取盒子在页面中的距离offsetLeft/offsetTop
+        // 用鼠标的坐标距离减去盒子的坐标距离 就是鼠标在盒子中的距离
+        var box = document.querySelector('.box');
+
+        // (1) 获取鼠标在页面的坐标
+        box.addEventListener('mousedown', function(e){
+            var x = e.pageX - this.offsetLeft;
+            var y = e.pageY - this.offsetTop;
+
+            function move(e){
+                box.style.cursor = 'move'; // 换个小手
+                box.style.left = e.pageX - x + 'px';
+                box.style.top = e.pageY - y + 'px';
+            }
+
+            // (2)鼠标移动的时候，把鼠标页面内的坐标减去 鼠标在盒子中的坐标就是模态框的top和left值了
+            document.addEventListener('mousemove', move) // 细节，函数不能带括号，不能输入参数
+
+            // (3)鼠标弹起，就移除鼠标事件
+            document.addEventListener('mouseup', function(){
+                document.removeEventListener('mousemove', move);
+                box.style.cursor = 'default'; // 换个小手
+            })
+        })
+
+    </script>
+</body>
+```
+
+
+
+
+
+
+
+
+
+## 23、固定侧边栏
+
+> mainTop也是如此
+>
+
+<img src="JS的码.assets/image-20220925000130807.png" alt="image-20220925000130807" style="zoom:67%;" />  
+
+
+
+样例：
+
+<img src="JS的码.assets/1-1664036975085-3.gif" alt="1" style="zoom:67%;" /> 
+
+
+
+源码：
+
+```html
+<body>
+    <div class="slider_bar" style="width: 100px;height:50px;background-color: #95b3d6;position: absolute; top: 550px;">
+        <span class="goBack" style="position: absolute;display:none;">返回顶部</span>
+    </div>
+    <div class='header' style="width: 900px;height: 400px;background-color:aquamarine;margin-top: 50px;">head</div>
+    <div class='banner' style="width: 900px;height: 400px;background-color:aquamarine;margin-top: 50px;">banner</div>
+    <div class='main' style="width: 900px;height: 800px;background-color:aquamarine;margin-top: 50px;">main</div>  
+    <script>
+        var sliderbar = document.querySelector('.slider_bar');
+        var banner = document.querySelector('.banner'); 
+        var bannerTop = banner.offsetTop; // 获取banner初始的offsetTop值，当划到bannerTop的时候就改定位
+        var sliderbarTop = sliderbar.offsetTop - bannerTop; // 获取导航相对于banner的距离
+        var main = document.querySelector('.main');
+        var goBack = document.querySelector('.goBack');
+        var mainTop = main.offsetTop;
+
+        // 获取scroll事件
+        document.addEventListener('scroll', function(){
+            // 当页面的被卷去的头部大于等于bannerTop时，此事，侧边栏就要改为固定点位了
+            if(window.pageYOffset >= bannerTop){
+                sliderbar.style.position = 'fixed';
+                sliderbar.style.top = sliderbarTop + 'px'; // 此处记得offset系列，获取的是数值不带单位
+            }else{
+                sliderbar.style.position = 'absolute';
+                sliderbar.style.top = '550px';
+            }
+
+            if(window.pageYOffset >= mainTop){
+                goBack.style.display = 'block';
+            }else{  
+                goBack.style.display = 'none';
+            }
+        })
+
+    </script>
+</body>
+```
+
+
+
+
+
+
+
+
+
+## 24、用户每次登录记录用户名
+
+样例：
+
+![1](JS的码.assets/1-1664117450879-3.gif) 
+
+
+
+源码：
+
+```html
+<body>
+    <input type="text" id="username"> <input type="checkbox" name='' id="remember"> 记住用户名
+    <script>
+        var username = document.querySelector('#username');
+        var remember  = document.querySelector('#remember');
+        // 如果有本地存储的用户名，就直接放到input的value里面去
+        if(localStorage.getItem('username')){
+            username.value = localStorage.getItem('username');
+            remember.checked = true;
+        }
+
+        // 点击记住用户名 存储到localStorage里面去
+        remember.addEventListener('change', function(){
+            // 如果是勾选(第一次点击)的话，就存储进去，如果取消(第二次点击)的话，就去除，反复
+            if(this.checked){
+                localStorage.setItem('username', username.value);
+            }else {
+                localStorage.removeItem('username');
+            }
+        })
+    </script>
+</body>
+```
+
+
+
+
+
+
+
+
+
+## 25、放大镜效果
+
+<img src="JS的码.assets/image-20220926174936101.png" alt="image-20220926174936101" style="zoom:67%;" /> 
+
+> 记得是大图片在盒子里面移动，所以加上要记得*乘以-1*
+
+<img src="JS的码.assets/image-20220926175156738.png" alt="image-20220926175156738" style="zoom:67%;" /> 
+
+样例：
+
+<img src="JS的码.assets/1-1664187036597-1.gif" alt="1" style="zoom:67%;" /> 
+
+> 记得引入JS文件
+>
+> style自己记得写到内部样式表去
+
+**HTML：**
+
+```html
+<body>
+    <div class="preview_img" style="position:relative;width: 231px;">
+        <img src="upload/tree.png" alt="" style="height:500px;vertical-align: bottom;">
+        <div class="mask" style="position:absolute;top:0;left:0;width: 150px;height: 150px;background-color:#8bb2d3;opacity: .4;border: 1px solid #ccc;cursor: move;"></div>
+        <div class="big" style="position:absolute;top:0;left: 235px;width: 300px;height:300px;border:1px solid #ccc;overflow:hidden;z-index: 9999;">
+            <img src="upload/tree.png" alt="" style="position:absolute;top:0;left:0;height: 800px;" class="bigImg">
+        </div>
+
+    </div>
+</body>
+```
+
+**JS**
+
+```javascript
+window.addEventListener('load', function () {
+    var preview_img = this.document.querySelector('.preview_img');
+    var mask = this.document.querySelector('.mask');
+    var big = this.document.querySelector('.big');
+    var bigImg = this.document.querySelector('.bigImg');
+
+    // 1.当鼠标经过preview_img的时候，隐藏 mask遮挡层 和 big大盒子
+    preview_img.addEventListener('mouseover', function () {
+        mask.style.display = 'block';
+        big.style.display = 'block';
+    });
+    preview_img.addEventListener('mouseout', function () {
+        mask.style.display = 'none';
+        big.style.display = 'none';
+    })
+    // 盒子跟随鼠标移动
+    preview_img.addEventListener('mousemove', function (e) {
+        // 1、先计算出鼠标在盒子的坐标
+        // 2、此处注意看盒子的父盒子是否有定位，因为offset需要看定位
+        var x = e.pageX - this.offsetLeft;
+        var y = e.pageY - this.offsetTop;
+        var maskX = x - mask.offsetWidth / 2; // maskX/Y的坐标可以等价为mask左上角顶点的在父盒子的坐标(根据最后赋值的结果来看)
+        var maskY = y - mask.offsetHeight / 2;
+        var maskXMax = preview_img.offsetWidth - mask.offsetWidth; // mask水平最大移动距离
+        var maskYMax = preview_img.offsetHeight - mask.offsetHeight; // mask竖直最大移动距离
+
+        if (maskX <= 0) {
+            maskX = 0; // 左边相贴的时候(即将移出去)，保持此坐标
+        } else if (maskX >= maskXMax) {
+            maskX = maskXMax; // 图片右侧相贴的时候，就保持这个距离了
+        }
+        if (maskY <= 0) {
+            maskY = 0; // 上边相贴的时候(即将移出去)，保持此坐标
+        } else if (maskY >= maskYMax) {
+            maskY = maskYMax; // 图片下侧相贴的时候，就保持这个距离了
+        }
+        mask.style.left = maskX + 'px'; // -mask.offset / 2（盒子宽高的一半）为了居中效果
+        mask.style.top = maskY + 'px';
+
+        // 大图移动的距离 = 大图的最大移动距离 * 遮挡层移动距离 / 遮挡层最大移动距离
+        var bigXMax = bigImg.offsetWidth - big.offsetWidth; // 大图片水平最大移动距离
+        var bigX = bigXMax * maskX / maskXMax; // 大图片水平移动距离
+        var bigYMax = bigImg.offsetHeight - big.offsetHeight; // 大图片竖直最大移动距离
+        var bigY = bigYMax * maskY / maskYMax; // 大图片竖直移动距离
+
+        bigImg.style.left = -1 * bigX + 'px';
+        bigImg.style.top = -1 * bigY + 'px';
+    })
+})
+```
+
+
+
+
+
+
+
+
+
+
+
+
+
+## 26、侧边栏滑动动画
+
+样例：
+
+![1](JS的码.assets/1-1664191394297-5.gif) 
+
+
+
+源码：
+
+**head**
+
+```html
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            height: 1000px;
+        }
+        .sliderbar{
+            position: fixed;
+            right: 0;
+            margin-top: 200px;
+            height: 40px;
+            line-height: 40px;
+            cursor: pointer;
+        }
+
+        span{
+            display: block;
+            background-color: #b388ff;
+            width: 40px;
+            text-align: center;
+        }
+
+        .con {
+            /* 这个定位和top/left的值的设置相当于让这个盒子跟span的右侧完全对齐 */
+            position: absolute;
+            top: 0;
+            left: 0;
+            /* 设置好了宽度con的字体就不会竖直显示了 */
+            width: 84px;
+            background-color: #fad534;
+            padding: 0 10px;
+            z-index: -1;
+        }
+    </style>
+    <!-- 引入js文件 -->
+    <script src="js/animate.js"></script>
+```
+
+**body**
+
+```html
+<body>
+    <div class="sliderbar">
+        <span>←</span>
+        <div class="con">联系客服</div>
+    </div>
+
+    <script>
+        var sliderbar = document.querySelector('.sliderbar');
+        var con = document.querySelector('.con');
+        
+        // 当鼠标经过 sliderbar 就会让 con这个盒子滑动到左侧
+        // 当鼠标离开 sliderbar 就会让 con这个盒子滑动到右侧
+        sliderbar.addEventListener('mouseenter', function(){
+            animate(con, -84, function(){
+                console.log(11);
+                console.log(sliderbar.children[0].innerHTML);
+                sliderbar.children[0].innerHTML = '→';
+            });
+        })
+        sliderbar.addEventListener('mouseleave', function(){
+            animate(con, 0, function(){
+                sliderbar.children[0].innerHTML = '←';
+            });
+        })
+
+    </script>
+</body>
+```
+
+**JS**
+
+```javascript
+// 缓慢动画原理
+// 1.让盒子移动的距离依次减小，速度便慢慢落下来
+// 2.核心算法：(目标值 - 现在的位置) / 10 作为每次移动的距离 步长
+// 3.停止条件：当前盒子的距离等于目标的距离
+function animate(obj, target, callback) {
+    clearInterval(obj.timer);
+    obj.timer = setInterval(function () {
+        obj.step = (target - obj.offsetLeft) / 10;
+        // 注意取整，正数往大的取整，负数往小的取整
+        obj.step = obj.step > 0 ? Math.ceil(obj.step) : Math.floor(obj.step);
+        if (obj.offsetLeft == target) {
+            // 停止动画，本质去除定时器
+            clearInterval(obj.timer);
+
+            //回调函数放到定时器结束里面
+            if (callback) {
+                callback();
+            }
+        }
+        // 看到下面的left就明白 输入的元素需要带有绝对定位/相对定位啊
+        obj.style.left = obj.offsetLeft + obj.step + 'px';
+    }, 15); // 15是个好东西
+}
+```
+
+
+
+
+
+
+
+
+
+
+
+## 27、轮播图
+
+<img src="JS的码.assets/image-20220926201652296.png" alt="image-20220926201652296" style="zoom:67%;" /> 
+
+<img src="JS的码.assets/image-20220926203509707.png" alt="image-20220926203509707" style="zoom:67%;" /> 
+
+<img src="JS的码.assets/image-20220926232522837.png" alt="image-20220926232522837" style="zoom:67%;" /> 
+
+<img src="JS的码.assets/image-20220926234145997.png" alt="image-20220926234145997" style="zoom:67%;" /> 
+
+<img src="JS的码.assets/image-20220927002023672.png" alt="image-20220927002023672" style="zoom:67%;" /> 
+
+<img src="JS的码.assets/image-20220927002947481.png" alt="image-20220927002947481" style="zoom:67%;" /> 
+
+<img src="JS的码.assets/image-20220927010517075.png" alt="image-20220927010517075" style="zoom:67%;" /> 
+
+样例：
+
+<img src="JS的码.assets/1-1664212267198-1.gif" alt="1" style="zoom:67%;" /> 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

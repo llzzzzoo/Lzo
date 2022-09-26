@@ -1859,6 +1859,12 @@ addEventListener
 
 <img src="(JavaScript学习笔记).assets/image-20220921235158203.png" alt="image-20220921235158203" style="zoom:67%;" /> 
 
+<img src="(JavaScript学习笔记).assets/image-20220924230925735.png" alt="image-20220924230925735" style="zoom:50%;" /> 
+
+
+
+
+
 #### ①禁止选中文字和右键菜单
 
 <img src="(JavaScript学习笔记).assets/image-20220921235958560.png" alt="image-20220921235958560" style="zoom:50%;" /> 酷的
@@ -2121,11 +2127,396 @@ Browser Object Model(浏览器对象模型)
 
 
 
+> 示例：
+>
+> *在第一个页面*
+>
+> <img src="(JavaScript学习笔记).assets/image-20220923163258700.png" alt="image-20220923163258700" style="zoom:67%;" /> 
+>
+> 
+>
+> *在第二个页面*
+>
+> <img src="(JavaScript学习笔记).assets/image-20220923163522926.png" alt="image-20220923163522926" style="zoom:67%;" /> 
 
 
 
 
 
+#### ④相关方法
+
+> 单独讲一下replace，这玩意相当于`替换当前的界面，并非跳转`，所以没有后退的功能
+
+<img src="(JavaScript学习笔记).assets/image-20220923163753008.png" alt="image-20220923163753008" style="zoom:67%;" /> 
+
+> 示例：
+>
+> <img src="(JavaScript学习笔记).assets/image-20220923164151781.png" alt="image-20220923164151781" style="zoom:67%;" /> 
+
+
+
+
+
+### 3.5.3、navigator对象
+
+navigator
+
+<img src="(JavaScript学习笔记).assets/image-20220923164357187.png" alt="image-20220923164357187" style="zoom:67%;" /> 
+
+
+
+
+
+### 3.5.4、history
+
+> 整个返回按钮啥的可以的
+
+<img src="(JavaScript学习笔记).assets/image-20220923164701065.png" alt="image-20220923164701065" style="zoom:67%;" /> 
+
+> 示例：
+>
+> <img src="(JavaScript学习笔记).assets/image-20220923164814507.png" alt="image-20220923164814507" style="zoom:67%;" /> 
+>
+> <img src="(JavaScript学习笔记).assets/image-20220923164931820.png" alt="image-20220923164931820" style="zoom:67%;" />好看哎 
+>
+> <img src="(JavaScript学习笔记).assets/image-20220923165124345.png" alt="image-20220923165124345" style="zoom:67%;" /> 又比如网易云
+
+
+
+
+
+
+
+
+
+
+
+
+
+# 四、网页特效
+
+## 1、元素相关
+
+### 1.1、偏移量offset
+
+#### 1.1.1、基础使用
+
+> 为什么要强调距离带有`定位父元素`的位置呢？
+>
+> 如果没有father，或者father没有定位，则其father`默认body`
+
+<img src="(JavaScript学习笔记).assets/image-20220923165608016.png" alt="image-20220923165608016" style="zoom:67%;" /> 
+
+> 示例：
+>
+> <img src="(JavaScript学习笔记).assets/image-20220923170158629.png" alt="image-20220923170158629" style="zoom:67%;" /> 
+
+
+
+
+
+#### 1.1.2、offset与style的区别
+
+<img src="(JavaScript学习笔记).assets/image-20220923170643521.png" alt="image-20220923170643521" style="zoom:67%;" /> 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+### 1.2、可视区client
+
+client，客户端
+
+![image-20220923172637477]((JavaScript学习笔记).assets/image-20220923172637477.png)
+
+
+
+
+
+### 1.3、立即执行函数
+
+> 那么问题来了，介玩意有啥呢用：
+>
+> `独立创建了一个作用域`，封装的死死的
+>
+> 所以当你``引入其他JS文件的时候`，`你写的num`和`立即执行函数的num`就不会产生冲突了 好耶ヾ(✿ﾟ▽ﾟ)ノ
+
+```javascript
+普通的声明调用
+function fn(){
+    conosole.log(1);
+}
+fn(); // 此处调用
+
+1、立即执行函数，是指不需要 如上面 一样调用，能够立即执行的函数
+两种写法，(function() {})() 和 (function(){}())
+(function(a, b){
+	console.log(a + b);
+})(1, 2);
+
+(function sum(a, b){ // 此处可以写函数名sum，也可以不写
+    console.log(a + b);
+}(2, 3));
+```
+
+
+
+
+
+
+
+
+
+
+
+### 1.4、滚动scroll
+
+<img src="(JavaScript学习笔记).assets/image-20220924184358783.png" alt="image-20220924184358783" style="zoom:67%;" /> 
+
+> 结合下面理解
+
+<img src="(JavaScript学习笔记).assets/image-20220924184301655.png" alt="image-20220924184301655" style="zoom:67%;" />  
+
+
+
+
+
+
+
+### 1.5、总结
+
+<img src="(JavaScript学习笔记).assets/image-20220924184633260.png" alt="image-20220924184633260" style="zoom:67%;" /> 
+
+<img src="(JavaScript学习笔记).assets/image-20220924184710505.png" alt="image-20220924184710505" style="zoom:67%;" /> 
+
+
+
+
+
+
+
+
+
+
+
+## 2、动画
+
+### 2.1、动画实现原理
+
+<img src="(JavaScript学习笔记).assets/image-20220924231103022.png" alt="image-20220924231103022" style="zoom:67%;" /> 
+
+> 示例：
+>
+> <img src="(JavaScript学习笔记).assets/image-20220924231715110.png" alt="image-20220924231715110" style="zoom:67%;" /> 
+
+
+
+
+
+### 2.2、封装动画函数
+
+#### 2.2.1、基础使用
+
+<img src="(JavaScript学习笔记).assets/image-20220924232011356.png" alt="image-20220924232011356" style="zoom:67%;" /> 
+
+<img src="(JavaScript学习笔记).assets/image-20220924232105026.png" alt="image-20220924232105026" style="zoom:67%;" /> 简简单单调用就好了
+
+
+
+#### 2.2.2、给不同元素记录不同计时器
+
+<img src="(JavaScript学习笔记).assets/image-20220924232349909.png" alt="image-20220924232349909" style="zoom:67%;" /> 
+
+> 这样写的好处有两个
+>
+> **1、性能角度**
+>
+> 本来写的是var timer = setInterval(^);
+>
+> 每个元素调用的时候，timer都会开辟内存空间，一千个调用，就开辟一千个空间，达咩
+>
+> 而obj.timer，只是在已经开辟了空间的obj对象中添加了一个属性，没有开辟新的空间啊
+>
+> 
+>
+> **2、逻辑角度**
+>
+> 每个玩意都应该有自己的定时器啊，共用就很怪，反正解耦合嘛
+
+```javascript
+简单动画函数封装obj 目标对象，target 目标位置
+function animate(obj, target){
+    //下面这个写法的原因：当我们设置了点击事件的时候，如果不断地点击，元素的速度会越来越快，因为开启了太多的定时器
+    // 解决方案就是如下，每次调用，都先清除一次定时器，使得只有一个定时器执行
+    clearInterval(obj.timer);
+    obj.timer = setInterval(function(){
+    	if(obj.offsetLeft >= target){
+            // 停止动画，本质去除定时器
+            clearInterval(obj.timer);
+        }
+        // 看到下面的left就明白 输入的元素需要带有绝对定位/相对定位啊
+        obj.style.left = obj.offsetLeft + 1 + 'px';
+    }, 30);
+}
+var div = document.querySelector('div');
+animate(div, 300);
+```
+
+ 
+
+
+
+
+
+### 2.3、缓慢动画原理
+
+<img src="(JavaScript学习笔记).assets/image-20220925181032626.png" alt="image-20220925181032626" style="zoom:67%;" />  
+
+```javascript
+    <div class="box" style="position:absolute;width: 300px;height:200pxs;background-color:aquamarine;">1</div>
+    <script>
+        var box = document.querySelector('.box');
+        // 缓慢动画原理
+        // 1.让盒子移动的距离依次减小，速度便慢慢落下来
+        // 2.核心算法：(目标值 - 现在的位置) / 10 作为每次移动的距离 步长
+        // 3.停止条件：当前盒子的距离等于目标的距离
+        function animate(obj, target){
+            clearInterval(obj.timer);
+            obj.timer = setInterval(function(){
+                obj.step = (target - obj.offsetLeft) / 10;
+                // 注意取整，正数往大的取整，负数往小的取整
+                obj.step = obj.step > 0? Math.ceil(obj.step) : Math.floor(obj.step);
+    	        if(obj.offsetLeft == target){
+                    // 停止动画，本质去除定时器
+                    clearInterval(obj.timer);
+                }
+            // 看到下面的left就明白 输入的元素需要带有绝对定位/相对定位啊
+            obj.style.left = obj.offsetLeft + obj.step + 'px';
+        }, 15); // 15是个好东西
+}   
+    animate(box, 500);
+	</script>
+```
+
+<img src="(JavaScript学习笔记).assets/1-1664100118183-1.gif" alt="1" style="zoom:67%;" /> 
+
+
+
+> **关于为何取整**
+>
+> 往大了取整，往大取整更快到达啊，不然定时器多运行几次多浪费鸭
+>
+> <img src="(JavaScript学习笔记).assets/image-20220925181105256.png" alt="image-20220925181105256" style="zoom:67%;" /> 
+
+
+
+
+
+#### 2.3.1、多个目标值之间移动
+
+尤其注意`从大的位置回到小的位置`
+
+<img src="(JavaScript学习笔记).assets/image-20220925180820000.png" alt="image-20220925180820000" style="zoom:67%;" /> 
+
+```javascript
+obj.step = obj.step > 0? Math.ceil(obj.step) : Math.floor(obj.step);
+```
+
+> **关于为何往小取整**
+>
+> 当你的step为-8.1的时候肯定往小了走啊，即-9，运动的px越大越好，记住这个原则
+
+
+
+#### 2.3.2、回调函数
+
+> 应用场景，等你前面的动画执行完后，我在执行一个
+>
+> 喵的，这么玄乎，其实不就是加了个函数作为参数，等定时器结束再执行吗
+
+<img src="(JavaScript学习笔记).assets/image-20220925181648583.png" alt="image-20220925181648583" style="zoom:67%;" /> 
+
+> 示例：
+>
+> <img src="(JavaScript学习笔记).assets/image-20220925182035172.png" alt="image-20220925182035172" style="zoom:67%;" /> 
+>
+> <img src="(JavaScript学习笔记).assets/image-20220925182157007.png" alt="image-20220925182157007" style="zoom:67%;" />  
+
+
+
+
+
+
+
+
+
+
+
+### 2.4、封装函数到JS文件
+
+
+
+
+
+
+
+
+
+
+
+
+
+# 五、存储
+
+## 1、本地存储
+
+![image-20220925221951153]((JavaScript学习笔记).assets/image-20220925221951153.png)
+
+
+
+## 2.sessionStorage
+
+<img src="(JavaScript学习笔记).assets/image-20220925222531894.png" alt="image-20220925222531894" style="zoom:67%;" /> 
+
+
+
+
+
+
+
+>  示例：
+>
+> <img src="(JavaScript学习笔记).assets/image-20220925222900053.png" alt="image-20220925222900053" style="zoom:50%;" /> 
+>
+> <img src="(JavaScript学习笔记).assets/image-20220925222654188.png" alt="image-20220925222654188" style="zoom:50%;" /> 
+
+
+
+
+
+## 3、localStorage
+
+<img src="(JavaScript学习笔记).assets/image-20220925223225999.png" alt="image-20220925223225999" style="zoom:67%;" /> 
+
+
+
+> 示例：
+>
+> <img src="(JavaScript学习笔记).assets/image-20220925223414049.png" alt="image-20220925223414049" style="zoom:67%;" /> 
+>
+> <img src="(JavaScript学习笔记).assets/image-20220925223529891.png" alt="image-20220925223529891" style="zoom: 50%;" /> 
 
 
 

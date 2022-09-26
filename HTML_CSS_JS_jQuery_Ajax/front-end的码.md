@@ -1950,6 +1950,8 @@ html,body,ul,li,ol,dl,dd,dt,p,h1,h2,h3,h4,h5,h6,form,fieldset,legend,img{margin:
 
 ## 9、焦点图/轮播图
 
+JS的码里面有能动的！！！
+
 ### 样例
 
 ![image-20220819205926561](front-end的码.assets/image-20220819205926561.png)
