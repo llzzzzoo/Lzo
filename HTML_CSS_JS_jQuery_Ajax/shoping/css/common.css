@@ -32,6 +32,10 @@
     color: #00aeec;
 }
 
+.style_touch_deepblue:hover {
+    color: #0071e3;
+}
+
 .style_touch_up:hover {
     display: block;
     animation: up;
@@ -255,66 +259,7 @@
     border-bottom: 2px solid #e5e5e5;
 }
 
-.nav .dropdown {
-    float: left;
-    width: 230px;
-    height: 45px;
-    margin-right: 10px;
 
-}
-
-.nav .navitems {
-    float: left;
-}
-
-.dropdown .dt {
-    width: 100%;
-    height: 100%;
-    line-height: 45px;
-    font-size: 20px;
-    font-weight: 600;
-    font-family: "Simsun";
-    padding-left: 5px;
-}
-
-.dropdown .dd {
-    width: 230px;
-    height: 465px;
-    background-color: #fff;
-}
-
-.dropdown .dd ul li {
-    position: relative;
-    height: 31px;
-    line-height: 31px;
-    margin-left: 2px;
-    padding-left: 16px;
-}
-
-.dropdown .dd ul>li {
-    margin-top: 5px;
-}
-
-.dropdown .dd ul li:hover {
-    background-color: #d9d9d9;
-}
-
-.dropdown .dd ul li::after {
-    position: absolute;
-    top: 0;
-    right: 5px;
-    padding-right: 8px;
-    content: '\ea50';
-    font-family: "icomoon";
-}
-
-.dropdown .dd ul li a {
-    font-size: 14px;
-}
-
-.dropdown .dd ul li a:hover {
-    color: #00aeec;
-}
 
 .navitems ul li {
     float: left;

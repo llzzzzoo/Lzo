@@ -26,6 +26,108 @@
     height: 453px;
 }
 
+.nav .dropdown {
+    float: left;
+    width: 230px;
+    height: 45px;
+    margin-right: 10px;
+}
+
+.nav .navitems {
+    float: left;
+}
+
+.dropdown .dt {
+    width: 100%;
+    height: 100%;
+    line-height: 45px;
+    font-size: 20px;
+    font-weight: 600;
+    font-family: "Simsun";
+    padding-left: 5px;
+}
+
+.dropdown .dd {
+    position: relative;
+    width: 230px;
+    height: 465px;
+    background-color: #fff;
+}
+
+.dropdown .dd ul li {
+    position: relative;
+    height: 31px;
+    line-height: 31px;
+    margin-left: 2px;
+    padding-left: 16px;
+}
+
+.dropdown .dd ul>li {
+    margin-top: 5px;
+}
+
+.dropdown .dd ul li:hover {
+    background-color: #d9d9d9;
+}
+
+.dropdown .dd ul li::after {
+    position: absolute;
+    top: 0;
+    right: 5px;
+    padding-right: 8px;
+    content: '\ea50';
+    font-family: "icomoon";
+}
+
+.dropdown .dd ul li a {
+    font-size: 14px;
+}
+
+.dropdown .dd ul li a:hover {
+    color: #00aeec;
+}
+
+.dropdown .dd .cate_top {
+    position: absolute;
+    top: 0;
+    left: 230px;
+    width: 990px;
+    height: 465px;
+    border: 1px solid #f3f5f7;
+    background-color: #fff;
+    box-shadow: 2px 0 5px rgb(0 0 0 / 30%);
+    transition: top .25s ease;
+    z-index: 994;
+    display: none;
+}
+
+.dropdown .dd #bottom {
+    position: absolute;
+    top: 0;
+    left: 230px;
+    width: 990px;
+    height: 465px;
+    background-color: #f3f5f7;
+    z-index: 994;
+    display: none;
+}
+
+.dropdown .dd .cate_top .cate_part {
+    position: absolute;
+    top: 0;
+    left: 1px;
+    width: 990px;
+    height: 465px;
+    transition: top .25s ease;
+    z-index: 995;
+    display: none;
+}
+
+.dropdown .dd .cate_top .cate_part a {
+    display: block;
+    width: 100%;
+    height: 100%;
+}
 
 .focus {
     float: left;
@@ -34,6 +136,7 @@
     width: 721px;
     height: 453px;
     margin: 0 auto;
+    border-radius: 5px;
     overflow: hidden;
 }
 
@@ -51,7 +154,6 @@
 
 
 .focus ul li img {
-    border-radius: 5px;
     width: 721px;
     height: 453px;
     z-index: 2;

@@ -8,19 +8,19 @@
     <title>啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊大啊</title>
     <script>
         /*
-        函数使用分为两步，声明函数 和 调用函数
-        1.声明函数
-        function 函数名() {
-            函数体
-        }
-        function haha(){
-            console.log(111);
-        }
-        (1) function 声明函数的关键字，开头小写，驼峰命名法
-        2.调用函数
-        haha();//千万记得加小括号啊集美
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                函数使用分为两步，声明函数 和 调用函数
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                1.声明函数
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                function 函数名() {
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    函数体
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                }
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                function haha(){
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    console.log(111);
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                }
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                (1) function 声明函数的关键字，开头小写，驼峰命名法
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                2.调用函数
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                haha();//千万记得加小括号啊集美
 
-        */
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                */
 
         /*         2.函数表达式(匿名函数)
                 var 变量名 = function () { 函数体 };
@@ -257,23 +257,105 @@
 
         // var a = null;
         // console.log(typeof a);
-        
-
-
-
-
-
-
-
     </script>
 
 
     <!-- 引入js文件 -->
     <script src="js/animate.js"></script>
+    <script src="js/jQuery.min.js"></script>
+    <style>
+        li {
+            list-style: none;
+        }
+        
+        a {
+            text-decoration: none;
+        }
+        
+        li {
+            position: relative;
+            float: left;
+            margin-left: 20px;
+            width: 145px;
+            height: 155px;
+        }
+        
+        .small {
+            position: absolute;
+            top: 0;
+            left: 0;
+        }
+        
+        .big {
+            display: none;
+        }
+        
+        .current {
+            width: 317px;
+        }
+        
+        .current .big {
+            display: block;
+        }
+        
+        .current .small {
+            display: none;
+        }
+    </style>
+    <script type="text/javascript">
+        $(function() {
+            // 鼠标经过小li，会发生两步操作
+            $("li").mouseenter(function() {
+                // 1.当前小li变为317px，同时，里面的小图片淡出，大图片淡入
+                // 记得加上stop
+                $(this).stop().animate({
+                    width: 317
+                }).find(".small").stop().fadeOut().siblings(".big").stop().fadeIn();
+                // 2.其余图片的大小都是145px，小图片淡入，大图片淡出
+                $(this).siblings("li").stop().animate({
+                    width: 145
+                }).find(".small").stop().fadeIn().siblings(".big").stop().fadeOut();
+            })
+
+        })
+    </script>
 </head>
 
 <body>
-    
+    <div class="shoufengqin">
+        <ul>
+            <li class="current">
+                <a href="#">
+                    <img src="images/stair.png" alt="" class="small">
+                    <img src="images/sunshine.png" alt="" class="big">
+                </a>
+            </li>
+            <li>
+                <a href="#">
+                    <img src="images/stair.png" alt="" class="small">
+                    <img src="images/sunshine.png" alt="" class="big">
+                </a>
+            </li>
+            <li>
+                <a href="#">
+                    <img src="images/stair.png" alt="" class="small">
+                    <img src="images/sunshine.png" alt="" class="big">
+                </a>
+            </li>
+            <li>
+                <a href="#">
+                    <img src="images/stair.png" alt="" class="small">
+                    <img src="images/sunshine.png" alt="" class="big">
+                </a>
+            </li>
+            <li>
+                <a href="#">
+                    <img src="images/stair.png" alt="" class="small">
+                    <img src="images/sunshine.png" alt="" class="big">
+                </a>
+            </li>
+        </ul>
+    </div>
 </body>
 
 </html>

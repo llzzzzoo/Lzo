@@ -1567,11 +1567,114 @@ function animate(obj, target, callback) {
 
 
 
+## 28、手风琴案例
+
+<img src="JS的码.assets/image-20221009174015389.png" alt="image-20221009174015389" style="zoom:67%;" /> 
+
+示例：
+
+<img src="JS的码.assets/1-1665309331053-3.gif" alt="1" style="zoom:67%;" /> 
 
 
 
+源码：
+
+```html
+    <script src="js/jQuery.min.js"></script>
+    <style>
+        li {
+            list-style: none;
+        }
+        
+        a {
+            text-decoration: none;
+        }
+        
+        li {
+            position: relative;
+            float: left;
+            margin-left: 20px;
+            width: 145px;
+            height: 155px;
+        }
+        
+        .small {
+            position: absolute;
+            top: 0;
+            left: 0;
+        }
+        
+        .big {
+            display: none;
+        }
+        
+        .current {
+            width: 317px;
+        }
+        
+        .current .big {
+            display: block;
+        }
+        
+        .current .small {
+            display: none;
+        }
+    </style>
+    <script type="text/javascript">
+        $(function() {
+            // 鼠标经过小li，会发生两步操作
+            $("li").mouseenter(function() {
+                // 1.当前小li变为317px，同时，里面的小图片淡出，大图片淡入
+                // 记得加上stop
+                $(this).stop().animate({
+                    width: 317
+                }).find(".small").stop().fadeOut().siblings(".big").stop().fadeIn();
+                // 2.其余图片的大小都是145px，小图片淡入，大图片淡出
+                $(this).siblings("li").stop().animate({
+                    width: 145
+                }).find(".small").stop().fadeIn().siblings(".big").stop().fadeOut();
+            })
+
+        })
+    </script>
 
 
+
+<div class="shoufengqin">
+        <ul>
+            <li class="current">
+                <a href="#">
+                    <img src="images/stair.png" alt="" class="small">
+                    <img src="images/sunshine.png" alt="" class="big">
+                </a>
+            </li>
+            <li>
+                <a href="#">
+                    <img src="images/stair.png" alt="" class="small">
+                    <img src="images/sunshine.png" alt="" class="big">
+                </a>
+            </li>
+            <li>
+                <a href="#">
+                    <img src="images/stair.png" alt="" class="small">
+                    <img src="images/sunshine.png" alt="" class="big">
+                </a>
+            </li>
+            <li>
+                <a href="#">
+                    <img src="images/stair.png" alt="" class="small">
+                    <img src="images/sunshine.png" alt="" class="big">
+                </a>
+            </li>
+            <li>
+                <a href="#">
+                    <img src="images/stair.png" alt="" class="small">
+                    <img src="images/sunshine.png" alt="" class="big">
+                </a>
+            </li>
+        </ul>
+    </div>
+```
 
 
 

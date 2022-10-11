@@ -882,6 +882,55 @@ for (int i = 0; i < 5; i++) {
 
 
 
+
+
+#### （3）很强的写法
+
+```java
+import java.util.Random;
+
+public class aaa{
+	public static void main(String[] args){
+		differentRondom(10, 9);
+		
+	}
+	
+	/*
+		从[0, n]里面随机等概率抽取不同的数字
+		缺点，打印序列基本上为递增
+		@param n 指定的区间
+		@param m 随机数的个数
+	*/
+	public static void differentRandom(int n, int m){
+		// 创建随机数对象
+		Random random = new Random();
+		n++; // 改变上限
+		int count = 0;
+		
+		// 0~n-1，只有满足条件时才打印i，保证了不会出现重复的
+		for(int i = 0; i < n; i++){
+			// 产生一个0~n-i的随机数
+			// 此处的n-i 和 < 符号尤为漂亮，它们保证了最后一定输出m个数字
+            // 解释：这里对选出m个数的时间先后做出了极端的假设
+            // (1)开始n-i选数的范围大嘛，可能前面一直都没选出来
+            // (2)也可能刚好m次循环后，就选出了m个数
+			// ——> 假设随机的数前面一直大于m，但是当n-i = m的时候，此时随机产生的数肯定小于m啊
+            // 	   所以此时必进入一次if，于是m--；可是n-i也减小了1，随机产生的数肯定又小于m
+            //     就这样每次，循环都能进入if语句，不会浪费一次循环出现没进入if，产生的数少于m个的情况
+            // ——> 假设前面选出的数都比m小，直接选出了m个数，也不用担心后面的for循环还会出现比m小的情况
+            //     每选出一次随机数，m--；最后m为0，使得选出m个数后，循环总是进入不了if语句
+			if(random.nextInt(n - i) < m){
+				System.out.println("this is " + ++count + " times: " + i);
+				// m--，控制最终打印的数量最多为m个
+				m--;
+			}	
+		}
+	}
+}
+```
+
+
+
 ### 14、注册方法结合异常的实现
 
 ```java

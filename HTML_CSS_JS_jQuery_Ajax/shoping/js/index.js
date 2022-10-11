@@ -15,9 +15,10 @@ window.addEventListener('load', function () {
     focus.addEventListener('mouseleave', function () {
         prev.style.display = 'none';
         next.style.display = 'none';
+        clearInterval(timer);
         timer = setInterval(function () {
             next.click();
-        }, 3000)
+        }, 3500)
     });
 
     // 2.动态生成小圆圈 有几张图片几个小圆圈
@@ -128,7 +129,7 @@ window.addEventListener('load', function () {
 
 })
 
-window.addEventListener('DOMContentLoaded', function () {
+$(function () {
     // 下拉菜单的操作
     //获取元素
     var r_nav = document.querySelector('.r_nav');
@@ -136,6 +137,7 @@ window.addEventListener('DOMContentLoaded', function () {
 
     for (var i = 0; i < lis.length; i++) {
         var droplist = lis[i].children[0];
+        if (droplist == null) return;
         lis[i].onmouseover = function () {
             this.children[0].children[1].style.display = 'block';
         }
@@ -173,4 +175,64 @@ window.addEventListener('DOMContentLoaded', function () {
         }
     });
 
-});
+})
+
+$(function () {
+    // 分类栏右侧的图片
+
+    // 1.鼠标经过小li
+    $(".dd ul li").mouseover(function () {
+        // 2.得到当前小li的索引号
+        var index = $(this).index(); // 由于伪数组，可以得到索引号
+        // 5.让cate_top显示
+        $(".cate_top").show();
+        // 3.让对应索引号的图片显示出来
+        $(".cate_top .cate_part").eq(index).show();
+        // 4.让其他的图片隐藏起来
+        $(".cate_top .cate_part").eq(index).siblings().hide();
+    })
+
+
+
+    $(".dd ul").mouseover(function () {
+        $("#bottom").show();
+    })
+
+    $(".dd ul").mouseout(function () {
+        // 5.让cate_top隐藏
+        $("#bottom").hide();
+    })
+
+    $(".dd ul li").mouseout(function () {
+
+        // 2.得到当前小li的索引号
+        var index = $(this).index(); // 由于伪数组，可以得到索引号
+        var flag = 0;
+        // 6.如果也离开了catetop就隐藏
+        $(".cate_top").mouseover(function () {
+            flag = 1;
+            // 5.让cate_top显示
+            $(".cate_top").show();
+            // 3.让对应索引号的图片显示出来
+            $(".cate_top .cate_part").eq(index).show();
+            // 4.让其他的图片隐藏起来
+            $(".cate_top .cate_part").eq(index).siblings().hide();
+        })
+
+        $(".cate_top").mouseout(function () {
+            // 5.让cate_top隐藏
+            $(".cate_top").hide();
+            // 3.让对应索引号的图片显示隐藏
+            $(".cate_top .cate_part").eq(index).hide();
+        })
+
+        if (0 == flag) {
+            // 5.让cate_top隐藏
+            $(".cate_top").hide();
+            // 3.让对应索引号的图片显示隐藏
+            $(".cate_top .cate_part").eq(index).hide();
+        }
+    })
+
+
+})
