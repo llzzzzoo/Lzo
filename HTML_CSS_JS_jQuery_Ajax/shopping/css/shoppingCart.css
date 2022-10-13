@@ -34,10 +34,10 @@ em {
     margin-bottom: 24px;
 }
 
-.w {
+
+.cart {
     background-color: #fff;
     border-radius: 24px;
-    padding-bottom: 72px;
 }
 
 .cart-body .switch-cart {
@@ -68,12 +68,13 @@ em {
     line-height: 72px;
 }
 
-.cart-body .cart-filter-bar .price {
+.cart-body .price {
     font-size: 22px;
 
 }
 
-.cart-body #topCartSubmit {
+.cart-body #topCartSubmit,
+#bottomCartSubmit {
     display: inline-block;
     width: 100px;
     height: 42px;
@@ -89,6 +90,10 @@ em {
 }
 
 .cart-body #topCartSubmit:hover {
+    background-color: #0077ed;
+}
+
+.cart-body #bottomCartSubmit:hover {
     background-color: #0077ed;
 }
 
@@ -168,7 +173,7 @@ em {
 .cart-body .itemList .shop {
     height: 38px;
     line-height: 38px;
-    padding-left: 20px;
+    padding-left: 27px;
 }
 
 .cart-body .itemList .shop-info {
@@ -407,4 +412,107 @@ em {
 .item-content .td-act a {
     display: block;
     padding-bottom: 7px;
+}
+
+.cart-body .float-bar-holder {
+    position: relative;
+    height: 72px;
+    border-top: 1px solid #e6e6e6;
+    border-radius: 0 0 24px 24px;
+}
+
+.float-bar-holder .float-bar {
+    position: fixed;
+    bottom: -1px;
+    width: 1200px;
+}
+
+.float-bar-holder .float-bar .float-bar-wrapper {
+    position: relative;
+    height: 72px;
+    background-color: #fff;
+    overflow: hidden;
+    margin: 0 24px;
+}
+
+.float-bar-holder .float-bar .float-bar-wrapper .select-All2 {
+    float: left;
+    width: 62px;
+    height: 72px;
+    line-height: 72px;
+    padding-left: 5px;
+    font-size: 13px;
+}
+
+.float-bar-holder .float-bar .float-bar-wrapper .select-All2 .checkedbox {
+    position: relative;
+    float: left;
+    margin-right: 4px;
+}
+
+.float-bar-holder .float-bar .float-bar-wrapper .select-All2 input {
+    position: relative;
+    float: none;
+    vertical-align: middle;
+    margin: -1px 3px 0 0;
+}
+
+.float-bar-holder .float-bar .float-bar-wrapper .operation {
+    float: left;
+    line-height: 72px;
+    height: 72px;
+    font-size: 13px;
+}
+
+.float-bar-holder .float-bar .float-bar-wrapper .operation a {
+    float: left;
+    margin-left: 25px;
+}
+
+.float-bar-holder .float-bar .float-bar-wrapper .float-bar-right {
+    position: absolute;
+    right: 18px;
+    top: 15px;
+    padding-left: 20px;
+}
+
+.float-bar .float-bar-wrapper .float-bar-right .selected-num {
+    float: left;
+    position: relative;
+    cursor: pointer;
+    top: 1.8px;
+}
+
+.float-bar .float-bar-wrapper .float-bar-right .cart-sum {
+    float: left;
+    height: 48px;
+    line-height: 48px;
+}
+
+.float-bar .float-bar-wrapper .float-bar-right .cart-sum span:nth-child(1) {
+    position: relative;
+    top: -3px;
+    font-size: 13px;
+}
+
+.float-bar .float-bar-wrapper .float-bar-right .selected-num span {
+    float: left;
+    line-height: 48px;
+    font-size: 13px;
+}
+
+
+.float-bar .float-bar-wrapper .float-bar-right .selected-num #selectedItemsCount {
+    float: left;
+    padding: 0 5px;
+    line-height: 50px;
+    font-size: 20px;
+    font-weight: 600;
+}
+
+.float-bar .pipe {
+    float: left;
+    margin: 0 10px 0 18px;
+    width: 1px;
+    height: 12px;
 }

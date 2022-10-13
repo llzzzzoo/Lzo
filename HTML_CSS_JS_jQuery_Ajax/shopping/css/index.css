@@ -121,12 +121,22 @@
     transition: top .25s ease;
     z-index: 995;
     display: none;
+    overflow: hidden;
 }
 
 .dropdown .dd .cate_top .cate_part a {
     display: block;
+}
+
+.dropdown .dd .cate_top .cate_part a img {
     width: 100%;
     height: 100%;
+    /* 和渐变更配哦 */
+    transition: all .4s;
+}
+
+.dropdown .dd .cate_top .cate_part a img:hover {
+    transform: scale(1.1);
 }
 
 .focus {

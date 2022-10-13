@@ -428,6 +428,52 @@ fadeIn/fadeOut/fadeTo/fadeToggle
 
 
 
+### 4.6、内容文本值
+
+> html()、text()、val()
+>
+> `后两者括号为空就是获取、括号有值就是修改`
+
+<img src="(jQuery学习笔记).assets/image-20221013230442520.png" alt="image-20221013230442520" style="zoom:67%;" /> 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
