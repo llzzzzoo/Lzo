@@ -1484,8 +1484,6 @@ window.addEventListener('load', function () {
         // 当鼠标离开 sliderbar 就会让 con这个盒子滑动到右侧
         sliderbar.addEventListener('mouseenter', function(){
             animate(con, -84, function(){
-                console.log(11);
-                console.log(sliderbar.children[0].innerHTML);
                 sliderbar.children[0].innerHTML = '→';
             });
         })

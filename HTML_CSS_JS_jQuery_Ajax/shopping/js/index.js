@@ -209,6 +209,103 @@ window.addEventListener('load', function () {
             input.focus();
         }
     });
+
+
+    // 电梯导航
+    // 当点击某个模块，由于滚动事件会轮流变色
+    // 利用节流阀、互斥锁使得点击时，不执行轮流变色
+    var flag = true;
+    $(window).scroll(function () {
+        var topLen = $(".recom").offset().top - 75;
+        if ($(document).scrollTop() >= topLen) {
+            $(".comebackTop").fadeIn();
+            $(".elevator").addClass("elevator_fixed");
+        } else {
+            $(".comebackTop").fadeOut();
+            $(".elevator").removeClass("elevator_fixed");
+        }
+        // 页面滚动到某个区域，对应位置变色，记得if的先后顺序
+        // 听我说，谢谢你
+        if (flag) {
+            if ($(document).scrollTop() >= $(".floor").offset().top - 30) {
+                $(".elevator_item").eq(2).find(".elevator_item_content").addClass("style_easy_blue");
+                $(".elevator_item").eq(2).siblings(".elevator_item").find(".elevator_item_content").removeClass("style_easy_blue");
+            } else if ($(document).scrollTop() >= $(".hot").offset().top - 30) {
+                $(".elevator_item").eq(1).find(".elevator_item_content").addClass("style_easy_blue");
+                $(".elevator_item").eq(1).siblings(".elevator_item").find(".elevator_item_content").removeClass("style_easy_blue");
+            } else if ($(document).scrollTop() >= $(".recom").offset().top - 30) {
+                console.log($(".elevator_item").eq(0));
+                $(".elevator_item").eq(0).find(".elevator_item_content").addClass("style_easy_blue");
+                $(".elevator_item").eq(0).siblings(".elevator_item").find(".elevator_item_content").removeClass("style_easy_blue");
+            } else {
+                $(".elevator_item_content").removeClass("style_easy_blue"); // 去除蓝色
+            }
+        }
+    })
+    // 划过返回顶部的按钮
+    var disPlaytimer;
+    function updateDisplay() {
+        disPlaytimer = setTimeout(function () {
+            $(".slider_bar").css("display", "none");
+        }, 130) // 设置为130为了解决滑动快速上移图案文字重合问题
+    }
+    var con = document.querySelector('.slider_bar');
+    $(".comebackTop").hover(function () {
+        clearTimeout(disPlaytimer);
+        $(".slider_bar").css("display", "block");
+        animate(con, 58, function () {
+            $(".comeTop_icon").html("");
+        });
+    }, function () {
+        animate(con, 0, function () {
+            $(".comeTop_icon").html("");
+        });
+        updateDisplay();
+    })
+    // 滚动到指定的位置
+    $(".elevator_item").click(function () {
+        flag = false; // 互斥锁
+        // 获取当前li的index，得到去往的位置
+        var nowIndex = $(this).index();
+        var currentClass; // 听我说，谢谢你
+        switch (nowIndex) {
+            case 0:
+                currentClass = ".recom";
+                break;
+            case 1:
+                currentClass = ".hot";
+                break;
+            case 2:
+                currentClass = ".floor";
+                break;
+            case 4:
+                currentClass = "TOP";
+                break;
+            default:
+                currentClass = "nothing";
+        }
+        if (currentClass !== "nothing") {
+            if (currentClass === "TOP") {
+                $("body, html").stop().animate({
+                    scrollTop: 0
+                });
+                $(".elevator_item_content").removeClass("style_easy_blue"); // 去除蓝色
+                return;
+            }
+            var currentHeight = $(currentClass).offset().top - 20;
+            // 页面滚动效果
+            $("body, html").stop().animate({
+                scrollTop: currentHeight
+            }, function () {
+                flag = true; // 开锁
+            });
+        }
+        // 让当前点击的出现蓝色
+        $(this).find(".elevator_item_content").addClass("style_easy_blue");
+        $(this).siblings(".elevator_item").find(".elevator_item_content").removeClass("style_easy_blue");
+    })
+
+
 })
 
 
@@ -231,11 +328,4 @@ $(function () {
             }
         }
     }
-
-
-
-
-
-
-
 })

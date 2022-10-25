@@ -28,6 +28,10 @@
     color: #1387f4;
 }
 
+.style_easy_blue {
+    color: #00aeec;
+}
+
 .style_touch_blue:hover {
     color: #00aeec;
 }
@@ -81,15 +85,24 @@
     margin: 10px 15px 0;
 }
 
+.shortcut .fr ul li {
+    cursor: pointer;
+}
+
 .shortcut .fr ul li .pull-down {
     display: none;
     position: absolute;
     width: 120px;
     height: 180px;
     top: 28px;
-    left: -30px;
+    left: -37px;
     padding-right: -10px;
     z-index: 100;
+}
+
+.shortcut .fr ul li .pull-down .white-block {
+    height: 10px;
+    background-color: #ffffff;
 }
 
 .shortcut .fr ul li .pull-down .content {

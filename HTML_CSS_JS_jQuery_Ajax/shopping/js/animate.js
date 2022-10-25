@@ -5,7 +5,7 @@
 function animate(obj, target, callback) {
     clearInterval(obj.timer);
     obj.timer = setInterval(function () {
-        obj.step = (target - obj.offsetLeft) / 10;
+        obj.step =  (target - obj.offsetLeft) / 10;
         // 注意取整，正数往大的取整，负数往小的取整
         obj.step = obj.step > 0 ? Math.ceil(obj.step) : Math.floor(obj.step);
         if (obj.offsetLeft == target) {

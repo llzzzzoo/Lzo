@@ -34,7 +34,6 @@ em {
     margin-bottom: 24px;
 }
 
-
 .cart {
     background-color: #fff;
     border-radius: 24px;
@@ -213,6 +212,12 @@ em {
     margin-bottom: 10px;
     overflow: hidden;
     height: 136px;
+}
+
+/* 为优先级考虑，应该假设cart-tbody选择器 */
+.cart-tbody .check-cart-item {
+    border: 1px solid #0071e3;
+    background-color: #e4f0ff;
 }
 
 .cart-tbody .item-content .td {
@@ -417,7 +422,6 @@ em {
 .cart-body .float-bar-holder {
     position: relative;
     height: 72px;
-    border-top: 1px solid #e6e6e6;
     border-radius: 0 0 24px 24px;
 }
 
@@ -425,6 +429,7 @@ em {
     position: fixed;
     bottom: -1px;
     width: 1200px;
+    border-top: 1px solid #e6e6e6;
 }
 
 .float-bar-holder .float-bar .float-bar-wrapper {
@@ -515,4 +520,57 @@ em {
     margin: 0 10px 0 18px;
     width: 1px;
     height: 12px;
+}
+
+.elevator {
+    position: absolute;
+    top: 300px;
+    right: 80px;
+    background-color: #ffffff;
+}
+
+.elevator_fixed {
+    position: fixed;
+    top: 77px;
+}
+
+.elevator_item:hover {
+    background-color: #f0f0f0;
+}
+
+.elevator .elevator_item_content,
+.slider_bar {
+    position: relative;
+    display: block;
+    width: 58px;
+    height: 58px;
+    line-height: 19px;
+    font-size: 14px;
+    padding: 10px;
+    text-align: center;
+}
+
+.comebackTop {
+    display: block;
+}
+
+.comebackTop .comeTop_icon {
+    font-family: "icomoon";
+    display: block;
+    width: 40px;
+    height: 40px;
+    line-height: 40px;
+    text-align: center;
+    font-size: 22px;
+    z-index: 3;
+}
+
+.comebackTop .slider_bar {
+    display: none;
+    /* 这个定位和top/left的值的设置相当于让这个盒子跟span的右侧完全对齐 */
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: -1;
+    background-color: #ffffff;
 }
