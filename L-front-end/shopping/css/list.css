@@ -1,9 +1,14 @@
+.logo a {
+    background: url(../images/kawayi-miku.png) no-repeat;
+}
+
 .sk_list {
     float: left;
 }
 
 .nav {
     height: 50px;
+    margin-left: 160px;
 }
 
 .sk_list ul li {
@@ -61,4 +66,8 @@
 
 .sk_bd ul li:nth-child(4n) {
     margin-right: 0;
+}
+
+.last_bottom_img {
+    margin-bottom: 20px;
 }

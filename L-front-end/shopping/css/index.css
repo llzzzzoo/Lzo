@@ -340,10 +340,6 @@
     margin-top: 5px;
 }
 
-.bargain a img:hover {
-    filter: opacity(90%);
-}
-
 /* 热门板块开始 */
 .hot {
     margin-top: 30px;
@@ -407,13 +403,13 @@
 .hot .praise {
     font-size: 14px;
     color: #b0b0b0;
-    padding: 5px 10px 0 150px;
+    padding: 12px 10px 0 150px;
 }
 
 .hot .info {
     font-size: 13.5px;
     font-family: "Microsoft Yahei";
-    margin-top: 20px;
+    margin-top: 13px;
     padding: 0 20px;
 }
 
@@ -439,7 +435,7 @@
 /* 推荐模块开始 */
 .recom {
     height: 163px;
-    background-color: #ffffff;
+    background-color: #f3f5f7;
     margin-top: 30px;
 }
 
@@ -473,11 +469,10 @@
 .recom_bd ul a li {
     position: relative;
     float: left;
-    width: 248px;
+    width: 198.2px;
+    /*减去了1px的间隔符*/
     height: 163px;
-    background-color: #00aee9;
-    /* filter: opacity(10%); */
-    background: url(../upload/jingxiang.png) no-repeat transparent;
+    background-color: #f3f5f7;
 }
 
 .recom_bd ul a:nth-child(-n+3) li::after {
@@ -490,16 +485,104 @@
     background-color: #ddd;
 }
 
-.recom_bd ul a li:hover {
-    filter: opacity(90%);
-}
-
 /* 必须这样限制图片大小，不然盒子掉下来 */
-.recom_bd ul li img {
-    width: 248px;
+/*.recom_bd ul li img {
+    width: 198.2px;
     height: 163px;
+}*/
+
+.small {
+    position: absolute;
+    top: 0;
+    left: 0;
 }
 
+.recom_bd .big {
+    display: none;
+    width: 396px;
+}
+
+.recom_bd .current_img li {
+    width: 396px;
+}
+
+.recom_bd .current_img .big {
+    display: block;
+}
+
+.current_img .small {
+    display: none;
+}
+
+/* 旋转木马模块 */
+.rotateHorse {
+    position: relative;
+    width: 350px;
+    height: 350px;
+    margin: 80px auto;
+    margin-top: 40px;
+    transform-style: preserve-3d;
+    /* 添加动画效果 */
+    animation: rotate 10s linear infinite;
+    /* 在旋转图片里面放一张图片 */
+    background: url(../upload/whitetouxiang-wlop.png);
+    background-position: center;
+}
+
+.rotateHorse:hover {
+    /* 鼠标放上去暂停 */
+    animation-play-state: paused;
+}
+
+@keyframes rotate {
+    0% {
+        transform: rotateY(0);
+    }
+
+    100% {
+        transform: rotateY(360deg);
+    }
+}
+
+.rotateHorse div {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-position: center;
+}
+
+.rotateHorse .move_pic {
+    width: 100%;
+    height: 100%;
+}
+
+.rotateHorse div:nth-child(1) {
+    transform: translateZ(500px);
+}
+
+.rotateHorse div:nth-child(2) {
+    /* 这个就是先旋转再移动了，其实好好想想不难理解的，先旋转一个角度，再平移，才能移到第一个盒子的一侧 */
+    /* 可以再结合3D效果好好想想 */
+    transform: rotateY(60deg) translateZ(500px);
+}
+
+.rotateHorse div:nth-child(3) {
+    transform: rotateY(120deg) translateZ(500px);
+}
+
+.rotateHorse div:nth-child(4) {
+    transform: rotateY(180deg) translateZ(500px);
+}
+
+.rotateHorse div:nth-child(5) {
+    transform: rotateY(240deg) translateZ(500px);
+}
+
+.rotateHorse div:nth-child(6) {
+    transform: rotateY(300deg) translateZ(500px);
+}
 
 /* 冒险模块 */
 .box_hd {
@@ -542,6 +625,13 @@
 .tab_list_item>div {
     float: left;
     height: 341px;
+}
+
+.tab_list_item .under_img {
+    width: 202px;
+    height: 228px;
+    padding-right: 22px;
+    margin-top: 10px;
 }
 
 .col_210 {

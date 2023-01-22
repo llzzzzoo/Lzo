@@ -1668,7 +1668,7 @@ cloneNode()/cloneNode(true)
 
 但是当你采用数组形式拼接的时候就牛逼了
 
-总结：innerHTML`创建元素效率高于`createElement，但是利用`数组`可以`提升前者的速度`
+总结：innerHTML`创建元素效率高于`createElement，并且利用`数组`可以`提升前者被拼接字符串拖慢的速度`
 
 > 实现步骤
 >

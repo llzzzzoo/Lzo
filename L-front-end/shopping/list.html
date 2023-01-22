@@ -19,60 +19,17 @@
     <meta name="keywords" content="阿拉斯加的鳕鱼正跃出水面,太平洋彼岸的海鸥振翅掠过城市上空,极土中的夜空散漫了五彩斑斓">
     <!-- 引入初始化样式文件 -->
     <link rel="stylesheet" href="css/base.css">
+
     <!-- 引入公共的样式文件 -->
     <link rel="stylesheet" href="css/common.css">
     <!-- 引入list文件 -->
     <link rel="stylesheet" href="css/list.css">
     <!-- 引入icofont文件 -->
     <link rel="stylesheet" href="css/iconfont.css">
-    <link rel="shortcut icon" href="favicon.ico">
-    <script>
-        window.addEventListener('DOMContentLoaded', function () {
-            // 下拉菜单的操作
-            //获取元素
-            var r_nav = document.querySelector('.r_nav');
-            var lis = r_nav.children;//得到小li
-
-            for (var i = 0; i < lis.length; i++) {
-                var droplist = lis[i].children[0];
-                lis[i].onmouseover = function () {
-                    this.children[0].children[1].style.display = 'block';
-                }
-                if (droplist != undefined) {
-                    droplist.onmouseout = function () {
-                        this.children[1].style.display = 'none';
-                    }
-                }
-            }
-
-            // input的样式操作
-            var input = document.querySelector('input');
-
-            input.onfocus = function () {
-                if (this.value === '嘉然今天吃什么')
-                    this.value = '';
-                //获得焦点需要把文字框里面的颜色变黑
-                this.style.color = '#333';
-            }
-
-            input.onblur = function () {
-                if (this.value === '') {
-                    this.value = '嘉然今天吃什么';
-                }
-                this.style.color = '#62676e';
-            }
-
-            // 核心思路：检测用户是否按下了 s 键，如果按下s键，就把光标定在搜索框里面
-            // 利用keyCode进行判断
-            // 搜索框获取焦点： 使用js 的focus()方法
-            // 此处建议keyup而不是keyon，因为后者会把s输入到搜索框里面
-            document.addEventListener('keyup', function (e) {
-                if (e.keyCode == 83) {
-                    input.focus();
-                }
-            });
-        });
-    </script>
+    <link rel="shortcut icon" href="images/favicon.ico">
+    <!-- 引入js文件 -->
+    <script src="js/jQuery.min.js"></script>
+    <script src="js/list.js"></script>
 </head>
 
 <body>
@@ -82,7 +39,7 @@
             <div class="w">
                 <div class="fl">
                     <ul>
-                        <li> 欢迎光临黑猫杂货铺！&nbsp;&nbsp;</li>
+                        <li> <span class="time_compliment">早上好呀</span>，欢迎光临黑猫杂货铺！&nbsp;&nbsp;</li>
                         <li>
                             <a href="#" class="style_touch_blue">立即登录</a>&nbsp;&nbsp;&nbsp;<a href="regist.html"
                                 class="style_blue style_touch_blue">点击注册</a>
@@ -158,10 +115,10 @@
                 <a href="#" class="style_touch_blue">碇真嗣</a>
             </div>
             <!-- 购物车模块 -->
-            <a href="#" class="shopcar_a">
+            <a href="shoppingCart.html" class="shopcar_a">
                 <div class="shopcar">
                     <span>购物车</span>
-                    <i class="count">7</i>
+                    <i class="count">6</i>
                 </div>
             </a>
         </header>
@@ -170,27 +127,25 @@
 
         <!-- nav导航模块开始 -->
         <div class="nav">
-            <div class="w">
-                <div class="sk_list">
-                    <ul>
-                        <li><a href="#">达咩达咩</a></li>
-                        <li><a href="#">达咩达咩</a></li>
-                        <li><a href="#">达咩达咩</a></li>
-                    </ul>
-                </div>
-                <div class="sk_con">
-                    <ul>
-                        <li><a href="#">女装<span style="color: #ff9242;"></span></a></li>
-                        <li><a href="#">女装</a></li>
-                        <li><a href="#">女装</a></li>
-                        <li><a href="#">女装</a></li>
-                        <li><a href="#">女装</a></li>
-                        <li><a href="#">女装</a></li>
-                        <li><a href="#">女装</a></li>
-                        <li><a href="#">女装</a></li>
-                        <li><a href="#">更多</a></li>
-                    </ul>
-                </div>
+            <div class="sk_list">
+                <ul>
+                    <li><a href="#">来点兔子吗</a></li>
+                    <li><a href="#">哇库哇库</a></li>
+                    <li><a href="#">达咩达咩</a></li>
+                </ul>
+            </div>
+            <div class="sk_con">
+                <ul>
+                    <li><a href="#">日常<span style="color: #ff9242;"></span></a></li>
+                    <li><a href="#">搞笑</a></li>
+                    <li><a href="#">治愈</a></li>
+                    <li><a href="#">玉玉</a></li>
+                    <li><a href="#">热血</a></li>
+                    <li><a href="#">恋爱</a></li>
+                    <li><a href="#">励志</a></li>
+                    <li><a href="#">原创</a></li>
+                    <li><a href="#">更多</a></li>
+                </ul>
             </div>
         </div>
         <div style="clear:both;"></div>
@@ -200,19 +155,27 @@
 
     <!-- 列表页主体部分开始= -->
     <div class="w sk_container">
-        <div class="sk_hd">
-            <img src="upload/" alt="我的图图呢">
+        <div class="sk_hd touch_opacity">
+            <a href="#"><img data-lazy-src="upload/venice.jpg" alt="我的图图呢"></a>
         </div>
         <div class="sk_bd">
             <ul>
-                <li><img src="upload" alt="我的图图呢"></li>
-                <li><img src="upload" alt="我的图图呢"></li>
-                <li><img src="upload" alt="我的图图呢"></li>
-                <li><img src="upload" alt="我的图图呢"></li>
-                <li><img src="upload" alt="我的图图呢"></li>
-                <li><img src="upload" alt="我的图图呢"></li>
-                <li><img src="upload" alt="我的图图呢"></li>
-                <li><img src="upload" alt="我的图图呢"></li>
+                <li class="touch_opacity"><a href="#"><img data-lazy-src="upload/star-rain.png" alt="我的图图呢"></a></li>
+                <li class="touch_opacity"><a href="#"><img data-lazy-src="upload/grassguitar-girl.png" alt="我的图图呢"></a>
+                </li>
+                <li class="touch_opacity"><a href="#"><img data-lazy-src="upload/grass-rabbit.jpeg" alt="我的图图呢"></a>
+                </li>
+                <li class="touch_opacity"><a href="#"><img data-lazy-src="upload/sing-miku.jpeg" alt="我的图图呢"></a></li>
+                <li class="last_bottom_img touch_opacity"><a href="#"><img data-lazy-src="upload/moon-chunribu.jpg"
+                            alt="我的图图呢"></a>
+                </li>
+                <li class="last_bottom_img touch_opacity"><a href="#"><img data-lazy-src="upload/jiandao-girl.png"
+                            alt="我的图图呢"></a>
+                </li>
+                <li class="last_bottom_img touch_opacity"><a href="#"><img data-lazy-src="upload/jian-girl.png"
+                            alt="我的图图呢"></a></li>
+                <li class="last_bottom_img touch_opacity"><a href="#"><img data-lazy-src="upload/road-JK.jpg"
+                            alt="我的图图呢"></a></li>
             </ul>
         </div>
     </div>
@@ -225,31 +188,31 @@
             <div class="mod_service">
                 <ul>
                     <li>
-                        <h5>图标</h5>
+                        <h5></h5>
                         <div class="service_text">
-                            <h4>正品保证</h4>
+                            <h4>送货上门</h4>
                             <p>正品保障，提供发票</p>
                         </div>
                     </li>
                     <li>
-                        <h5>图标</h5>
+                        <h5></h5>
                         <div class="service_text">
-                            <h4>正品保证</h4>
-                            <p>正品保障，提供发票</p>
+                            <h4>跨国运输</h4>
+                            <p>云梦速递，使命必达</p>
                         </div>
                     </li>
                     <li>
-                        <h5>图标</h5>
+                        <h5></h5>
                         <div class="service_text">
-                            <h4>正品保证</h4>
-                            <p>正品保障，提供发票</p>
+                            <h4>云端备份</h4>
+                            <p>双重保险，无忧购物</p>
                         </div>
                     </li>
                     <li>
-                        <h5>图标</h5>
+                        <h5></h5>
                         <div class="service_text">
-                            <h4>正品保证</h4>
-                            <p>正品保障，提供发票</p>
+                            <h4>售后保障</h4>
+                            <p>全天等候，为您服务</p>
                         </div>
                     </li>
                 </ul>
@@ -257,71 +220,72 @@
             <div class="mod_help">
                 <dl>
                     <dt>服务指南</dt>
-                    <dd><a href="#">1111</a></dd>
-                    <dd><a href="#">1111</a></dd>
-                    <dd><a href="#">1111</a></dd>
-                    <dd><a href="#">1111</a></dd>
-                    <dd><a href="#">1111</a></dd>
-                    <dd><a href="#">1111</a></dd>
+                    <dd><a href="#" class="style_touch_blue">关于我们</a></dd>
+                    <dd><a href="#" class="style_touch_blue">联系我们</a></dd>
+                    <dd><a href="#" class="style_touch_blue">用户协议</a></dd>
+                    <dd><a href="#" class="style_touch_blue">加入我们</a></dd>
                 </dl>
                 <dl>
-                    <dt>服务指南</dt>
-                    <dd><a href="#">1111</a></dd>
-                    <dd><a href="#">1111</a></dd>
-                    <dd><a href="#">1111</a></dd>
-                    <dd><a href="#">1111</a></dd>
-                    <dd><a href="#">1111</a></dd>
-                    <dd><a href="#">1111</a></dd>
+                    <dt>传送门</dt>
+                    <dd><a href="#" class="style_touch_blue">协议汇总</a></dd>
+                    <dd><a href="#" class="style_touch_blue">配送方式</a></dd>
+                    <dd><a href="#" class="style_touch_blue">活动专题页</a></dd>
+                    <dd><a href="#" class="style_touch_blue">侵权申诉</a></dd>
                 </dl>
                 <dl>
-                    <dt>服务指南</dt>
-                    <dd><a href="#">1111</a></dd>
-                    <dd><a href="#">1111</a></dd>
-                    <dd><a href="#">1111</a></dd>
-                    <dd><a href="#">1111</a></dd>
-                    <dd><a href="#">1111</a></dd>
-                    <dd><a href="#">1111</a></dd>
+                    <dt>活动中心</dt>
+                    <dd><a href="#" class="style_touch_blue">帮助中心</a></dd>
+                    <dd><a href="#" class="style_touch_blue">社区中心</a></dd>
+                    <dd><a href="#" class="style_touch_blue">MCN管理中心</a></dd>
+                    <dd><a href="#" class="style_touch_blue">名人堂</a></dd>
                 </dl>
                 <dl>
-                    <dt>服务指南</dt>
-                    <dd><a href="#">1111</a></dd>
-                    <dd><a href="#">1111</a></dd>
-                    <dd><a href="#">1111</a></dd>
-                    <dd><a href="#">1111</a></dd>
-                    <dd><a href="#">1111</a></dd>
-                    <dd><a href="#">1111</a></dd>
+                    <dt>售后服务</dt>
+                    <dd><a href="#" class="style_touch_blue">售后政策</a></dd>
+                    <dd><a href="#" class="style_touch_blue">价格保护</a></dd>
+                    <dd><a href="#" class="style_touch_blue">退款说明</a></dd>
+                    <dd><a href="#" class="style_touch_blue">取消订单</a></dd>
                 </dl>
                 <dl>
-                    <dt>服务指南</dt>
-                    <dd><a href="#">1111</a></dd>
-                    <dd><a href="#">1111</a></dd>
-                    <dd><a href="#">1111</a></dd>
-                    <dd><a href="#">1111</a></dd>
-                    <dd><a href="#">1111</a></dd>
-                    <dd><a href="#">1111</a></dd>
+                    <dt>特色服务</dt>
+                    <dd><a href="#" class="style_touch_blue">壁纸站</a></dd>
+                    <dd><a href="#" class="style_touch_blue">广告合作</a></dd>
+                    <dd><a href="#" class="style_touch_blue">高级弹幕</a></dd>
+                    <dd><a href="#" class="style_touch_blue">品牌号官网</a></dd>
                 </dl>
                 <dl>
                     <dt>帮助中心</dt>
-                    <dd><img src="upload/jingxiang.png" alt=""></dd>
-                    联系客服端
+                    <dd><img src="upload/sleep-leimu.png" alt=""></dd>
+                    叫醒客服端
                 </dl>
             </div>
             <div class="mod_copyright">
                 <div class="links">
-                    <a href="#">111</a>
-                    <a href="#">111</a>
+                    联系电话:19115104446
+                    &nbsp;&nbsp;
+                    联系邮箱：lzo2511977838@163.com
                 </div>
                 <div class="copyright">
-                    2222222222222222222222222222222222<br />
-                    2222222222222222222222
+                    Copyright © 2021 - 2023 云梦YM.com 版权所有<br /> 最终解释权归云梦公司所有
                 </div>
             </div>
         </div>
     </div>
     <div style="clear:both;"></div>
     <!-- 底部模块的结束 -->
-
-
+    <!-- 引入图片懒加载插件 -->
+    <script src="js/EasyLazyload.min.js"></script>
+    <script>
+        lazyLoadInit({
+            showTime: 1100,
+            onLoadBackEnd: function (i, e) {
+                console.log("onLoadBackEnd:" + i);
+            }
+            , onLoadBackStart: function (i, e) {
+                console.log("onLoadBackStart:" + i);
+            }
+        });
+    </script>
 </body>
 
 </html>

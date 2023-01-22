@@ -17,6 +17,20 @@ $(function () {
         }
     }
 
+    // 不同时间段不同问候语
+    //1.得到当前小时数
+    var date = new Date();
+    var hour = date.getHours();
+    //2.判断小时数改变文字信息
+    if (hour < 10) {
+        $(".time_compliment").text('早上好呀');
+    } else if (hour < 14) {
+        $(".time_compliment").text('中午好呀');
+    } else if (hour < 18) {
+        $(".time_compliment").text('下午好呀');
+    } else {
+        $(".time_compliment").text('晚上好呀');
+    }
 })
 
 window.addEventListener('load', function () {

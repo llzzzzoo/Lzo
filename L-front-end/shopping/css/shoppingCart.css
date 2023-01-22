@@ -6,6 +6,10 @@
     top: 7px
 }
 
+.logo a {
+    background: url(../images/cuteSmile-miku.jpg) no-repeat;
+}
+
 em {
     font-style: normal;
 }

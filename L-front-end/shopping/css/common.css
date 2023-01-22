@@ -40,6 +40,14 @@
     color: #0071e3;
 }
 
+.touch_opacity:hover {
+    filter: opacity(90%);
+}
+
+.remove_bottom_aperture {
+    vertical-align: bottom;
+}
+
 .style_touch_up:hover {
     display: block;
     animation: up;
@@ -272,8 +280,6 @@
     border-bottom: 2px solid #e5e5e5;
 }
 
-
-
 .navitems ul li {
     float: left;
 }
@@ -298,6 +304,7 @@
     height: 455px;
     background-color: #ffffff;
     padding-top: 30px;
+
 }
 
 .mod_service {
@@ -316,7 +323,8 @@
     float: left;
     width: 50px;
     height: 50px;
-    background-color: #1387f4;
+    font-family: 'icomoon';
+    font-size: 40px;
     margin-right: 7px;
 }
 
@@ -342,6 +350,7 @@
 
 .mod_help dl dd {
     font-size: 14px;
+    padding: 5px 0;
 }
 
 .mod_help dl {
@@ -359,7 +368,7 @@
 }
 
 .mod_copyright .links {
-    margin-bottom: 15px;
+    margin: 15px 0;
 }
 
 .links a {

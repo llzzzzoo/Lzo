@@ -71,7 +71,9 @@ window.addEventListener('load', function () {
 
     // 6.克隆第一张图片，放到ul最后面
     // 此处便不必担心小圆圈会多了，因为前面已经生成完了小圆圈
+    // 此处与懒加载矛盾，故删除，所以要修改复制的地址
     var first = ul.children[0].cloneNode(true);
+    first.innerHTML = "<a href=" + "#" + "><img src=" + first.children[0].children[0].dataset['lazySrc'] + " alt=" + "阿伟你又在看二刺猿了嚯" + "></a>";
     ul.appendChild(first);
 
     // 7.点击一次右侧按钮，图片滚动一张
@@ -184,6 +186,21 @@ window.addEventListener('load', function () {
         }
     })
 
+    // 不同时间段不同问候语
+    //1.得到当前小时数
+    var date = new Date();
+    var hour = date.getHours();
+    //2.判断小时数改变文字信息
+    if (hour < 10) {
+        $(".time_compliment").text('早上好呀');
+    } else if (hour < 14) {
+        $(".time_compliment").text('中午好呀');
+    } else if (hour < 18) {
+        $(".time_compliment").text('下午好呀');
+    } else {
+        $(".time_compliment").text('晚上好呀');
+    }
+
     // input的样式操作
     var input = document.querySelector('input');
 
@@ -210,6 +227,22 @@ window.addEventListener('load', function () {
         }
     });
 
+    // 底层图片出现操作
+    // 鼠标经过小li，会发生两步操作
+    $(".recom_bd ul a li").mouseenter(function () {
+        // 1.当前小li变为317px，同时，里面的小图片淡出，大图片淡入
+        // 并且修改宽度
+        // 记得加上stop
+        $(this).stop().animate({
+            width: 396
+        }).find(".small").stop().fadeOut().siblings(".big").stop().fadeIn();
+        // 2.其余图片的大小都是145px，小图片淡入，大图片淡出
+        // 并且修改宽度
+        var liArray = $(this).parent().siblings("a").find("li");
+        liArray.stop().animate({
+            width: 198.2
+        }).find(".small").stop().fadeIn().siblings(".big").stop().fadeOut();
+    })
 
     // 电梯导航
     // 当点击某个模块，由于滚动事件会轮流变色
@@ -228,6 +261,9 @@ window.addEventListener('load', function () {
         // 听我说，谢谢你
         if (flag) {
             if ($(document).scrollTop() >= $(".floor").offset().top - 30) {
+                $(".elevator_item").eq(3).find(".elevator_item_content").addClass("style_easy_blue");
+                $(".elevator_item").eq(3).siblings(".elevator_item").find(".elevator_item_content").removeClass("style_easy_blue");
+            } else if ($(document).scrollTop() >= $(".rotate").offset().top - 30) {
                 $(".elevator_item").eq(2).find(".elevator_item_content").addClass("style_easy_blue");
                 $(".elevator_item").eq(2).siblings(".elevator_item").find(".elevator_item_content").removeClass("style_easy_blue");
             } else if ($(document).scrollTop() >= $(".hot").offset().top - 30) {
@@ -276,9 +312,12 @@ window.addEventListener('load', function () {
                 currentClass = ".hot";
                 break;
             case 2:
+                currentClass = ".rotate";
+                break;
+            case 3:
                 currentClass = ".floor";
                 break;
-            case 4:
+            case 5:
                 currentClass = "TOP";
                 break;
             default:
