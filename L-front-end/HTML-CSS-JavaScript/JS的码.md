@@ -1688,13 +1688,13 @@ function animate(obj, target, callback) {
 
 <img src="JS的码.assets/image-20230121230945204.png" alt="image-20230121230945204" style="zoom:67%;" /> 
 
-<img src="JS的码.assets/image-20230122004046209.png" alt="image-20230122004046209" style="zoom:67%;" /> 
+<img src="JS的码.assets/image-20230122235823213.png" alt="image-20230122235823213" style="zoom:67%;" />  
 
+<img src="JS的码.assets/image-20230126184324623.png" alt="image-20230126184324623" style="zoom:67%;" /> 
 
+<img src="JS的码.assets/image-20230126201720673.png" alt="image-20230126201720673" style="zoom:67%;" /> 
 
-
-
-
+<img src="JS的码.assets/image-20230126202839772.png" alt="image-20230126202839772" style="zoom:67%;" /> 
 
 
 

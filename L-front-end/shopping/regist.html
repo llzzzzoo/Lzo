@@ -122,25 +122,27 @@
             <div class="reg_form">
                 <form action="">
                     <ul>
-                        <li><label for="">手机号：</label>
+                        <li><label for="phone_num">手机号：</label>
                             <div class="con"></div>
-                            <input type="text" class="inp num" placeholder="请输入手机号"><span class="error">
+                            <input type="text" class="inp num" id="phone_num" placeholder="请输入手机号"
+                                name="telephoneNum"><span class="error">
                                 <i class="error_icon"></i> 手机号格式不正确，请重新输入</span>
                         </li>
-                        <li><label for="">验证码：</label>
-                            <input type="text" class="inp num_input" placeholder="请输入验证码"><span class="success">
+                        <li><label for="veri_Code">验证码：</label>
+                            <input type="text" class="inp num_input" id="veri_Code" placeholder="请输入验证码"
+                                name="verificationCode"><span class="success">
                                 <i class="success_icon"></i> 短信验证码正确</span>
                         </li>
-                        <li><label for="">登录密码：</label><input type="text" class="inp" placeholder="请保证6-14位，且包含大小写"
-                                id="pwd"><span class="error" id='prompt'>
+                        <li><label for="pwd">登录密码：</label><input type="text" class="inp" placeholder="请保证6-14位，且包含大小写"
+                                id="pwd" name="password"><span class="error" id='prompt'>
                                 <i class="error_icon"></i> 密码不正确，请重新输入</span>
                         </li>
                         <li class="safe">安全程度&nbsp;&nbsp;<em class="ruo">弱</em> <em class="zhong">中</em> <em
                                 class="qiang">强</em>
                         </li>
 
-                        <li><label for="">再次输入：</label><input type="text" class="inp" placeholder="请重新输入一次密码"><span
-                                class="error">
+                        <li><label for="pwd_again">再次输入：</label><input type="text" class="inp" id="pwd_again"
+                                placeholder="请重新输入一次密码" name="passwordAgain"><span class="error">
                                 <i class="error_icon"></i> 前后密码不一致</span>
                         </li>
                         <li class="agree"><input type="checkbox" name="" id=""> 同意协议并注册 <a href="#">知晓用户协议</a></li>
