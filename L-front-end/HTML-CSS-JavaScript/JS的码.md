@@ -1342,7 +1342,6 @@ document.addEventListener('keyup', function (e) {
         <div class="big" style="position:absolute;top:0;left: 235px;width: 300px;height:300px;border:1px solid #ccc;overflow:hidden;z-index: 9999;">
             <img src="upload/tree.png" alt="" style="position:absolute;top:0;left:0;height: 800px;" class="bigImg">
         </div>
-
     </div>
 </body>
 ```

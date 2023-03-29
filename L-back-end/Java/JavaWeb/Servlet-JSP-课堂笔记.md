@@ -10,6 +10,26 @@
 - SpringCloud
 - ....
 
+```mermaid
+mindmap
+  root((mindmap))
+    Origins
+      Long history
+      ::icon(fa fa-book)
+      Popularisation
+        British popular psychology author Tony Buzan
+    Research
+      On effectiveness<br/>and features
+      On Automatic creation
+        Uses
+            Creative techniques
+            Strategic planning
+            Argument mapping
+    Tools
+      Pen and paper
+      Mermaid
+```
+
 # 需要提前准备了哪些技术，接下来的课才能听懂？
 
 - JavaSE（Java语言的标准版，Java提供的最基本的类库）
@@ -776,6 +796,10 @@ public void service(ServletRequest request, ServletResponse response){
     ```
 
   - 以上方法在Servlet类当中，都可以使用this去调用。因为GenericServlet实现了ServletConfig接口。
+  
+  - 子类继承父类之后，重写父类带参的init（）方法，可能导致父类原本设计的init方法的功能失效，即无法通过Tomcat创造ServletConfig对象并传入init方法。
+
+<img src="Servlet-JSP-课堂笔记.assets/image-20230210221810248-1676038691854-1.png" alt="image-20230210221810248" style="zoom: 80%;" /> 
 
 ## ServletContext
 
@@ -785,13 +809,15 @@ public void service(ServletRequest request, ServletResponse response){
 
 - ServletContext对象在服务器启动阶段创建，在服务器关闭的时候销毁。这就是ServletContext对象的生命周期。ServletContext对象是应用级对象。
 
+- 服务器的部署就是在deploy ServeletContext对象
+
 - Tomcat服务器中有一个webapps，这个webapps下可以存放webapp，可以存放多个webapp，假设有100个webapp，那么就有100个ServletContext对象。但是，总之，一个应用，一个webapp肯定是只有一个ServletContext对象。
 
 - ServletContext被称为Servlet上下文对象。（Servlet对象的四周环境对象。）
 
 - 一个ServletContext对象通常对应的是一个web.xml文件。
 
-- ServletContext对应显示生活中的什么例子呢？
+- ServletContext对应现实生活中的什么例子呢？
 
   - 一个教室里有多个学生，那么每一个学生就是一个Servlet，这些学生都在同一个教室当中，那么我们可以把这个教室叫做ServletContext对象。那么也就是说放在这个ServletContext对象（环境）当中的数据，在同一个教室当中，物品都是共享的。比如：教室中有一个空调，所有的学生都可以操作。可见，空调是共享的。因为空调放在教室当中。教室就是ServletContext对象。
 
@@ -832,6 +858,8 @@ public void service(ServletRequest request, ServletResponse response){
     public String getRealPath(String path);
     ```
 
+    ![image-20230210223443880](Servlet-JSP-课堂笔记.assets/image-20230210223443880.png) 
+    
   - ```java
     // 通过ServletContext对象也是可以记录日志的
     public void log(String message);
@@ -911,7 +939,7 @@ public void service(ServletRequest request, ServletResponse response){
 
 - 什么是HTTP协议？
 
-  - HTTP协议：是W3C制定的一种超文本传输协议。（通信协议：发送消息的模板提前被制定好。）
+  - HTTP(Hyper Text Transfer Protocol)协议：是W3C制定的一种超文本传输协议。（通信协议：发送消息的模板提前被制定好。）
   - W3C：
     - 万维网联盟组织
     - 负责制定标准的：HTTP HTML4.0 HTML5 XML DOM等规范都是W3C制定的。
@@ -1402,7 +1430,7 @@ public abstract class HttpServlet extends GenericServlet {
 
 - 什么是一个web站点的欢迎页面？
 
-  - 对于一个webapp来说，我们是可以设置它的欢迎页面的。
+  - 对于一个webapp来说，我们.是可以设置它的欢迎页面的。
   - 设置了欢迎页面之后，当你访问这个webapp的时候，或者访问这个web站点的时候，没有指定任何“资源路径”，这个时候会默认访问你的欢迎页面。
   - 我们一般的访问方式是：
     - http://localhost:8080/servlet06/login.html 这种方式是指定了要访问的就是login.html资源。
@@ -2110,6 +2138,20 @@ public abstract class HttpServlet extends GenericServlet {
 
 - 转发会存在浏览器的刷新问题。
 
+**转发**
+
+<img src="Servlet-JSP-课堂笔记.assets/image-20230218111147862.png" alt="image-20230218111147862" style="zoom:80%;" /> 
+
+
+
+**重定向**
+
+<img src="Servlet-JSP-课堂笔记.assets/image-20230218111406931.png" alt="image-20230218111406931" style="zoom:80%;" /> 
+
+
+
+
+
 ## 将oa项目中的资源跳转修改为合适的跳转方式
 
 - 删除之后，重定向
@@ -2311,10 +2353,19 @@ public abstract class HttpServlet extends GenericServlet {
 
   - 怎么用java设置cookie的有效时间
     - cookie.setMaxAge(60 * 60); 设置cookie在一小时之后失效。
+    
   - 没有设置有效时间：默认保存在浏览器的运行内存中，浏览器关闭则cookie消失。
+
   - 只要设置cookie的有效时间 > 0，这个cookie一定会存储到硬盘文件当中。
-  - 设置cookie的有效时间 = 0 呢？
+
+  - **设置cookie的有效时间 = 0 呢**？
+    
     - cookie被删除，同名cookie被删除。
+    
+      - 注意：删除的时候需要除了设置MaxAge，还需要把初始的如Path也给设置一下。为了让浏览器能specifically找到它
+    
+        具体见网址：https://coderanch.com/t/357128/java/setMaxAge-doesnt-delete-cookie：
+    
   - 设置cookie的有效时间 < 0 呢？
     - 保存在运行内存中。和不设置一样。
 
