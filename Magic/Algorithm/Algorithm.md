@@ -371,7 +371,7 @@
 
 > - **原理**
 
-<img src="Algorithm.assets/image-20230725215606210.png" alt="image-20230725215606210" style="zoom:67%;" /> ****
+<img src="Algorithm.assets/image-20230725215606210.png" alt="image-20230725215606210" style="zoom:67%;" /> 
 
 
 
@@ -893,8 +893,6 @@
 
 <img src="Algorithm.assets/image-20230801172159313.png" alt="image-20230801172159313" style="zoom:67%;" /> 
 
-
-
 > - 如果我取了对数，即让回归函数趋于线性，那又该怎么解释系数呢？
 >   - 其实就是从一个单位转换到了一个百分比
 
@@ -938,6 +936,38 @@
 <img src="Algorithm.assets/image-20230801192524276.png" alt="image-20230801192524276" style="zoom:67%;" /> 
 
 <img src="Algorithm.assets/image-20230801192804494.png" alt="image-20230801192804494" style="zoom:67%;" /> 
+
+
+
+### 1.5、示例
+
+> - STEP
+>
+>   - 使用regress，得到的结果怎么看？
+>
+>     - 
+>
+>     - 关注假设是否成立，原假设为<img src="Algorithm.assets/image-20230827212343258.png" alt="image-20230827212343258" style="zoom:67%;"/>看Prob，大于0.05代表原假设成立，即这个回归是个答辩
+>
+>       ![image-20230827212952023](Algorithm.assets/image-20230827212952023.png)
+>
+>     - 再看每个系数β的假设检验，检查是否显著。原假设是每个评价都等于零
+>
+>       <img src="Algorithm.assets/image-20230827213115815.png" alt="image-20230827213115815" style="zoom:67%;" />
+>
+>     - 
+
+> - 对应SSR、SSE、SST。还有个自由度df，用来调增拟合优度R^2用的
+
+<img src="Algorithm.assets/image-20230827205928320.png" alt="image-20230827205928320" style="zoom:67%;" />
+
+> - 解释型回归只解释关系，对R^2的关注度不如预测型回归高
+
+<img src="Algorithm.assets/image-20230827210228373.png" alt="image-20230827210228373" style="zoom:67%;" /><img src="Algorithm.assets/image-20230827214950576.png" alt="image-20230827214950576" style="zoom:67%;" /> 
+
+
+
+
 
 
 
@@ -1050,8 +1080,6 @@
 
 <img src="Algorithm.assets/image-20230802154158512.png" alt="image-20230802154158512" style="zoom:67%;" /> 
 
-
-
 > - 算法优缺点
 
 <img src="Algorithm.assets/image-20230802155316464.png" alt="image-20230802155316464" style="zoom:67%;" /> 
@@ -1060,7 +1088,7 @@
 
 ## 2、K-means++聚类算法
 
-> - 为了解决K-means的几个问题诞生
+> - 为了解决K-means的孤立点敏感、初始点瞎吉尔乱选而诞生
 >   - 主要是体现在选取初始聚类中心的规则上
 >     - 底层思想就是让距离较远的点自成一类，不会划分到本类去
 
@@ -1071,6 +1099,11 @@
 ## 3、系统聚类
 
 ### 3.1、概述
+
+> - 为什么不用决定分多少类？
+>   - 其实不然，它是给你分成了1......n类，你自己选择要分成几个类
+
+<img src="Algorithm.assets/image-20230827165422352.png" alt="image-20230827165422352" style="zoom:67%;" /> 
 
 <img src="Algorithm.assets/image-20230802164024172.png" alt="image-20230802164024172" style="zoom:67%;" /> 
 
@@ -1139,13 +1172,48 @@
 
 <img src="Algorithm.assets/image-20230802173042444.png" alt="image-20230802173042444" style="zoom:67%;" /> 
 
-
-
-
-
-3.3、注意事项
+### 3.3、注意事项
 
 <img src="Algorithm.assets/image-20230802173440424.png" alt="image-20230802173440424" style="zoom:67%;" /> 
+
+### 3.4、选择聚类个数
+
+<img src="Algorithm.assets/image-20230827170823789.png" alt="image-20230827170823789" style="zoom:67%;" /><img src="Algorithm.assets/image-20230827170903407.png" alt="image-20230827170903407" style="zoom:67%;" /> 
+
+ 
+
+### 3.5、方差检验和L-W检验
+
+<img src="Algorithm.assets/image-20230906231441082.png" alt="image-20230906231441082" style="zoom:80%;" />
+
+
+
+
+
+### 3.6、合理性检验
+
+> - 利用轮廓系数
+>   - 
+
+<img src="Algorithm.assets/image-20230907010708320.png" alt="image-20230907010708320" style="zoom:67%;" />
+
+<img src="Algorithm.assets/image-20230907010833758.png" alt="image-20230907010833758" style="zoom:67%;" />
+
+> - 聚类噪声指标
+
+<img src="Algorithm.assets/image-20230907011103150.png" alt="image-20230907011103150" style="zoom:67%;" />
+
+
+
+> - 噪声和离群点
+
+<img src="Algorithm.assets/image-20230907011159623.png" alt="image-20230907011159623" style="zoom:67%;" />
+
+<img src="Algorithm.assets/image-20230907012006327.png" alt="image-20230907012006327" style="zoom:67%;" />
+
+
+
+
 
 
 
@@ -1401,6 +1469,375 @@ y = -y % 记得取反，因为求的是负数
 
 
 
+# .
+
+# ----预测模型----
+
+
+
+# 一、灰色预测
+
+## 1、PRINCIPLE
+
+<img src="Algorithm.assets/image-20230829160015775.png" alt="image-20230829160015775" style="zoom:67%;" />
+
+<img src="Algorithm.assets/image-20230829161656094.png" alt="image-20230829161656094" style="zoom:67%;" />
+
+<img src="Algorithm.assets/image-20230829162244258.png" alt="image-20230829162244258" style="zoom:67%;" />
+
+<img src="Algorithm.assets/image-20230829162559748.png" alt="image-20230829162559748" style="zoom:67%;" />
+
+ <img src="Algorithm.assets/image-20230829164207722.png" alt="image-20230829164207722" style="zoom:80%;" />
+
+> - OLS原理介绍
+
+<img src="Algorithm.assets/image-20230829164553369.png" alt="image-20230829164553369" style="zoom:67%;" />
+
+<img src="Algorithm.assets/image-20230829164649863.png" alt="image-20230829164649863" style="zoom:67%;" />
+
+<img src="Algorithm.assets/image-20230829165347656.png" alt="image-20230829165347656" style="zoom:67%;" />
+
+> - 将基本形式灰色微分方程(离散微分方程)化为白化方程(连续微分方程)
+
+<img src="Algorithm.assets/image-20230829173726795.png" alt="image-20230829173726795" style="zoom:67%;" />
+
+> - 
+
+<img src="Algorithm.assets/image-20230829181507318.png" alt="image-20230829181507318" style="zoom:67%;" />
+
+> - 本质就是一条指数拟合曲线，但是需要满足条件`指数规律，即求出合理的α、β`
+
+<img src="Algorithm.assets/image-20230829182003465.png" alt="image-20230829182003465" style="zoom:67%;" />
+
+> - 如何检测是否满足`指数规律`呢？
+>   - 总结，只要ρ(k)∈(0, 0.5)的占比越高越说明符合准指数规律
+
+<img src="Algorithm.assets/image-20230829182816745.png" alt="image-20230829182816745" style="zoom:67%;" />
+
+
+
+> - EVALUATION OF MODEL
+
+> - 经典残差
+>   - 
+
+<img src="Algorithm.assets/image-20230829184156066.png" alt="image-20230829184156066" style="zoom:67%;" />
+
+<img src="Algorithm.assets/image-20230829184340865.png" alt="image-20230829184340865" style="zoom:67%;" />
+
+
+
+## 2、应用场景
+
+<img src="Algorithm.assets/image-20230829185348593.png" alt="image-20230829185348593" style="zoom:67%;" />
+
+<img src="Algorithm.assets/image-20230829185335313.png" alt="image-20230829185335313" style="zoom:67%;" />
+
+
+
+
+
+## 3、CODE
+
+<img src="Algorithm.assets/image-20230829200814548.png" alt="image-20230829200814548" style="zoom:67%;" />
+
+
+
+
+
+
+
+
+
+# .
+
+# ----时间序列----
+
+# 概述
+
+# 一、尝鬼操作
+
+> - 时间序列：同一对象，不同时间
+
+<img src="Algorithm.assets/image-20230827231256451.png" alt="image-20230827231256451" style="zoom:67%;" /> 
+
+> - 时期时间序列和时点时间序列的区别？
+>   - 可加性
+
+<img src="Algorithm.assets/image-20230827231506446.png" alt="image-20230827231506446" style="zoom:67%;" /> 
+
+## 1、时间序列分解
+
+> - 长期、季节、周期、不规则
+>   - 季节和周期去主要区别是时间：周期的是很久的才循环，季节的一般季、月、周
+> - 注意：`只有周期性的数据才能分解`
+
+<img src="Algorithm.assets/image-20230827231800698.png" alt="image-20230827231800698" style="zoom:67%;" /> 
+
+<img src="Algorithm.assets/image-20230827231932689.png" alt="image-20230827231932689" style="zoom:67%;" /> 
+
+![image-20230827232009714](Algorithm.assets/image-20230827232009714.png)
+
+
+
+<img src="Algorithm.assets/image-20230827232604870.png" alt="image-20230827232604870" style="zoom:67%;" /> 
+
+### 1.1、叠加和乘积
+
+> - 选叠加还是乘积？
+>   - 看序列的季节波动，如果一直平稳，就不会受到其他变动影响；如果呈现波动，就表明会受到影响
+
+<img src="Algorithm.assets/image-20230827232907098.png" alt="image-20230827232907098" style="zoom:67%;" /> 
+
+
+
+## 2、处理数据
+
+### 2.1、缺失值
+
+> - 只可删除头和尾，中间用其他办法替换
+
+![image-20230828001932699](Algorithm.assets/image-20230828001932699.png)
+
+<img src="Algorithm.assets/image-20230828001914822.png" alt="image-20230828001914822" style="zoom:67%;" /> 
+
+## 3、分析步骤
+
+### 3.1、定义时间变量
+
+<img src="Algorithm.assets/image-20230828002224795.png" alt="image-20230828002224795" style="zoom:67%;" /> 
+
+### 3.2、画出序列图
+
+<img src="Algorithm.assets/image-20230828002454139.png" alt="image-20230828002454139" style="zoom:67%;" /> 
+
+### 3.3、季节性分解
+
+<img src="Algorithm.assets/image-20230828003354761.png" alt="image-20230828003354761" style="zoom:67%;" /> 
+
+> - 结果含义如下
+
+<img src="Algorithm.assets/image-20230828003845483.png" alt="image-20230828003845483" style="zoom:67%;" />  <img src="Algorithm.assets/image-20230828004133937.png" alt="image-20230828004133937" style="zoom:67%;" /> 
+
+> - 画出时序图
+>
+> - 那么问题来了，这玩意有什么用呢？
+>
+>   - 看到了T+C+I吗，近似为直线，可以进行拟合，再加上S即可得到最终的值
+>
+>     所以就可以通过时间预测当前的数据值了
+
+<img src="Algorithm.assets/image-20230828005409547.png" alt="image-20230828005409547" style="zoom:67%;" /> 
+
+> - SUMMARY
+
+<img src="Algorithm.assets/image-20230828005821297.png" alt="image-20230828005821297" style="zoom:67%;" /> 
+
+
+
+## 4、这下想不专家都不行啦
+
+<img src="Algorithm.assets/image-20230828010016531.png" alt="image-20230828010016531" style="zoom:67%;" /> 
+
+### 4.1、指数平滑模型
+
+<img src="Algorithm.assets/image-20230828012818834.png" alt="image-20230828012818834" style="zoom:67%;" /> 
+
+#### 4.1.1、SIMPLE模型
+
+> - 底层思想：预测数据 = 以往数据加权求和，离得越近的数据权重越大
+
+<img src="Algorithm.assets/image-20230828013741244.png" alt="image-20230828013741244" style="zoom:67%;" /> 
+
+#### 4.1.2、线性趋势模型
+
+> - 主要关注α和β，因为有了他们后面的东西都可以求出来了
+
+<img src="Algorithm.assets/image-20230828014721456.png" alt="image-20230828014721456" style="zoom:67%;" /> 
+
+
+
+#### 4.1.3、阻尼趋势模型
+
+> - 其实GDP也是这样，先直线上升然后趋于平缓
+
+<img src="Algorithm.assets/image-20230828015043401.png" alt="image-20230828015043401" style="zoom:67%;" /> 
+
+#### 4.1.4、简单季节性
+
+<img src="Algorithm.assets/image-20230828015353636.png" alt="image-20230828015353636" style="zoom:67%;" /> 
+
+#### 4.1.5、温特加/乘法模型
+
+<img src="Algorithm.assets/image-20230828015439302.png" alt="image-20230828015439302" style="zoom:67%;" />
+
+<img src="Algorithm.assets/image-20230828015517516.png" alt="image-20230828015517516" style="zoom:67%;" />
+
+
+
+
+
+## 5、例题
+
+<img src="Algorithm.assets/image-20230828175851054.png" alt="image-20230828175851054" style="zoom:67%;" />
+
+<img src="Algorithm.assets/image-20230828181410033.png" alt="image-20230828181410033" style="zoom:80%;" />
+
+<img src="Algorithm.assets/image-20230828181448085.png" alt="image-20230828181448085" style="zoom:67%;" />
+
+<img src="Algorithm.assets/image-20230828181602714.png" alt="image-20230828181602714" style="zoom:67%;" />
+
+> - 有些其他步骤见视频吧
+
+<img src="Algorithm.assets/image-20230828181642316.png" alt="image-20230828181642316" style="zoom:67%;" />
+
+<img src="Algorithm.assets/image-20230828181929733.png" alt="image-20230828181929733" style="zoom:80%;" />
+
+<img src="Algorithm.assets/image-20230828183702971.png" alt="image-20230828183702971" style="zoom:67%;" />
+
+<img src="Algorithm.assets/image-20230828183736628.png" alt="image-20230828183736628" style="zoom:67%;" />
+
+
+
+> - 论文如何写？
+>
+>   - 见25分钟
+>
+>     [数学建模]: https://www.youtube.com/watch?v=wPwGkKOEZiM&amp;list=PLvce_oy4ggsHzrmgBz8vwQqRmezDOzo1N	"11-04 实例1销量数据预测和实例2人口数据预测"
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+# .
+
+# ----降维----
+
+# 概述
+
+## 1、主成分分析
+
+<img src="Algorithm.assets/image-20230828173427508.png" alt="image-20230828173427508" style="zoom:67%;" />
+
+<img src="Algorithm.assets/image-20230828173725965.png" alt="image-20230828173725965" style="zoom:67%;" />
+
+<img src="Algorithm.assets/image-20230828173904924.png" alt="image-20230828173904924" style="zoom:67%;" />
+
+
+
+### 1.1、STEP
+
+<img src="Algorithm.assets/image-20230828175239912.png" alt="image-20230828175239912" style="zoom:80%;" />
+
+> - 样本相关系数矩阵 = 样本标准化后的协防差矩阵
+
+<img src="Algorithm.assets/image-20230828175311126.png" alt="image-20230828175311126" style="zoom:80%;" />
+
+<img src="Algorithm.assets/image-20230828175457555.png" alt="image-20230828175457555" style="zoom: 80%;" />
+
+<img src="Algorithm.assets/image-20230828175541148.png" alt="image-20230828175541148" style="zoom:80%;" />
+
+
+
+
+
+## 2、因子分析
+
+<img src="Algorithm.assets/image-20230828210146036.png" alt="image-20230828210146036" style="zoom:67%;" />
+
+<img src="Algorithm.assets/image-20230828211957262.png" alt="image-20230828211957262" style="zoom:80%;" />
+
+
+
+### 2.1、PRINCIPLE
+
+<img src="Algorithm.assets/image-20230829005444296.png" alt="image-20230829005444296" style="zoom:67%;" />
+
+<img src="Algorithm.assets/image-20230828214633152.png" alt="image-20230828214633152" style="zoom:67%;" />
+
+<img src="Algorithm.assets/image-20230828214947773.png" alt="image-20230828214947773" style="zoom:67%;" />
+
+<img src="Algorithm.assets/image-20230828215239772.png" alt="image-20230828215239772" style="zoom:67%;" />
+
+<img src="Algorithm.assets/image-20230828220724981.png" alt="image-20230828220724981" style="zoom:67%;" />
+
+<img src="Algorithm.assets/image-20230828222544162.png" alt="image-20230828222544162" style="zoom:67%;" />
+
+
+
+### 2.2、STEP
+
+<img src="Algorithm.assets/image-20230828224257784.png" alt="image-20230828224257784" style="zoom:67%;" />
+
+> - 为什么要接近0/1？
+>   - 为了消除一些系数和保留一些系数，equals筛选
+
+<img src="Algorithm.assets/image-20230828224434796.png" alt="image-20230828224434796" style="zoom:67%;" />
+
+<img src="Algorithm.assets/image-20230828224754002.png" alt="image-20230828224754002" style="zoom:67%;" />
+
+<img src="Algorithm.assets/image-20230828224832827.png" alt="image-20230828224832827" style="zoom:67%;" />
+
+
+
+## 3、EXAMPLE
+
+<img src="Algorithm.assets/image-20230829010001711.png" alt="image-20230829010001711" style="zoom:67%;" />
+
+<img src="Algorithm.assets/image-20230829010018973.png" alt="image-20230829010018973" style="zoom:67%;" />
+
+<img src="Algorithm.assets/image-20230829010113508.png" alt="image-20230829010113508" style="zoom:67%;" />
+
+> - 要通过检验啊魂淡！
+
+<img src="Algorithm.assets/image-20230829010258571.png" alt="image-20230829010258571" style="zoom:67%;" />
+
+> - 碎石图确认因子数目
+
+<img src="Algorithm.assets/image-20230829010645284.png" alt="image-20230829010645284" style="zoom:67%;" />
+
+> - 对结果进行分析
+
+<img src="Algorithm.assets/image-20230829010837354.png" alt="image-20230829010837354" style="zoom:67%;" />
+
+<img src="Algorithm.assets/image-20230829011034306.png" alt="image-20230829011034306" style="zoom:67%;" />
+
+<img src="Algorithm.assets/image-20230829013106001.png" alt="image-20230829013106001" style="zoom:67%;" />
+
+<img src="Algorithm.assets/image-20230829013433023.png" alt="image-20230829013433023" style="zoom:67%;" />
+
+> - 得到因子得分？
+>   - 1
+> - 有什么用？
+
+<img src="Algorithm.assets/image-20230829013545116.png" alt="image-20230829013545116" style="zoom:80%;" />
+
+
+
+
+
+
+
+
+
+# .
+
+# ----图论----
+
 
 
 
@@ -1408,6 +1845,16 @@ y = -y % 记得取反，因为求的是负数
 # . 
 
 # ----机器学习模型----
+
+# ----模型选择----
+
+<img src="Algorithm.assets/image-20230904155610606.png" alt="image-20230904155610606" style="zoom:80%;" />
+
+ 
+
+
+
+
 
 ## 1、SVM向量机应用
 
@@ -1428,6 +1875,16 @@ y = -y % 记得取反，因为求的是负数
 <img src="Algorithm.assets/image-20230803203751397.png" alt="image-20230803203751397" style="zoom:67%;" /> 
 
 <img src="Algorithm.assets/image-20230803203939635.png" alt="image-20230803203939635" style="zoom:67%;" /> 
+
+ <img src="Algorithm.assets/image-20230904161020324.png" alt="image-20230904161020324" style="zoom:80%;" />
+
+<img src="Algorithm.assets/image-20230904161156259.png" alt="image-20230904161156259" style="zoom:80%;" /> 
+
+
+
+
+
+
 
 
 
@@ -1453,9 +1910,35 @@ y = -y % 记得取反，因为求的是负数
 
 
 
+## 4、决策树
+
+> - GOAL
+>   - 构建最佳的决策树ID3的话就是每次熵降最多
+>   - 防止过拟合
+
+![image-20230902100715006](Algorithm.assets/image-20230902100715006.png)
+
+> - 下图为CART决策树
+
+<img src="Algorithm.assets/image-20230902103503112.png" alt="image-20230902103503112" style="zoom:80%;" />
+
+<img src="Algorithm.assets/image-20230902103657216.png" alt="image-20230902103657216" style="zoom:80%;" />
+
+<img src="Algorithm.assets/image-20230902105917489.png" alt="image-20230902105917489" style="zoom: 80%;" />
+
+
+
+
+
+
+
  
 
-## 4、随机森林
+## 5、随机森林
+
+> - 不需单独设置测试，袋外数据即为测试集
+
+<img src="Algorithm.assets/image-20230907095245848.png" alt="image-20230907095245848" style="zoom: 80%;" />
 
 <img src="Algorithm.assets/image-20230804155042317.png" alt="image-20230804155042317" style="zoom:67%;" /> 
 
@@ -1469,6 +1952,10 @@ y = -y % 记得取反，因为求的是负数
 
 
 
+### 5.1、得到指标重要性
+
+> - 分类变量需要更改决策树设置
+>   - 见视频65
 
 
 
@@ -1478,6 +1965,47 @@ y = -y % 记得取反，因为求的是负数
 
 
 
+## 6、BP神经网络
+
+> - 
+
+<img src="Algorithm.assets/image-20230816192625252.png" alt="image-20230816192625252" style="zoom:67%;" /> 
+
+## 7、交叉验证
+
+> - 随机数种子
+>   - 固定交叉验证的随机性
+
+<img src="Algorithm.assets/image-20230904153858041.png" alt="image-20230904153858041" style="zoom:67%;" />
+
+
+
+### 7.1、F1分数
+
+> - 计算F1分数
+>   - 利用混淆矩阵
+
+<img src="Algorithm.assets/image-20230904155211463.png" alt="image-20230904155211463" style="zoom: 80%;" />
+
+<img src="Algorithm.assets/image-20230904155237105.png" alt="image-20230904155237105" style="zoom: 80%;" />
+
+
+
+> - 多分类问题的F1分数
+
+<img src="Algorithm.assets/image-20230906122458189.png" alt="image-20230906122458189" style="zoom:80%;" />
+
+<img src="Algorithm.assets/image-20230906122316205.png" alt="image-20230906122316205" style="zoom:80%;" />
+
+
+
+
+
+### 7.2、ROC曲线和AUC
+
+<img src="Algorithm.assets/image-20230906171517084.png" alt="image-20230906171517084" style="zoom:80%;" />
+
+<img src="Algorithm.assets/image-20230906172109164.png" alt="image-20230906172109164" style="zoom:80%;" />
 
 
 
@@ -1487,7 +2015,67 @@ y = -y % 记得取反，因为求的是负数
 
 
 
+## 8、调参怪
 
+<img src="Algorithm.assets/image-20230906003932664.png" alt="image-20230906003932664" style="zoom:80%;" />
+
+
+
+
+
+### 8.1、具体方法
+
+#### 8.1.1、网格搜索
+
+<img src="Algorithm.assets/image-20230906011220499.png" alt="image-20230906011220499" style="zoom:80%;" />
+
+<img src="Algorithm.assets/image-20230906011201807.png" alt="image-20230906011201807" style="zoom:80%;" />
+
+![image-20230906011439194](Algorithm.assets/image-20230906011439194.png)
+
+<img src="Algorithm.assets/image-20230906011522324.png" alt="image-20230906011522324" style="zoom:80%;" />
+
+
+
+> - 多个参数调参
+
+<img src="Algorithm.assets/image-20230907151907525.png" alt="image-20230907151907525" style="zoom:67%;" />
+
+
+
+
+
+
+
+#### 8.1.2、随机搜索
+
+![image-20230906011532754](Algorithm.assets/image-20230906011532754.png)
+
+
+
+#### 8.1.3、贝叶斯调参
+
+<img src="Algorithm.assets/image-20230906011636638.png" alt="image-20230906011636638" style="zoom:80%;" /> 
+
+
+
+
+
+
+
+
+
+## 9、特征选择
+
+<img src="Algorithm.assets/image-20230907100216236.png" alt="image-20230907100216236" style="zoom:80%;" />
+
+![image-20230907171153592](Algorithm.assets/image-20230907171153592.png)
+
+> - 降维和特征选择有什么区别
+>   - 前者是删除特征，后者是选择一部分特征
+>   - 依靠主成分分析进行降维
+
+<img src="Algorithm.assets/image-20230907171222915.png" alt="image-20230907171222915" style="zoom:80%;" />
 
 
 
