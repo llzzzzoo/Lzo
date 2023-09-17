@@ -444,13 +444,9 @@ python
 
 
 
-
-
 ### 10.4、break/continue
 
 没啥区别
-
-
 
 
 
@@ -1309,7 +1305,7 @@ True
 >         c = ''.join('abc')
 >         print(a is b)
 >         print(a is c)
->     
+>                                     
 >     # output
 >     True
 >     False
@@ -1534,9 +1530,851 @@ hello java python
 
 
 
+### 2.7、比较
+
+<img src="Python基础学习笔记.assets/image-20230424004613543.png" alt="image-20230424004613543" style="zoom:67%;" /> 
+
+```python
+    # 得到字符的ASCII码
+    print(ord('a'), ord('b'))
+
+    # 得到ASCII码得到字符
+    print(chr(97))
+
+    '''
+        == 和 is的区别
+        == 比较的是value
+        is 比较的是id
+    '''
+    a = b = 'Pq'
+    print(a == b)
+    print(a is b)
+    
+# output
+97 98
+a
+True
+True
+```
 
 
 
+### 2.8、切片
+
+```python
+    '''
+        == 和 is的区别
+        == 比较的是value
+        is 比较的是id
+    '''
+    a = b = 'Pq'
+    print(a == b)
+    print(a is b)
+
+    tt = '123,456'
+    # 切割区间，左闭右开
+    t = tt[:3]
+    print(t)
+    # 切割区间，左闭右开
+    t = tt[4:]
+    print(t)
+
+    # 从[0,4)，步长为2
+    t = tt[0:4:2]
+    print(t)
+    # 从0开始，默认到末尾，步长为2
+    t = tt[::2]
+    print(t)
+    # 从末尾开始，到0为止，步长为1
+    t = tt[::-1]
+    print(t)
+    
+# output
+True
+True
+123
+456
+13
+1346
+654,321
+```
+
+
+
+
+
+### 2.9、格式化字符串
+
+<img src="Python基础学习笔记.assets/image-20230424010641559.png" alt="image-20230424010641559" style="zoom: 67%;" /> 
+
+
+
+<img src="Python基础学习笔记.assets/image-20230424011005337.png" alt="image-20230424011005337" style="zoom:67%;" /> 
+
+```python
+    name = '111'
+    age = 2
+    # %
+    print('我是%s, 我年龄为%d' % (name, age))
+    # {}
+    print('我叫{}，今年{}'.format(name, age))
+    # .2f: 保留两位小数，.3:一共3位数
+    print('{:.2f}, {:.3}'.format(3.123, 1.1111))
+    # f'{}'
+    print(f'我叫{name}, 今年{age}')
+    
+# output
+我是111, 我年龄为2
+我叫111，今年2
+3.12, 1.11
+我叫111, 今年2
+```
+
+
+
+
+
+### 2.10、字符串的编码转换
+
+​	<img src="Python基础学习笔记.assets/image-20230424014206757.png" alt="image-20230424014206757" style="zoom:80%;" /> 
+
+```python
+    s = '花终于开了'
+    # 编码
+    byte = s.encode(encoding="GBK")
+    # 解码
+    print(byte.decode(encoding='GBK'))
+
+# output
+花终于开了
+```
+
+
+
+
+
+
+
+# 五、函数
+
+## 1、基本语法
+
+> - 有个关键字传参挺骚的
+>
+>   ```python
+>       reslut = calc(b=1, a=2)
+>       print(reslut)
+>   ```
+
+```python
+    def calc(a, b):
+        c = a + b
+        return c
+
+    # 位置传参
+    reslut = calc(10, 20)
+    print(reslut)
+
+    reslut = calc(b=1, a=2)
+    print(reslut)
+    
+# output
+30
+3
+```
+
+
+
+> - 可以返回多个元素，以元组结构返回
+
+```python
+    def calc(a, b):
+        c = a + b
+        return c, 1
+
+    reslut = calc(10, 20)
+    print(reslut)
+    
+# output
+(30, 1)
+```
+
+
+
+
+
+## 2、函数参数定义
+
+> - 当没有参数的时候，我可以给函数的形参设置默认值
+> - *有默认值的参数一定要放在无默认值的参数后*
+
+```python
+    # 有默认值的参数一定要放在无默认值的参数后
+    def azhe(a, b = 10):
+        print(a, '', b)
+
+    azhe(20)
+    azhe(20, 20)
+    
+# output
+20  10
+20  20
+```
+
+
+
+> - 个数可变的位置参数
+>
+> - 个数可变的关键字参数
+>
+> - 参数只能有一个
+>
+>   - 除非
+>
+>     ```python
+>     def fun(*args, *args):
+>     	pass
+>     ```
+
+```python
+    def bian(*args):
+    print(args)
+
+    # 打印结果是元组
+    bian(1, 2, 3)
+    bian(1)
+    
+# output
+(1, 2, 3)
+(1,)
+    
+    
+    def fun(**kwargs):
+        print(kwargs)
+
+    fun(a=10)
+    fun(b=20, c=30, a=10)
+    
+# output
+{'a': 10}
+{'b': 20, 'c': 30, 'a': 10}
+```
+
+
+
+> - 展示一下`可变长度的位置形参`和`可变长度的关键字形参`的作用
+
+```python
+    # 直接传递一个列表
+    def funn(a, b, c):
+        print(a, '', b, '', c)
+    list = [1, 2, 3]
+    funn(*list)
+
+    # 传递一个字典
+    # 如果key没有完全对应参数名字就不能输出
+    dict = {'a':3, 'b':2, 'c':1}
+    funn(**dict)
+
+    # 从*之后的参数，调用只能使用关键字
+    def fnn(a, b, *, c):
+        print(a, '', b, '', c)
+    fnn(1, 2, c=3)
+    
+# output
+1  2  3
+3  2  1
+1  2  3
+```
+
+
+
+
+
+# 总结
+
+<img src="Python基础学习笔记.assets/image-20230425220606654.png" alt="image-20230425220606654" style="zoom: 67%;" /> 
+
+
+
+
+
+
+
+# 六、异常
+
+## 1、try-execpt-else/-finally
+
+<img src="Python基础学习笔记.assets/image-20230504004830262.png" alt="image-20230504004830262" style="zoom:67%;" />
+
+ 	   <img src="Python基础学习笔记.assets/image-20230504005020526.png" alt="image-20230504005020526" style="zoom:67%;" />
+
+```python
+try:
+    print('1')
+except BaseException as e:
+    traceback.print_exc()
+else:
+    print('啊对对对')
+finally:
+    print('无所吊谓，我会出手')
+```
+
+
+
+
+
+## 2、常见bug类型
+
+​	    <img src="Python基础学习笔记.assets/image-20230504005344928.png" alt="image-20230504005344928" style="zoom:67%;" />
+
+
+
+
+
+## 3、手动异常
+
+​	   <img src="Python基础学习笔记.assets/image-20230504005515600.png" alt="image-20230504005515600" style="zoom:67%;" />  
+
+```python
+    try:
+        print('1')
+    except BaseException as e:
+        traceback.print_exc()
+    else:
+        print('啊对对对')
+    finally:
+        print('无所吊谓，我会出手')
+```
+
+
+
+
+
+
+
+# 三、大的要来了
+
+## 1、类
+
+### 1.1、创建
+
+<img src="Python基础学习笔记.assets/image-20230517002046081.png" alt="image-20230517002046081" style="zoom: 67%;" /> 
+
+
+
+### 1.2、对象的创建
+
+
+
+<img src="Python基础学习笔记.assets/image-20230517002801001.png" alt="image-20230517002801001" style="zoom:67%;" /> 
+
+
+
+### 1.3、类属性、类方法、静态方法
+
+<img src="Python基础学习笔记.assets/image-20230517003626032.png" alt="image-20230517003626032" style="zoom:67%;" /> 
+
+
+
+```python
+class NewBee:
+    nive_you = "newBee"
+
+    def __int__(self, you):
+        self.you = you
+
+    # 实例方法
+    def fk(self):
+        print("fk you  ", self)
+
+    # 静态方法
+    @staticmethod
+    def staticMe():
+        print("这都啥啥啥啊")
+
+    # 类方法
+    @classmethod
+    def cM(cls):
+        print("事学生")
+
+
+nb = NewBee()
+print(NewBee)
+print(id(nb))
+print(type(nb))
+print(nb)
+
+print("\n-----调用类属性-----")
+print(nb.nive_you)
+# 修改了类属性
+NewBee.nive_you = "azhe"
+print(nb.nive_you)
+
+print("\n-----调用实例方法-----")
+# 调用实例方法
+nb.fk()
+# 通过类调用实例方法，传入的self为实例对象本身
+NewBee.fk(nb)
+
+print("\n-----类方法的使用-----")
+NewBee.cM()
+
+print("\n-----静态方法的使用-----")
+NewBee.staticMe()
+
+
+
+# output
+<class '__main__.NewBee'>
+2556617051088
+<class '__main__.NewBee'>
+<__main__.NewBee object at 0x0000025342404BD0>
+
+-----调用类属性-----
+newBee
+azhe
+
+-----调用实例方法-----
+fk you   <__main__.NewBee object at 0x0000025342404BD0>
+fk you   <__main__.NewBee object at 0x0000025342404BD0>
+
+-----类方法的使用-----
+事学生
+
+-----静态方法的使用-----
+这都啥啥啥啊
+```
+
+
+
+
+
+### 1.4、动态绑定属性和方法
+
+<img src="Python基础学习笔记.assets/image-20230517004505890.png" alt="image-20230517004505890" style="zoom:67%;" /> 
+
+```python
+class WoCao:
+    def __init__(self, name, age):
+        self.name = name
+        self.age = age
+    def fk(self):
+        print(self.name, "是个傻宝")
+
+man1 = WoCao("n", 11)
+man2 = WoCao("aw", 22)
+
+print("-----为man1动态绑定一个gg属性-----")
+man1.gg = "GG BOND"
+print(man1.gg)
+
+def newB():
+    print("大的要来了")
+print("-----为man2动态绑定一个WoCao类之外的函数-----")
+man2.nm = newB()
+man2.nm
+
+# output
+这都啥啥啥啊
+-----为man1动态绑定一个gg属性-----
+GG BOND
+-----为man2动态绑定一个WoCao类之外的函数-----
+大的要来了
+```
+
+
+
+
+
+## 2、封装/继承/多态
+
+<img src="Python基础学习笔记.assets/image-20230520005518740.png" alt="image-20230520005518740" style="zoom:67%;" /> 
+
+```python
+class S:
+    def __init__(self, name, age):
+        self.name = name
+        # 相当于一个private
+        self.__age = age
+    def getAge(self):
+        print(self.__age)
+
+
+s = S("wc", 20)
+s.getAge()
+# 也可以暴力访问
+print("暴力访问：", s._S__age)
+
+# output
+20
+暴力访问： 20
+```
+
+
+
+
+
+## 3、方法重写
+
+<img src="Python基础学习笔记.assets/image-20230522230131240.png" alt="image-20230522230131240" style="zoom:67%;" /> 
+
+
+
+
+
+## 4、object类
+
+> - 重写自定义类的_ _ str _ _
+
+<img src="Python基础学习笔记.assets/image-20230522230430540.png" alt="image-20230522230430540" style="zoom:67%;" /> 
+
+```python
+class Stu:
+    def __init__(self, name, age):
+        self.name = name
+        self.age = age
+
+    def __str__(self):
+        return "我{1}是你爹{0}".format(self.name, self.age)
+
+
+s = Stu("那边", 121)
+print(s)
+
+# output
+我121是你爹那边
+```
+
+
+
+
+
+
+
+## 5、多态
+
+<img src="Python基础学习笔记.assets/image-20230522231019134.png" alt="image-20230522231019134" style="zoom:67%;" /> 
+
+<img src="Python基础学习笔记.assets/image-20230522231741395.png" alt="image-20230522231741395" style="zoom:67%;" /> 
+
+```python
+class Animal:
+    def eat(self):
+        print("大哥先吃")
+
+
+class Dog(Animal):
+    def eat(self):
+        print("狗恰")
+
+
+class Cat(Animal):
+    def eat(self):
+        print("猫恰")
+
+
+class Person:
+    def eat(self):
+        print("人恰")
+
+
+# 定义函数
+def fun(obj):
+    obj.eat()
+
+
+# 调用函数
+fun(Cat())
+fun(Dog())
+fun(Animal())
+fun(Person())
+
+# output
+猫恰
+狗恰
+大哥先吃
+人恰
+```
+
+
+
+
+
+## 6、特殊方法/属性
+
+<img src="Python基础学习笔记.assets/image-20230522232033654.png" alt="image-20230522232033654" style="zoom:67%;" /> 
+
+```python
+class A:
+    pass
+
+
+class B:
+    pass
+
+
+class C(A, B):
+    def __init__(self, name, age):
+        self.name = name
+        self.age = age
+
+
+x = C("名字", "34")
+print(x.__dict__) # 实例对象的属性字典
+print(C.__dict__) # 类的属性字典
+print("-------------")
+print(x.__class__) # <class '__main__.C'> 输出了对象所属的类
+print(C.__bases__) # C继承的全部的父类类型元素
+print(C.__base__) # C继承的第一个父类
+print(C.__mro__) # 类的层次结构
+print(A.__subclasses__()) # 子类的列表
+
+# output
+{'name': '名字', 'age': '34'}
+{'__module__': '__main__', '__init__': <function C.__init__ at 0x0000015C6CB8E660>, '__doc__': None}
+-------------
+<class '__main__.C'>
+(<class '__main__.A'>, <class '__main__.B'>)
+<class '__main__.A'>
+(<class '__main__.C'>, <class '__main__.A'>, <class '__main__.B'>, <class 'object'>)
+[<class '__main__.C'>]
+```
+
+
+
+
+
+```python
+class C(object):
+    def __init__(self, name, age):
+        print("init被调用了，self的id值为: {0}".format(id(self)))
+        self.name = name
+        self.age = age
+
+    def __new__(cls, *args, **kwargs):
+        print("new被调用了，cls: {0}".format(id(cls)))
+        obj = super().__new__(cls)
+        print("创建的对象的id: {0}".format(id(obj)))
+        return obj
+
+print("object类id: {0}".format(id(object)))
+print("C类id: {0}".format(id(C)))
+a = C("mz", 10)
+print("a实例对象id: {0}".format(id(a)))
+
+
+# output
+object类id: 140704729619248
+C类id: 1941955553848
+new被调用了，cls: 1941955553848
+创建的对象的id: 1941955112072
+init被调用了，self的id值为: 1941955112072
+a实例对象id: 1941955112072
+```
+
+
+
+
+
+## 7、深拷贝和浅拷贝
+
+<img src="Python基础学习笔记.assets/image-20230624151142343.png" alt="image-20230624151142343" style="zoom:67%;" /> 
+
+
+
+> - 变量赋值操作
+>   - 赋值的地址
+
+> - 浅拷贝
+>   - 源对象和拷贝对象的子对象都是相同的
+
+> - 深拷贝
+>   - 源对象和拷贝对象的子对象不相同
+
+```python
+class CPU:
+    pass
+
+
+class Disk:
+    pass
+
+
+class Computer:
+    def __init__(self, cpu, disk):
+        self.cpu = cpu
+        self.disk = disk
+
+
+# （1）变量赋值
+cpu1 = CPU()
+cpu2 = cpu1
+print("变量赋值：\ncpu1地址为：{0}\ncpu2地址为：{1}\n".format(cpu1, cpu2))
+
+# （2）类的浅拷贝
+disk = Disk()  # 硬盘类的对象
+computer1 = Computer(cpu1, disk)  # 计算机类的对象
+
+
+import copy
+computer2 = copy.copy(computer1)
+print("浅拷贝：")
+print("----computer1----\ncomputer1地址:{0}\ncpu地址：{1}\ndisk地址：{2}\n".format(computer1, computer1.cpu, computer1.disk))
+print("----computer2----\ncomputer2地址:{0}\ncpu地址：{1}\ndisk地址：{2}\n".format(computer2, computer2.cpu, computer2.disk))
+computer3 = copy.deepcopy(computer1)
+print("深拷贝：")
+print("----computer1----\ncomputer1地址:{0}\ncpu地址：{1}\ndisk地址：{2}\n".format(computer1, computer1.cpu, computer1.disk))
+print("----computer3----\ncomputer3地址:{0}\ncpu地址：{1}\ndisk地址：{2}\n".format(computer3, computer3.cpu, computer3.disk))
+
+# output
+变量赋值：
+cpu1地址为：<__main__.CPU object at 0x0000027179397548>
+cpu2地址为：<__main__.CPU object at 0x0000027179397548>
+
+浅拷贝：
+----computer1----
+computer1地址:<__main__.Computer object at 0x0000027179397588>
+cpu地址：<__main__.CPU object at 0x0000027179397548>
+disk地址：<__main__.Disk object at 0x00000271793975C8>
+
+----computer2----
+computer2地址:<__main__.Computer object at 0x0000027179397608>
+cpu地址：<__main__.CPU object at 0x0000027179397548>
+disk地址：<__main__.Disk object at 0x00000271793975C8>
+
+深拷贝：
+----computer1----
+computer1地址:<__main__.Computer object at 0x0000027179397588>
+cpu地址：<__main__.CPU object at 0x0000027179397548>
+disk地址：<__main__.Disk object at 0x00000271793975C8>
+
+----computer3----
+computer3地址:<__main__.Computer object at 0x0000027179397648>
+cpu地址：<__main__.CPU object at 0x0000027179397808>
+disk地址：<__main__.Disk object at 0x0000027179397F88>
+```
+
+
+
+
+
+
+
+
+
+## 8、模块
+
+<img src="Python基础学习笔记.assets/image-20230624152500425.png" alt="image-20230624152500425" style="zoom:67%;" /> 
+
+
+
+> - 内置模块
+
+<img src="Python基础学习笔记.assets/image-20230624155929850.png" alt="image-20230624155929850" style="zoom:67%;" />  
+
+
+
+
+
+
+
+## 9、主程序
+
+> - 当本module导包到A模块时，runA模块，而放在本modlue的`if __name__ == '__main__':`的代码不会被执行
+
+
+
+
+
+## 10、包
+
+<img src="Python基础学习笔记.assets/image-20230624154742819.png" alt="image-20230624154742819" style="zoom:67%;" /> 
+
+
+
+
+
+
+
+## 11、文件
+
+### 1、编码格式
+
+> - python文件默认的就是UTF-8
+
+<img src="Python基础学习笔记.assets/image-20230624160831861.png" alt="image-20230624160831861" style="zoom:67%;" /> 
+
+
+
+### 2、读写原理
+
+
+
+<img src="Python基础学习笔记.assets/image-20230624161242944.png" alt="image-20230624161242944" style="zoom:67%;" /> 
+
+```python
+file = open("a.txt", 'r')
+print(file.readlines())
+file.close()
+
+# output
+['wo草']
+```
+
+
+
+
+
+### 3、相关方法
+
+<img src="Python基础学习笔记.assets/image-20230624162656512.png" alt="image-20230624162656512" style="zoom:67%;" /> 
+
+<img src="Python基础学习笔记.assets/image-20230624162800548.png" alt="image-20230624162800548" style="zoom:67%;" /> 
+
+```python
+file = open("a.txt", 'r')
+print(file.readlines())
+file.close()
+```
+
+
+
+### 4、with语句
+
+<img src="Python基础学习笔记.assets/image-20230624163751462.png" alt="image-20230624163751462" style="zoom:67%;" /> 
+
+
+
+> - 上下文表达式：open("logo,png", "rb")，结果为上下文管理器-》一个类对象实现了enter和exit方法，表明遵守上下文协议，
+>
+>   它的实例对象即为上下文管理器，然后创建一个运行时上下文，自动调用enter方法，并将返回值赋给src_file -- 相当于一个赋值操作
+>
+> - 且当with语句块执行后，它会自动执行上下文管理器的exit()方法，就不用我们手动关闭了
+
+
+
+
+
+### 5、OS模块
+
+```python
+import os
+# 相当于cmd窗口，打开记事本，计算器
+os.system('notepad.exe')
+os.system('calc.exe')
+
+# 直接执行可执行文件
+os.startfile(".exe")
+
+
+```
+
+> - 下面的就是操作目录相关的了
+
+<img src="Python基础学习笔记.assets/image-20230624165157789.png" alt="image-20230624165157789" style="zoom:67%;" /> 
+
+<img src="Python基础学习笔记.assets/image-20230624165301881.png" alt="image-20230624165301881" style="zoom:67%;" /> 
 
 
 
